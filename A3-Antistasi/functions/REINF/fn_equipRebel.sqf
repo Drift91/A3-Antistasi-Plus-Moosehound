@@ -22,19 +22,10 @@ private _unitClass = if (_forceClass != "") then {_forceClass} else {_unit getVa
 private _customLoadout = rebelLoadouts get _unitClass;
 
 if (!isNil "_customLoadout") exitWith {
-	private _uniforms = A3A_faction_reb getVariable "uniforms";
 	private _uniformItems = uniformItems _unit;
 
 	_unit setUnitLoadout _customLoadout;
-	private _headgear = headgear _unit;
-
-	_unit forceAddUniform (selectRandom _uniforms);
 	{_unit addItemToUniform _x} forEach _uniformItems;
-
-	//if it isn't a helmet - randomize
-	if !(_headgear in allArmoredHeadgear) then {
-		_unit addHeadgear (selectRandom (A3A_faction_reb getVariable "headgear"));
-	};
 
 	_unit linkItem "ItemMap";
 	_unit linkItem "ItemCompass";
