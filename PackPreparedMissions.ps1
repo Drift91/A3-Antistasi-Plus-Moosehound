@@ -14,6 +14,6 @@ ForEach ($mission in $packedMissionFiles) {
 ForEach ($missionFolder in $missionFolders) {
     Write-Host "Packing $($missionFolder).";
     $destinationPath = $(Join-Path $folderForPreparedMissions.FullName $missionFolder);
-    cpbo -p $destinationPath;
+    FileBank $destinationPath;
 }
 
