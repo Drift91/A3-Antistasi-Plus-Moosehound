@@ -51,7 +51,7 @@ if (count _positionTel > 0) then
 	if (_positionTel distance getMarkerPos _base < 50) then
 		{
 		_positionX = [getMarkerPos _base, 10, random 360] call BIS_Fnc_relPos;
-		_distanceX = round (((position player) distance _positionX)/200);
+		_distanceX = round (((position player) distance _positionX)/400);
 		disableUserInput true;
 		cutText ["Fast traveling, please wait","BLACK",2];
 		sleep 2;
