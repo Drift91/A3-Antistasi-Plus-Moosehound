@@ -22,8 +22,6 @@ if ((_x getVariable "unitType") != SDKUnarmed) then
 	};
 } forEach _units;
 
-if (recruitCooldown < time) then {recruitCooldown = time + 60} else {recruitCooldown = recruitCooldown + 60};
-
 
 _LeaderX = leader _newGroup;
 

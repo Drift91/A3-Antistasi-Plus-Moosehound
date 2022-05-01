@@ -11,9 +11,6 @@ musicON = false;
 //True when the client is saving
 savingClient = false;
 
-//Prevents units being recruited too soon after being dismissed.
-recruitCooldown = 0;	
-
 incomeRep = false;
 
 //Should AI automatically heal teammates. Each client has their own copy of this.
