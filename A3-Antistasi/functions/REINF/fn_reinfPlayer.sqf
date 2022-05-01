@@ -32,7 +32,7 @@ if (_typeUnit == SDKATman && {tierWar < 4}) exitWith {
 
 if (_costs > _resourcesFIA) exitWith {["AI Recruitment", format ["You do not have enough money for this kind of unit (%1%2 needed).", _costs, currencySymbol]] call A3A_fnc_customHint;};
 
-if ((count units group player) + (count units stragglers) > 9) exitWith {["AI Recruitment", "Your squad is full or you have too many scattered units with no radio contact."] call A3A_fnc_customHint;};
+if ((count units group player) + (count units stragglers) > 19) exitWith {["AI Recruitment", "Your squad is full or you have too many scattered units with no radio contact."] call A3A_fnc_customHint;};
 
 private _unit = [group player, _typeUnit, position player, [], 0, "NONE"] call A3A_fnc_createUnit;
 
