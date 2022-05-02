@@ -19,7 +19,7 @@ if (player != player getVariable ["owner",player]) exitWith {
 };
 
 if (player distance2D (getMarkerPos "Synd_HQ") > 50) exitWith {
-    ["Rally Point", "You cannot travel to rally point outside the HQ."] call SCRT_fnc_misc_showDeniedActionHint;
+    ["Rally Point", "You cannot travel to rally point from outside the HQ."] call SCRT_fnc_misc_showDeniedActionHint;
 };
 
 private _groupX = group player;
