@@ -130,7 +130,7 @@ if (count _positionTel > 0) then {
 		["Fast Travel", "You cannot Fast Travel to an area under attack or with enemies in the surrounding."] call SCRT_fnc_misc_showDeniedActionHint; openMap [false,false]
 	};
 
-	if (_positionTel distance getMarkerPos _base < 50) then {
+	if (_positionTel distance getMarkerPos _base < 150) then {
 		_positionX = [getMarkerPos _base, 10, random 360] call BIS_Fnc_relPos;
 		_distanceX = round (((position _boss) distance _positionX)/400);
 		//if (!_esHC) then {disableUserInput true; cutText ["Fast traveling, please wait","BLACK",2]; sleep 2;} else {hcShowBar false;hcShowBar true;hint format ["Moving group %1 to destination",groupID _groupX]; sleep _distanceX;};

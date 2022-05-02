@@ -48,7 +48,7 @@ if (count _positionTel > 0) then
 
 	if (_checkX) exitWith {["Fast Travel", "You cannot Fast Travel to an area under attack or with enemies in the surrounding area."] call A3A_fnc_customHint; openMap [false,false]};
 
-	if (_positionTel distance getMarkerPos _base < 50) then
+	if (_positionTel distance getMarkerPos _base < 150) then
 		{
 		_positionX = [getMarkerPos _base, 10, random 360] call BIS_Fnc_relPos;
 		_distanceX = round (((position player) distance _positionX)/400);
