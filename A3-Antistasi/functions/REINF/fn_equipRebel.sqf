@@ -22,7 +22,10 @@ private _unitClass = if (_forceClass != "") then {_forceClass} else {_unit getVa
 private _customLoadout = rebelLoadouts get _unitClass;
 
 if (!isNil "_customLoadout") exitWith {
+	private _uniformItems = uniformItems _unit;
+
 	_unit setUnitLoadout _customLoadout;
+	{_unit addItemToUniform _x} forEach _uniformItems;
 
 	_unit linkItem "ItemMap";
 	_unit linkItem "ItemCompass";
