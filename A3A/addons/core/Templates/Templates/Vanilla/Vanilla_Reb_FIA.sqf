@@ -10,7 +10,7 @@ private _hasContact = "enoch" in A3A_enabledDLC;
 ["name", "FIA"] call _fnc_saveToTemplate;
 
 ["flag", "Flag_FIA_F"] call _fnc_saveToTemplate;
-["flagTexture", "a3\data_f\flags\flag_fia_co.paa"] call _fnc_saveToTemplate;
+["flagTexture", "Drift91_Moosestasi\textures\flags\Flag_FIA_CO.paa"] call _fnc_saveToTemplate;
 ["flagMarkerType", "flag_FIA"] call _fnc_saveToTemplate;
 
 ["vehicleBasic", "I_G_Quadbike_01_F"] call _fnc_saveToTemplate;

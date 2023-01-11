@@ -97,7 +97,7 @@ class Templates
     class Vanilla_FIA : Vanilla_Base
     {
         side = "Reb";
-        flagTexture = "a3\data_f\flags\flag_fia_co.paa";
+        flagTexture = "Drift91_Moosestasi\textures\flags\Flag_FIA_CO.paa";
         name = "A3 FIA";
         file = "Vanilla_Reb_FIA";
         description = $STR_A3AP_setupFactionsTab_fia;
@@ -186,7 +186,7 @@ class Templates
     // class Aegis_FIA : Aegis_Base
     // {
     //     side = "Reb";
-    //     flagTexture = "a3\data_f\flags\flag_fia_co.paa";
+    //     flagTexture = "Drift91_Moosestasi\textures\flags\Flag_FIA_CO.paa";
     //     name = "Aegis FIA";
     //     file = "Aegis_Reb_FIA";
     //     description = $STR_A3AP_setupFactionsTab_fia;
@@ -315,7 +315,7 @@ class Templates
     class 3CBF_FIA : 3CBF_Base
     {
         side = "Reb";
-        flagTexture = "a3\data_f\flags\flag_fia_co.paa";
+        flagTexture = "Drift91_Moosestasi\textures\flags\Flag_FIA_CO.paa";
         name = "3CBF FIA";
         file = "3CBF_Reb_FIA";
         description = $STR_A3AP_setupFactionsTab_fia_3cbf;
