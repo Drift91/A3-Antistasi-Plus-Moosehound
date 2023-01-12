@@ -1,0 +1,13 @@
+{
+  "inputDirs": [
+    "S:\repos\games\Arma3\A3-Antistasi-Plus-Moosehound\A3A\addons"
+  ],
+  "includePaths": [
+    "S:\repos\games\Arma3\A3-Antistasi-Plus-Moosehound\A3A\addons"
+  ],
+  "excludeList": [
+    
+  ],
+  "outputDir": "S:\repos\games\Arma3\A3-Antistasi-Plus-Moosehound\A3A\addons",
+  "workerThreads": 6
+}
