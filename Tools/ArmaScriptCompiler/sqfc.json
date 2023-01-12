@@ -3,7 +3,8 @@
     "S:/repos/games/Arma3/A3-Antistasi-Plus-Moosehound/A3A/addons"
   ],
   "includePaths": [
-    "S:/repos/games/Arma3/A3-Antistasi-Plus-Moosehound/A3A/addons"
+    "S:/repos/games/Arma3/A3-Antistasi-Plus-Moosehound/A3A/addons",
+	"S:/Contents/To Lotus/downloads/!Games/Arma 3/!Development/Vanilla Files/a3"
   ],
   "excludeList": [
   ],
