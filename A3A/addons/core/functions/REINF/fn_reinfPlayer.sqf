@@ -16,7 +16,7 @@ private _resourcesFIA = player getVariable ["moneyX", 0];
 
 if (_costs > _resourcesFIA) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", format [localize "STR_A3A_reinf_reinfPlayer_no_money", _costs, A3A_faction_civ get "currencySymbol"]] call A3A_fnc_customHint;};
 
-if ((count units group player) + (count units stragglers) > 9) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", localize "STR_A3A_reinf_reinfPlayer_full_squad"] call A3A_fnc_customHint;};
+if ((count units group player) + (count units stragglers) > 19) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", localize "STR_A3A_reinf_reinfPlayer_full_squad"] call A3A_fnc_customHint;};
 
 private _unit = [group player, _typeUnit, position player, [], 0, "NONE"] call A3A_fnc_createUnit;
 
