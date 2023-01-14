@@ -85,7 +85,6 @@ player setVariable ["eligible",player call A3A_fnc_isMember,true];
 player setVariable ["A3A_playerUID",getPlayerUID player,true];			// Mark so that commander routines know for remote-controlling
 
 musicON = false;
-recruitCooldown = 0;			//Prevents units being recruited too soon after being dismissed.
 incomeRep = false;
 autoHeal = true;				//Should AI in player squad automatically heal teammates
 isPowPaycheckAnnounced = false; //Are players know about that IDAP pays for released prisoners

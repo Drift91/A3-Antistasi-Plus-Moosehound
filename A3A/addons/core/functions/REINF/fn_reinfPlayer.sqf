@@ -2,8 +2,6 @@ params ["_typeUnit"];
 
 if !(player call A3A_fnc_isMember) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", localize "STR_A3A_reinf_reinfPlayer_only_members"] call A3A_fnc_customHint;};
 
-if (recruitCooldown > time) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", format [localize "STR_A3A_reinf_reinfPlayer_cooldown",round (recruitCooldown - time)]] call A3A_fnc_customHint;};
-
 if (player != player getVariable ["owner",player]) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", localize "STR_A3A_reinf_reinfPlayer_aicontrol"] call A3A_fnc_customHint;};
 
 if ([getPosATL player] call A3A_fnc_enemyNearCheck) exitWith {[localize "STR_A3A_reinf_reinfPlayer_header", localize "STR_A3A_reinf_reinfPlayer_enemy_near"] call A3A_fnc_customHint;};

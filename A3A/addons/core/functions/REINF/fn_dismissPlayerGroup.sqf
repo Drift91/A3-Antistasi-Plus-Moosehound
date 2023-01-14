@@ -18,8 +18,6 @@ private _newGroup = createGroup teamPlayer;
 	};
 } forEach _units;
 
-if (recruitCooldown < time) then {recruitCooldown = time + 60} else {recruitCooldown = recruitCooldown + 60};
-
 {_x domove getMarkerPos respawnTeamPlayer} forEach units _newGroup;
 
 private _timeX = time + 120;
