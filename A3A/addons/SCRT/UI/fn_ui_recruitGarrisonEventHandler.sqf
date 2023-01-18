@@ -8,7 +8,7 @@ if(_mode == "ADD") then {
             playSound "readoutClick";
 
             private _site = [markersX, _pos] call BIS_fnc_nearestPosition;
-            if (getMarkerPos _site distance _pos > 25) exitWith {
+            if (getMarkerPos _site distance _pos > 150) exitWith {
                 [
                     localize "STR_notifiers_fail_type",
                     localize "STR_antistasi_journal_entry_header_AI_1",  
