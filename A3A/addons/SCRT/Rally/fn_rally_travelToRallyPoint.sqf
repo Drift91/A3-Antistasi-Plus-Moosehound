@@ -38,7 +38,7 @@ if ([position _rallyPoint, 50] call A3A_fnc_enemyNearCheck) exitWith {
 };
 
 private _positionX = [_rallyPosition, 10, random 360] call BIS_fnc_relPos;
-private _distanceX = round (((player distance2D _positionX)/200)/2);
+private _distanceX = round (((player distance2D _positionX)/400)/2);
 
 disableUserInput true; 
 cutText [format [localize "STR_cut_RP_FT_timer", _distanceX],"BLACK",1]; 
