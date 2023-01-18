@@ -365,7 +365,7 @@
                 <Russian>Вы не можете путешествовать к точке сбора будучи в тяжело раненом состоянии.</Russian>
             </Key>
             <Key ID="STR_A3AP_rally_hq">
-                <Original>You can't travel to rally point outside the HQ.</Original>
+                <Original>You can't travel to rally point from outside the HQ.</Original>
                 <Russian>Вы не можете путешествовать к точке сбора находясь за пределами штаба.</Russian>
             </Key>
             <Key ID="STR_A3AP_rally_not_enough_points">
