@@ -34,10 +34,8 @@ class CfgFunctions {
 			class common_chemicalDamage {};
 			class common_recon {};
         	class common_reveal {};
-			class common_getNearFriendlyAiUnits {}; 
 			class common_moveOutpostStatic {};
 			class common_findSafePositionForVehicle {};
-			class common_possessNearestFriendlyAi {};
 			class common_fillSupplyDrop {};
 			class common_supplyDrop {};
 			class common_paradropVehicle {};
@@ -46,6 +44,7 @@ class CfgFunctions {
 			class common_triggerArtilleryResponseEH {};
 			class common_buyReviveKitBox {};
 			class common_revive {};
+			class common_updateArsenal {};
 		};
 
 		class Effect {
@@ -97,8 +96,6 @@ class CfgFunctions {
 			class misc_deniedHint {};
 			class misc_orbitingCamera {};
 			class misc_followCamera {};
-			class misc_projectileCamera {};
-			class misc_toggleProjectileCamEventHandler {};
 			class misc_updateRichPresence {};
 			class misc_getAccentColor {};
 			class misc_createBelonging {};
@@ -289,5 +286,10 @@ class CfgFunctions {
 			class rivals_destroyLocation {};
 		};
 		
+		class AI {
+			file = QPATHTOFOLDER(AI);
+			class ai_getNearFriendlyUnits {}; 
+			class ai_possessFriendlyUnit {};
+		};
 	};
 };

@@ -598,7 +598,7 @@ switch(true) do {
     };
 };
 
-[_taskId, "RIV_ATT", 10] spawn A3A_fnc_taskDelete;
+[_taskId, "RIV_ATT", 5] spawn A3A_fnc_taskDelete;
 
 sleep 60;
 

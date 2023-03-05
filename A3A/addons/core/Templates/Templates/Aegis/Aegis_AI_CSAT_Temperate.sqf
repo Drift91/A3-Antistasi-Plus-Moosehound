@@ -164,39 +164,16 @@ private _chFaces = ["AsianHead_A3_01","AsianHead_A3_02","AsianHead_A3_03","Asian
 ["eliteVoices", _chVoices] call _fnc_saveToTemplate;
 ["eliteFaces", _chFaces] call _fnc_saveToTemplate;
 
-// ["voices", ["Male01POL", "Male02POL", "Male03POL"]] call _fnc_saveToTemplate;
-// ["faces", [
-//     "LivonianHead_1", "LivonianHead_2", "LivonianHead_3", "LivonianHead_4",
-//     "LivonianHead_5", "LivonianHead_6", "LivonianHead_7", "LivonianHead_8",
-//     "LivonianHead_9", "LivonianHead_10",
-//     "WhiteHead_01", "WhiteHead_02", "WhiteHead_03", "WhiteHead_04",
-//     "WhiteHead_06", "WhiteHead_07", "WhiteHead_08", "WhiteHead_10", "WhiteHead_11",
-//     "WhiteHead_13", "WhiteHead_15", "WhiteHead_16", "WhiteHead_17", "WhiteHead_18",
-//     "WhiteHead_19", "WhiteHead_20", "WhiteHead_21"
-// ]] call _fnc_saveToTemplate;
-["voices", ["Male01PER","Male02PER","Male03PER"]] call _fnc_saveToTemplate;
-
-private _faces = [
-    "PersianHead_A3_01","PersianHead_A3_02","PersianHead_A3_03"
-];
-if (_hasWs) then {
-    _faces append [
-        "CamoHead_Persian_01_F", 
-        "CamoHead_Persian_02_F", 
-        "CamoHead_Persian_03_F", 
-        "lxWS_African_Head_01", 
-        "lxWS_African_Head_02", 
-        "lxWS_African_Head_05",
-        "lxWS_African_Head_04",
-        "lxWS_Said_Head",
-        "lxWS_African_Head_Old_Bard",
-        "lxWS_African_Head_03",
-        "PersianHead_A3_06",
-        "PersianHead_A3_07",
-        "PersianHead_A3_05"
-    ];
-};
-["faces", _faces] call _fnc_saveToTemplate;
+["voices", ["Male01POL", "Male02POL", "Male03POL"]] call _fnc_saveToTemplate;
+["faces", [
+    "LivonianHead_1", "LivonianHead_2", "LivonianHead_3", "LivonianHead_4",
+    "LivonianHead_5", "LivonianHead_6", "LivonianHead_7", "LivonianHead_8",
+    "LivonianHead_9", "LivonianHead_10",
+    "WhiteHead_01", "WhiteHead_02", "WhiteHead_03", "WhiteHead_04",
+    "WhiteHead_06", "WhiteHead_07", "WhiteHead_08", "WhiteHead_10", "WhiteHead_11",
+    "WhiteHead_13", "WhiteHead_15", "WhiteHead_16", "WhiteHead_17", "WhiteHead_18",
+    "WhiteHead_19", "WhiteHead_20", "WhiteHead_21"
+]] call _fnc_saveToTemplate;
 
 ["insignia", ["CSAT_Patch", "CSAT_BearRegiment", ""]] call _fnc_saveToTemplate;
 ["sfInsignia", ["CSAT_DragonRegiment"]] call _fnc_saveToTemplate;

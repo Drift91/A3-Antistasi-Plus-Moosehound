@@ -82,13 +82,7 @@ switch (_key) do {
         [] call SCRT_fnc_ui_toggleCommanderMenu;
     };
 
-    case QGVAR(projectileCameraEscape): {
-		if (!(isNil "isProjectileLaunched") && {isProjectileLaunched}) then {
-			isProjectileInterrupted = true;
-		};
-	};
-
-    Default {
+    default {
         Error_1("Key action not registered: %1", _key)
     };
 };

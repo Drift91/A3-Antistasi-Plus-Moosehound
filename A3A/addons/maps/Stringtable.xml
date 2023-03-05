@@ -326,6 +326,18 @@
       <Russian>В Епонии такого вообще нет.</Russian>
       <Chinesesimp>在爱波尼亚中没有这样的东西。</Chinesesimp>
     </Key>
+    <Key ID="STR_antistasi_mission_info_weferlingen_mapname_text">
+      <Original>Antistasi Plus - Code Red</Original>
+      <Russian>Antistasi Plus - Код Красный</Russian>
+    </Key>
+    <Key ID="STR_antistasi_mission_info_weferlingen_mapname_short_text">
+      <Original>Antistasi Plus - Code Red</Original>
+      <Russian>Antistasi Plus - Код Красный</Russian>
+    </Key>
+    <Key ID="STR_antistasi_mission_info_weferlingen_blurb_text">
+      <Original>Border crossing never has been so easy.</Original>
+      <Russian>Пересечение границы еще никогда не было таким простым.</Russian>
+    </Key>
   </Container>
 </Package>
 </Project>

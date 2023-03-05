@@ -90,12 +90,6 @@ if !(isNull (objectParent player)) then
         _result set [0, false];
         _result pushBack (localize "STR_A3A_goUndercover_error_additive_uniform_output");
     };
-    if (backpack player != "" && {!(backpack player in (A3A_faction_reb get "civilianBackpacks"))}) then 
-    {
-        _text = format [localize "STR_A3A_goUndercover_error_additive_backpack", _text];
-        _result set [0, false];
-        _result pushBack (localize "STR_A3A_goUndercover_error_additive_backpack_output");
-    };
     if (uniform player == "") then
     {
         _text = format [localize "STR_A3A_goUndercover_error_naked_uniform", _text];

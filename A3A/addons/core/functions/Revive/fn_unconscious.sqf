@@ -102,7 +102,7 @@ while {time < _bleedOut && {_unit getVariable ["incapacitated",false] && {alive 
 			_helped = _originalBody;
 		};
 
-		_consciousUnits = [] call SCRT_fnc_common_getNearFriendlyAiUnits;
+		_consciousUnits = [] call SCRT_fnc_ai_getNearFriendlyUnits;
 		
 		if (isNull _helped) then {
 			private _helpX = [_unit] call A3A_fnc_askHelp;

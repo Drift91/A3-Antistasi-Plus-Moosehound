@@ -48,10 +48,6 @@ private _text = "";
 private _sideName = _faction get "name";
 private _intelContent = "";
 
-private _fnc_prepareTraderQuest = {
-    [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
-};
-
 if (!isTraderQuestCompleted && !isTraderQuestAssigned) then {
     private _thresholds = createHashMapFromArray [
         ["Small", 20],
@@ -60,7 +56,7 @@ if (!isTraderQuestCompleted && !isTraderQuestAssigned) then {
     ];
 
     if (random 100 < (_thresholds get _intelType)) then {
-        [] call _fnc_prepareTraderQuest;
+        [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
         _text = format [localize "STR_trader_task_hint_description", ([] call SCRT_fnc_misc_getWorldName)];
     };
 };
@@ -149,7 +145,7 @@ if (_text isEqualTo "") then {
                 case (DISCOUNT):
                 {
                     if (!isTraderQuestCompleted && !isTraderQuestAssigned) then {
-                        [] call _fnc_prepareTraderQuest;
+                        [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
                         _text = format [localize "STR_trader_task_hint_description", ([] call SCRT_fnc_misc_getWorldName)];
                     } else {
                         private _discount = traderDiscount + 0.01;
@@ -225,7 +221,7 @@ if (_text isEqualTo "") then {
                 case (DISCOUNT):
                 {
                     if (!isTraderQuestCompleted && !isTraderQuestAssigned) then {
-                        [] call _fnc_prepareTraderQuest;
+                        [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
                         _text = format [localize "STR_trader_task_hint_description", ([] call SCRT_fnc_misc_getWorldName)];
                     } else {
                         private _discount = traderDiscount + 0.05;
@@ -291,7 +287,7 @@ if (_text isEqualTo "") then {
                 case (DISCOUNT):
                 {
                     if (!isTraderQuestCompleted && !isTraderQuestAssigned) then {
-                        [] call _fnc_prepareTraderQuest;
+                        [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
                         _text = format [localize "STR_trader_task_hint_description", ([] call SCRT_fnc_misc_getWorldName)];
                     } else {
                         private _discount = traderDiscount + 0.1;

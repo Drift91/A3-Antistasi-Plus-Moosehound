@@ -57,7 +57,7 @@ if (isNil "specialVarLoads") then {
         "supportPoints",
         "constructionsX",
         "watchpostsFIA", "roadblocksFIA", "aapostsFIA", "atpostsFIA", "hmgpostsFIA",
-        "traderDiscount", "isTraderQuestCompleted", "isTraderQuestAssigned","traderPosition",
+        "traderDiscount", "isTraderQuestCompleted","traderPosition",
         "areOccupantsDefeated", "areInvadersDefeated",
         "destroyedMilAdmins",
         "rebelLoadouts", "randomizeRebelLoadoutUniforms",
@@ -422,28 +422,31 @@ if (_varName in specialVarLoads) then {
         };
 
         case 'tasks': {
-            // [_varValue] spawn {
-            //     params ["_varValue"];
-            //     {
-            //         switch (_x) do {
-            //             //These are really dangerous. Disable for now.
-            //             //Should be done after all the other init is completed if we really want it
-            //             case "rebelAttack": {
-            //                 if(attackCountdownInvaders > attackCountdownOccupants) then {
-            //                     [Invaders] spawn A3A_fnc_rebelAttack;
-            //                 } else {
-            //                     [Occupants] spawn A3A_fnc_rebelAttack;
-            //                 };
-            //             };
-            //             case "DEF_HQ": {
-            //                 [] spawn A3A_fnc_attackHQ;
-            //             };
-            //             default {
-            //                 [_x,clientOwner,true] call A3A_fnc_missionRequest;
-            //             };
-            //         };   
-            //     } forEach _varValue;
-            // };
+            [_varValue] spawn {
+                params ["_varValue"];
+                {
+                    switch (_x) do {
+                        //These are really dangerous. Disable for now.
+                        //Should be done after all the other init is completed if we really want it
+                        // case "rebelAttack": {
+                        //     if(attackCountdownInvaders > attackCountdownOccupants) then {
+                        //         [Invaders] spawn A3A_fnc_rebelAttack;
+                        //     } else {
+                        //         [Occupants] spawn A3A_fnc_rebelAttack;
+                        //     };
+                        // };
+                        // case "DEF_HQ": {
+                        //     [] spawn A3A_fnc_attackHQ;
+                        // };
+                        case "TRADER": {
+                            [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
+                        };
+                        // default {
+                        //     [_x,clientOwner,true] call A3A_fnc_missionRequest;
+                        // };
+                    };   
+                } forEach _varValue;
+            };
         };
 
         case 'A3A_fuelAmountleftArray': {
@@ -473,15 +476,6 @@ if (_varName in specialVarLoads) then {
             publicVariable "isTraderQuestCompleted";
         };
 
-        case 'isTraderQuestAssigned': {
-            isTraderQuestAssigned = _varvalue;  
-            publicVariable "isTraderQuestAssigned";
-            //isTraderQuestCompleted should be loaded before isTraderQuestAssigned
-            if (isTraderQuestAssigned && {!isTraderQuestCompleted}) then {
-                [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
-            };
-        };
-
         case 'traderDiscount': {
 			if(_varValue > 0) then {
 				[_varValue] call SCRT_fnc_trader_setTraderDiscount;
@@ -497,11 +491,14 @@ if (_varName in specialVarLoads) then {
 
         case 'traderPosition': {
 			if(count _varvalue > 0) then {
+                isTraderQuestAssigned = true;
+                publicVariable "isTraderQuestAssigned";
 				traderX = [_varvalue] call SCRT_fnc_trader_createTrader; 
 				publicVariable "traderX";
 				[traderX] call SCRT_fnc_trader_setStockType;
 				[traderX] remoteExecCall ["SCRT_fnc_trader_addVehicleMarketAction", 0, true];
-				traderPosition = _varvalue; publicVariable "traderPosition";
+				traderPosition = _varvalue; 
+                publicVariable "traderPosition";
 			};
 		};
 

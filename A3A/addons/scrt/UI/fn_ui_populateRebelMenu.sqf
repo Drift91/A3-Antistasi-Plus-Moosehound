@@ -48,7 +48,6 @@ if (areRivalsDiscovered) then {
 } forEach (allControls findDisplay 70000);
 
 ["MAIN", 5100, false] call SCRT_fnc_ui_switchButton;
-["MAIN", 5200, false] call SCRT_fnc_ui_switchButton;
 ["MAIN", 5400, false] call SCRT_fnc_ui_switchButton;
 
 private _gameInfoText = format [
@@ -66,3 +65,7 @@ private _gameInfoText = format [
 if (player distance2D (getMarkerPos "Synd_HQ") > 50) then {
     ((findDisplay 70000) displayCtrl 5300) ctrlShow false;
 };
+
+[70000,'RIGHT'] spawn SCRT_fnc_ui_changeTab;
+[70000,'RIGHT'] spawn SCRT_fnc_ui_changeTab;
+[70000,'RIGHT'] spawn SCRT_fnc_ui_changeTab;

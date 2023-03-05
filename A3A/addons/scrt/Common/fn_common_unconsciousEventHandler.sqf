@@ -13,15 +13,16 @@ if (reviveKitsEnabled) then {
 			player spawn A3A_fnc_respawn;
 		};
 		case DIK_T: {
-			private _nearFriendlyUnits = [] call SCRT_fnc_common_getNearFriendlyAiUnits;
+			private _nearFriendlyUnits = [] call SCRT_fnc_ai_getNearFriendlyUnits;
 
-			if (time < (player getVariable ["A3A_possessTime", time - 1])) exitWith {
-				[localize "STR_antistasi_dialogs_ai_control_title", localize "STR_A3AP_notifications_possess_cooldown"] call SCRT_fnc_misc_deniedHint;
+			private _possessTimeout = player getVariable ["A3A_possessTime", time - 1];
+			if (time < _possessTimeout) exitWith {
+				[localize "STR_antistasi_dialogs_ai_control_title", format [localize "STR_A3AP_notifications_possess_cooldown", round (_possessTimeout - time)]] call SCRT_fnc_misc_deniedHint;
 			};
 			
 			if (_nearFriendlyUnits isNotEqualTo []) then {
 				(findDisplay 46) displayRemoveEventHandler ["KeyDown", respawnMenu];
-				[_nearFriendlyUnits] spawn SCRT_fnc_common_possessNearestFriendlyAI;
+				[_nearFriendlyUnits select 0] spawn SCRT_fnc_ai_possessFriendlyUnit;
 			};
 		};
 		case DIK_Q: {
@@ -44,10 +45,16 @@ if (reviveKitsEnabled) then {
 			player spawn A3A_fnc_respawn;
 		};
 		case DIK_T: {
-			private _nearFriendlyUnits = [] call SCRT_fnc_common_getNearFriendlyAiUnits;
+			private _nearFriendlyUnits = [] call SCRT_fnc_ai_getNearFriendlyUnits;
+
+			private _possessTimeout = player getVariable ["A3A_possessTime", time - 1];
+			if (time < _possessTimeout) exitWith {
+				[localize "STR_antistasi_dialogs_ai_control_title", format [localize "STR_A3AP_notifications_possess_cooldown", round (_possessTimeout - time)]] call SCRT_fnc_misc_deniedHint;
+			};
+
 			if (_nearFriendlyUnits isNotEqualTo []) then {
 				(findDisplay 46) displayRemoveEventHandler ["KeyDown", respawnMenu];
-				[_nearFriendlyUnits] spawn SCRT_fnc_common_possessNearestFriendlyAI;
+				[_nearFriendlyUnits select 0] spawn SCRT_fnc_ai_possessFriendlyUnit;
 			};
 		};
 	#if __A3_DEBUG__

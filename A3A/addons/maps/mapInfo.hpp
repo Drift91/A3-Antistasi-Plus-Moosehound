@@ -14,4 +14,5 @@ class mapInfo {
     #include "Antistasi_cam_lao_nam.cam_lao_nam\mapInfo.hpp"
     #include "Antistasi_vn_khe_sanh.vn_khe_sanh\mapInfo.hpp"
     #include "Antistasi_Sehreno.Sehreno\mapInfo.hpp"
+    #include "Antistasi_gm_weferlingen_summer.gm_weferlingen_summer\mapInfo.hpp"
 };

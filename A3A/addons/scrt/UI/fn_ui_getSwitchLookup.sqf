@@ -8,10 +8,6 @@ switch (_table) do {
                 _return pushBack "musicON";
                 _return pushBack musicON;
             };
-            case 5200: {
-                _return pushBack "isProjectileCamEnabled";
-                _return pushBack isProjectileCamEnabled;
-            };
             case 5400: {
                 _return pushBack "isPlayerParadropable";
                 _return pushBack isPlayerParadropable;

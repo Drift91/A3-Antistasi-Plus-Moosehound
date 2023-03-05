@@ -111,10 +111,6 @@ if (side group player == teamPlayer) then
 		}
 	];
 
-	if (isProjectileCamEnabled) then {
-		["ADD"] call SCRT_fnc_misc_toggleProjectileCamEventHandler;
-	};
-
 	player addEventHandler ["InventoryOpened",
 		{
 		private ["_playerX","_containerX","_typeX"];

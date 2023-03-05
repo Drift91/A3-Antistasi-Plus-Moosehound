@@ -1,6 +1,6 @@
 class napf {
 	population[] = {}; //automated data is fine and needs no adaptation
-	disabledTowns[] = {"Island_Bernerplatte", "Island_Feldmoos", "Island_Bernerplatte", "Insel_Pfeffikon", "mil_SouthAirstrip", "LandMark_Hubel", "Insel_Hasenmatt", "pass_Rorenpass", "Castle_Froburg", "castle_Homburg", "Insel_Suhrenfeld"};
+	disabledTowns[] = {"Island_Feldmoos", "Island_Bernerplatte", "Insel_Pfeffikon", "mil_SouthAirstrip", "LandMark_Hubel", "Insel_Hasenmatt", "pass_Rorenpass", "Castle_Froburg", "castle_Homburg", "Insel_Suhrenfeld"};
 	antennas[] = {
 		{15116.9,12587,0}, {18100.3,2555.68,0},{8966.71,3432.88,0}, {15684.9,19837.4,0},{4974.47,9258.15,0},{10978.2,16960.1,0},{8171.18,14687,0}
 	};

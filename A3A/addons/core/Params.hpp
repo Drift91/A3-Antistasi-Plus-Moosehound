@@ -173,7 +173,7 @@ class Params
     {
         title = $STR_params_fastTravelEnemyCheck;
         values[] = {0,1};
-        texts[] = {$STR_params_fastTravelEnemyCheck_0, $STR_params_fastTravelEnemyCheck_1};
+        texts[] = {$STR_params_fastTravelEnemyCheck_player, $STR_params_fastTravelEnemyCheck_team};
         default = 0;
     };
     class rallyPointSpawnCount
@@ -186,8 +186,8 @@ class Params
     class aiControlTime
     {
         title = $STR_params_aiControlTime;
-        values[] = {60,120,300,900,1800};
-        texts[] = {"60","120","300","900", "1800"};
+        values[] = {30, 60, 90, 120};
+        texts[] = {"30", "60", "90", "120"};
         default = 60;
     };
     class deathPenalty
@@ -223,7 +223,7 @@ class Params
         title = $STR_params_unconsciousAiPossess;
         values[] = {0,1};
         texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
-        default = 1;
+        default = 0;
     };
     class areRandomEventsEnabled
     {

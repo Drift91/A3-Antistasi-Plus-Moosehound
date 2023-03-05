@@ -96,7 +96,6 @@ private _destroyedPositions = destroyedBuildings apply { getPosATL _x };
 ["supportPoints", supportPoints] call A3A_fnc_setStatVariable;
 ["areOccupantsDefeated", areOccupantsDefeated] call A3A_fnc_setStatVariable;
 ["areInvadersDefeated", areInvadersDefeated] call A3A_fnc_setStatVariable;
-["isTraderQuestAssigned", isTraderQuestAssigned] call A3A_fnc_setStatVariable;
 ["isTraderQuestCompleted", isTraderQuestCompleted] call A3A_fnc_setStatVariable;
 ["traderDiscount", traderDiscount] call A3A_fnc_setStatVariable;
 ["traderPosition", traderPosition] call A3A_fnc_setStatVariable;
@@ -334,7 +333,7 @@ if (!isDedicated) then {
 		private _index = A3A_tasksData findIf { (_x#1) isEqualTo _type and (_x#2) isEqualTo "CREATED" };
 		if (_index != -1) then { _typesX pushBackUnique _type };
 
-	} forEach ["AS","CON","DES","LOG","RES","ENC","RIV_ENC","CONVOY","DEF_HQ","rebelAttack","invaderPunish"];
+	} forEach ["AS","CON","DES","LOG","RES","TRADER","RIV_ENC","CONVOY","DEF_HQ","rebelAttack","invaderPunish"];
 
 	["tasks",_typesX] call A3A_fnc_setStatVariable;
 };

@@ -880,40 +880,10 @@ class commanderMenu
 					};		
 				};
 
-				
-				class rocketCameraSwitchButton: ScrtRscControlsGroupNoScrollbarsMain 
-				{
-					idc = 5200;
-					y = "8 * pixelGridNoUIScale * pixelH";
-					class Controls 
-					{
-						class SwitchPic: switchButtonPic
-						{			
-							idc = 5201;
-							text = "\A3\ui_f\data\igui\cfg\simpleTasks\types\scout_ca.paa";
-						};
-						class SwitchTitle: switchButtonTitle
-						{			
-							idc = 5202;	
-							text = $STR_commander_projectile_camera_switch;
-						};
-						class SwitchText: switchButtonSelect
-						{			
-							idc = 5203;
-							text = "";
-						};
-						class SwitchButton: switchButton {
-							idc = 5204;
-							action = "['MAIN', 5200, true, 'CAMERA'] call SCRT_fnc_ui_switchButton";
-							tooltip = $STR_commander_projectile_camera_switch_tooltip;
-						};
-					};		
-				};
-
 				class paradropButton: ScrtRscControlsGroupNoScrollbarsMain 
 				{
 					idc = 5400;
-					y = "11.5 * pixelGridNoUIScale * pixelH";
+					y = "8 * pixelGridNoUIScale * pixelH";
 					class Controls 
 					{
 						class SwitchPic: switchButtonPic
@@ -936,7 +906,7 @@ class commanderMenu
 							action = "['MAIN', 5400, true, 'PARADROP'] call SCRT_fnc_ui_switchButton";
 							tooltip = $STR_commander_menu_paradrop_tooltip;
 						};
-					};		
+					};
 				};
 
 				class saveGameButton: ButtonBase

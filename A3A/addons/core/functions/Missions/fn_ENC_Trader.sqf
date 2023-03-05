@@ -62,7 +62,7 @@ publicVariable "traderX";
 
 _worldName = [] call SCRT_fnc_misc_getWorldName;
 
-private _taskId = "ENC" + str A3A_taskCount;
+private _taskId = "TRADER" + str A3A_taskCount;
 
 [
     [teamPlayer,civilian],
@@ -79,7 +79,7 @@ private _taskId = "ENC" + str A3A_taskCount;
     "meet",
     true
 ] call BIS_fnc_taskCreate;
-[_taskId, "ENC", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
+[_taskId, "TRADER", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 private _trigger = createTrigger ["EmptyDetector", _traderPosition];
 _trigger setTriggerArea [30, 30, 0, false];
@@ -92,7 +92,7 @@ waitUntil {
     (call BIS_fnc_listPlayers) findIf {(side _x) in [teamPlayer, civilian] && {_x inArea _trigger}} != -1
 };
 
-[_taskId, "ENC", "SUCCEEDED"] call A3A_fnc_taskSetState;
+[_taskId, "TRADER", "SUCCEEDED"] call A3A_fnc_taskSetState;
 
 {
     [25,_x] call A3A_fnc_addScorePlayer;
@@ -109,4 +109,4 @@ publicVariable "isTraderQuestCompleted";
 
 deleteVehicle _trigger;
 
-[_taskId, "ENC", 5] spawn A3A_fnc_taskDelete;
+[_taskId, "TRADER", 5] spawn A3A_fnc_taskDelete;

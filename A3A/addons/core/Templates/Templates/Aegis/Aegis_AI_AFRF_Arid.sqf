@@ -7,6 +7,7 @@ private _hasContact = "enoch" in A3A_enabledDLC;
 private _hasLawsOfWar = "orange" in A3A_enabledDLC;
 
 //TODO: remove arifle_AKM74_polymer and arifle_AKM74_polymer_alt
+//TODO: redo template from scratch (remove DLC checks, check classnames existence etc)
 
 //////////////////////////
 //   Side Information   //

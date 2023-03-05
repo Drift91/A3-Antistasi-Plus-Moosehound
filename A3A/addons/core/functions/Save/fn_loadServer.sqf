@@ -49,7 +49,6 @@ if (isServer) then {
 	["areOccupantsDefeated"] call A3A_fnc_getStatVariable;
 	["areInvadersDefeated"] call A3A_fnc_getStatVariable;
 	["isTraderQuestCompleted"] call A3A_fnc_getStatVariable;
-	["isTraderQuestAssigned"] call A3A_fnc_getStatVariable;
 	["traderPosition"] call A3A_fnc_getStatVariable;
 	["traderDiscount"] call A3A_fnc_getStatVariable;
 	["destroyedMilAdmins"] call A3A_fnc_getStatVariable;

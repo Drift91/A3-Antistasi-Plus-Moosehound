@@ -10,6 +10,9 @@ private _credits = [
 	[ (localize "STR_antistasi_credits_authors"), ["Barbolani","Official Antistasi Community"]]
 ];
 
+if ("coldWar" in A3A_factionEquipFlags) then {
+	_credits pushBack [[localize "STR_antistasi_credits_cw_mode", "<t size=1.5 font='PuristaBold' color='#B6020B'>%1</t>"], [""]];
+};
 
 private _layer = "credits1" call bis_fnc_rscLayer;
 
@@ -18,11 +21,18 @@ private _layer = "credits1" call bis_fnc_rscLayer;
 	_names = _x select 1;
 	_icon = _x param [2,""];
 
-	_text = format ["<t size=1.5 font='PuristaBold'>%1</t>",toUpper (_title)] + "<br />";
+	private _formatting = "";
+	if (_title isEqualType []) then {
+		_formatting = _title#1;
+		_title = _title#0;
+	};
+
+	_text = format [[_formatting, "<t size=1.5 font='PuristaBold'>%1</t>"] select (_formatting isEqualTo ""), toUpper _title] + "<br />";
 	_text = [
 		_text,
 		(_icon + "<br />" + _text)
 	] select (_icon isNotEqualTo "");
+
 	{
 		//Second line break controls size of gap between authors. &#160; is a non-breaking space character, which prevents the size being ignored.
 		_text = _text + _x + "<br /><t size='0.2'>&#160;</t><br />";

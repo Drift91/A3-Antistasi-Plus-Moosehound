@@ -1,5 +1,33 @@
 # Changelog
 
+<!-- ## 2.x.x
+### Additions
+- (Aegis) AUKUS, NATO, CSAT, AAF factions (Aegis factions are beta/experimental so they could be used only via their dev branch versions of Aegis, Atlas and Opposing Force mods)
+- (Aegis) CHDKZ and Ion PMC Rival factions (Aegis factions are beta/experimental so they could be used only via their dev branch versions of Aegis, Atlas and Opposing Force mods) -->
+
+## 2.1.3
+### Additions
+- Weferlingen support
+- (3CB Factions) Cold War Mode - Red Army and US Army Cold War factions, enables Cold War Mode - Authentic US and Red Army unit rosters with equipment and vehicles up until first half of 90s, exclusion of equipment that does not fit Cold War time period from all sources (enemies, loot crates and Arms Dealer store) with some exceptions
+- (3CB Factions) Non-Aligned Movement rebel faction
+- (3CB Factions) CHKDZ Cold War Rival faction
+
+### Changes
+- Vehicle box restore action will force arsenal tick (arsenal unlock pass)
+- Self-revive kit could be fit into backpack only
+- Self-revive kit will heal to 75% on use
+- Players will receive small rank increase after releasing enemy POWs
+- Fast Travel Check for player only non-working option fix
+- Fixed inability to build AT Emplacements
+- Fixed soft-lock of Find the Arms Dealer task if task was obtained but not completed between different game runs
+- Marked AI Possession feature as expiremental, disabled by default, light refactoring and stabilization pass in attempt to fix some of the non-obvious hard-to-catch issues
+- Changed AI Control Time options to 30, 60, 90, 120 seconds
+- Player squad dismiss will be full refunded
+- Increased amount of donation to faction from 100 to 250 to reduce number of clicks while transfering big sums of money
+
+### Removals
+- Removed Projectile Camera
+
 ## 2.1.2
 ### Changes
 - Full commander menu will be available at trader location, not only HQ
@@ -326,8 +354,6 @@
 - Iron Man Mode mission parameter - one life for Petros. If he dies, save file will be erased and mission will be ended (one-time, irreversible action for current save after full mission loading)
 
 ### Changes
-- (3CB Factions) Cold War Mode as separate parameter
-- (3CB Factions + Global Mobilization) Cold War mode will be no longer automatically enforced when 3CBF and GM modset is present, it should be turned on with Cold War Mode mission parameter as it happens with just 3CBF, also this allow to play Weferlingen with RHS and 3CBF without enforcing Cold War Mode
 - (Taviana) Small custom object placements changes
 
 ## 1.8.3.2

@@ -26,7 +26,7 @@ params [
 _reviver removeItem "A3AP_SelfReviveKit";
 
 _revivee setVariable ["incapacitated",false,true]; 
-_revivee setDamage 0.5;
+_revivee setDamage 0.25;
 
 [localize "STR_A3AP_items_crrk_name", localize "STR_antistasi_actions_crk_used"] call A3A_fnc_customHint;
 playSound "A3AP_UiSuccess";

@@ -60,6 +60,7 @@ else {
     _modAggro = [-3, 30];
 
 	[player, _sideX] call SCRT_fnc_common_givePrisonerReleasePaycheck;
+	[5,player] call A3A_fnc_addScorePlayer;
 };
 
 

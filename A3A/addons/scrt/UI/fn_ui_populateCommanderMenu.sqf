@@ -172,7 +172,6 @@ lbSetCurSel [2758, 0];
 } forEach (allControls findDisplay 60000);
 
 ["MAIN", 5100, false] call SCRT_fnc_ui_switchButton;
-["MAIN", 5200, false] call SCRT_fnc_ui_switchButton;
 ["MAIN", 5400, false] call SCRT_fnc_ui_switchButton;
 ["MAIN", 5500, false] call SCRT_fnc_ui_switchButton;
 

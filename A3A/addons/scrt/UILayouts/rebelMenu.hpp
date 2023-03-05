@@ -236,39 +236,10 @@ class rebelMenu
 					};		
 				};
 
-				class rocketCameraSwitchButton: ScrtRscControlsGroupNoScrollbarsMain 
-				{
-					idc = 5200;
-					y = "7.5 * pixelGridNoUIScale * pixelH";
-					class Controls 
-					{
-						class SwitchPic: switchButtonPic
-						{			
-							idc = 5201;
-							text = "\A3\ui_f\data\igui\cfg\simpleTasks\types\scout_ca.paa";
-						};
-						class SwitchTitle: switchButtonTitle
-						{			
-							idc = 5202;	
-							text = "PROJECTILE CAMERA";
-						};
-						class SwitchText: switchButtonSelect
-						{			
-							idc = 5203;
-							text = "";
-						};
-						class SwitchButton: switchButton {
-							idc = 5204;
-							action = "['MAIN', 5200, true, 'CAMERA'] call SCRT_fnc_ui_switchButton";
-							tooltip = $STR_commander_projectile_camera_switch_tooltip;
-						};
-					};		
-				};
-
 				class paradropButton: ScrtRscControlsGroupNoScrollbarsMain 
 				{
 					idc = 5400;
-					y = "11 * pixelGridNoUIScale * pixelH";
+					y = "7.5 * pixelGridNoUIScale * pixelH";
 					class Controls 
 					{
 						class SwitchPic: switchButtonPic
@@ -291,7 +262,7 @@ class rebelMenu
 							action = "['MAIN', 5400, true, 'PARADROP'] call SCRT_fnc_ui_switchButton";
 							tooltip = $STR_commander_menu_paradrop_tooltip_noncomm;
 						};
-					};		
+					};
 				};
 
 				class paradropDescriptionText: TextBaseMT
@@ -299,7 +270,7 @@ class rebelMenu
 					idc = 6521;			
 					text = $STR_commander_menu_paradrop_tooltip_noncomm;
 					x = "1 * pixelGridNoUIScale * pixelW";
-					y = "14.5 * pixelGridNoUIScale * pixelH";	
+					y = "11 * pixelGridNoUIScale * pixelH";	
 					w = "22 * pixelGridNoUIScale * pixelW";	
 					h = "10 * pixelGridNoUIScale * pixelH";
 					colorText[] = {1,1,1,0.7};

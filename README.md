@@ -8,7 +8,7 @@
   </p>
   <p>
     <a href="https://github.com/igorkis-scrts/A3-Antistasi-Plus/releases/latest">
-        <img src="https://img.shields.io/badge/Current_Stable_Version-2.1.2-red" alt="Antistasi Plus Version">
+        <img src="https://img.shields.io/badge/Current_Stable_Version-2.1.3-red" alt="Antistasi Plus Version">
     </a>
   </p>
 </div>
@@ -32,7 +32,6 @@
 - Infantry unit tiers based on current war level, the bigger war level - the better enemy's infantry units equipment
 - Discord Rich Presence support
 - Chemical airstrike - new airstirke variant which can be used by rebel commander and invader faction
-- Projectile Camera
 - Howitzer and Mechanized Airborne QRF support types
 - Integrated Mag Repack script
 - Various additional settings and small abilities - vehicle unflip, server time multiplier et cetera

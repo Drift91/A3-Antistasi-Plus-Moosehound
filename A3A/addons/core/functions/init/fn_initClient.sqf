@@ -20,7 +20,6 @@ autoHeal = true;				//Should AI in player squad automatically heal teammates
 isPowPaycheckAnnounced = false; //Are players know about that IDAP pays for released prisoners
 isSupportAnnounced = false;     //Are support abilities announced
 isMenuOpen = false;             //is Commander/Player menu open
-isProjectileCamEnabled = false; //Projectile following camera
 isPlayerParadropable = true;    //parachute commander ability attendance
 hasHeadlessClients = false;     //check if has headless clients
 
@@ -191,10 +190,6 @@ player addEventHandler ["FiredMan", {
         };
     };
 }];
-
-if (isProjectileCamEnabled) then {
-	["ADD"] call SCRT_fnc_misc_toggleProjectileCamEventHandler;
-};
 
 player addEventHandler ["InventoryOpened", {
     private ["_playerX","_containerX","_typeX"];

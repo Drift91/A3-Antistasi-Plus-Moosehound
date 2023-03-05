@@ -300,6 +300,14 @@
                 <Original>Pathet Lao.\nPoilitical movement and organization from Laos.</Original>
                 <Russian>Патет Лао.\nПолитическое движение и организация из Лаоса.</Russian>
             </Key>
+            <Key ID="STR_A3AP_setupFactionsTab_ra">
+                <Original>The Workers' and Peasants' Red Army (Red Army).\nAll the might of the Soviet Union.\nUsage of this faction will activate the Cold War mode (there will be only usage of vehicles and weapons that roughly fits the timeline.</Original>
+                <Russian>Рабоче-крестьянская красная армия (РККА).\nВся мощь Советского Союза.\nИспользование этой фракции включает режим Холодной Войны (будет использоваться только оружие и техника, которые подходят по временному периоду).</Russian>
+            </Key>
+            <Key ID="STR_A3AP_setupFactionsTab_us_cw">
+                <Original>United States Army.\nAggressive, overwhelming force.\nUsage of this faction will activate the Cold War mode (there will be only usage of vehicles and weapons that roughly fits the timeline.</Original>
+                <Russian>Армия США.\nАгрессивная, ошеломляющая сила.\nИспользование этой фракции включает режим Холодной Войны (будет использоваться только оружие и техника, которые подходят по временному периоду).</Russian>
+            </Key>
         </Container>
         <Container name="magRepack">
             <Key ID="STR_magRepack_init">
@@ -3376,12 +3384,12 @@
                 <Russian>Проверка на врагов поблизости при быстром перемещении</Russian>
                 <Chinesesimp>快速旅行敌人检查</Chinesesimp>
             </Key>
-            <Key ID="STR_params_fastTravelEnemyCheck_0">
+            <Key ID="STR_params_fastTravelEnemyCheck_player">
                 <Original>Check for player only</Original>
                 <Russian>Проверять только путешествующих игроков</Russian>
                 <Chinesesimp>检查玩家</Chinesesimp>
             </Key>
-            <Key ID="STR_params_fastTravelEnemyCheck_1">
+            <Key ID="STR_params_fastTravelEnemyCheck_team">
                 <Original>Check for player squad (Vanilla Antistasi Style)</Original>
                 <Russian>Проверять весь отряд игрока (стиль обычного Antistasi)</Russian>
                 <Chinesesimp>检查玩家小队（Vanilla Antistasi风格）</Chinesesimp>
@@ -3513,7 +3521,7 @@
             </Key>
             <Key ID="STR_params_allowFuturisticSupports">
                 <Original>[Experimental] Allow futuristic supports to be used by the enemy</Original>
-                <Russian>Разрешить использование противником футуристичных вариантов поддержки</Russian>
+                <Russian>[Экспериментально] Разрешить использование противником футуристичной поддержки</Russian>
                 <Chinesesimp>【实验性】允许敌人使用未来支援</Chinesesimp>
             </Key>
             <Key ID="STR_params_CrateOptions">
@@ -3632,8 +3640,8 @@
                 <Chinesesimp>宙斯放置的建筑物的永久保存</Chinesesimp>
             </Key>
             <Key ID="STR_params_unconsciousAiPossess">
-                <Original>Allow players to take control on AI units while laying unconscious</Original>
-                <Russian>Разрешить игрокам управлять ИИ-соотрядниками находясь в бессознательном состоянии</Russian>
+                <Original>[Experimental] Allow players to take control on AI units while laying unconscious</Original>
+                <Russian>[Экспериментально] Разрешить игрокам управлять ИИ-соотрядниками находясь в бессознательном состоянии</Russian>
                 <Chinesesimp>允许玩家在失去行动的情况下控制AI队友</Chinesesimp>
             </Key>
             <Key ID="STR_params_maxConstructions">
@@ -4419,9 +4427,9 @@
                 <Chinesesimp>使用此选项从服务器成员列表中删除您当前正在看的玩家。</Chinesesimp>
             </Key>
             <Key ID="STR_antistasi_dialogs_donate_faction_title">
-                <Original>Donate 100 Money to Faction</Original>
-                <Russian>Передать 100 денег фракции</Russian>
-                <Chinesesimp>捐100块给派系</Chinesesimp>
+                <Original>Donate 250 Money to faction</Original>
+                <Russian>Передать 250 денег фракции</Russian>
+                <Chinesesimp>捐250块给派系</Chinesesimp>
             </Key>
             <Key ID="STR_antistasi_dialogs_donate_faction_tooltip">
                 <Original>Donates your personal money to rebel faction. It will increase your prestige among rebels.</Original>
@@ -4429,9 +4437,9 @@
                 <Chinesesimp>将您的私人资金捐赠给叛乱派系。 这会增加你在抵抗军中的声望。</Chinesesimp>
             </Key>
             <Key ID="STR_antistasi_dialogs_donate_player_title">
-                <Original>Donate 100 money to player</Original>
-                <Russian>Передать 100 денег игроку</Russian>
-                <Chinesesimp>捐100钱给玩家</Chinesesimp>
+                <Original>Donate 250 money to player</Original>
+                <Russian>Передать 250 денег игроку</Russian>
+                <Chinesesimp>捐250钱给玩家</Chinesesimp>
             </Key>
             <Key ID="STR_antistasi_dialogs_donate_player_tooltip">
                 <Original>Donates your personal money to player you're looking at.</Original>
@@ -5162,16 +5170,6 @@
                 <Russian>Выключает/включает ситуативную музыку.</Russian>
                 <Chinesesimp>禁用/启用情境音乐。</Chinesesimp>
             </Key>
-            <Key ID="STR_commander_projectile_camera_switch">
-                <Original>PROJECTILE CAMERA</Original>
-                <Russian>СНАРЯДНАЯ КАМЕРА</Russian>
-                <Chinesesimp>投影相机</Chinesesimp>
-            </Key>
-            <Key ID="STR_commander_projectile_camera_switch_tooltip">
-                <Original>Enables/Disables camera that follows any projectile that has been launched from missile/rocket launchers or weapon with high magnification scope (more than 8x). Use key (default - Esc) to exit camera.</Original>
-                <Russian>Включает/отключает камеру, которая следует за любым снарядом или пулей, запущенным из ракетных установок или оружия с прицелом с большим увеличением (более 8x). Используйте клавишу (Esc по умолчанию), чтобы выйти из камеры.</Russian>
-                <Chinesesimp>启用/禁用跟踪从导弹/火箭发射器或具有高放大倍率范围（超过 8 倍）的武器发射的任何射弹的相机。 使用键（默认 - Esc）退出相机。</Chinesesimp>
-            </Key>
             <Key ID="STR_commander_menu_persistent_save_button">
                 <Original>PERSISTENT SAVE</Original>
                 <Russian>ПОСТОЯННОЕ СОХРАНЕНИЕ</Russian>
@@ -5707,6 +5705,10 @@
                 <Original>Socrates</Original>
                 <Russian>Socrates</Russian>
                 <Chinesesimp>Socrates</Chinesesimp>
+            </Key>
+            <Key ID="STR_antistasi_credits_cw_mode">
+                <Original>Cold War Mode</Original>
+                <Russian>Режим Холодной Войны</Russian>
             </Key>
         </Container>
         <Container name="loot_actions">
@@ -7035,8 +7037,8 @@
         </Container>
         <Container name="common_notifications">
             <Key ID="STR_A3AP_notifications_possess_cooldown">
-                <Original>AI Control has already been used, please wait 15 seconds.</Original>
-                <Russian>Управление ИИ уже было использовано, пожалуйста, подождите 15 секунд.</Russian>
+                <Original>AI Control has already been used, wait %1 seconds.</Original>
+                <Russian>Управление ИИ уже было использовано, подождите %1 секунд.</Russian>
             </Key>
             <Key ID="STR_antistasi_actions_common_notifications_money_found_title">
                 <Original>Money</Original>
@@ -7665,16 +7667,6 @@
                 <Original>Clears the last hint notification</Original>
                 <Russian>Очищает уведомление о последней подсказке</Russian>
                 <Chinesesimp>清除最后提示通知</Chinesesimp>
-            </Key>
-            <Key ID="STR_A3A_keyActions_projectileCameraEscape_title">
-                <Original>Exit Projectile Camera</Original>
-                <Russian>Выйти из камеры снаряда</Russian>
-                <Chinesesimp>退出射弹相机</Chinesesimp>
-            </Key>
-            <Key ID="STR_A3A_keyActions_projectileCameraEscape_desc">
-                <Original>Exits the projectile following camera mode</Original>
-                <Russian>Выходит из режима преследования снаряда</Russian>
-                <Chinesesimp>退出弹丸跟随相机模式</Chinesesimp>
             </Key>
         </Container>
         <Container name="A3A_goUndercover">
@@ -8732,15 +8724,15 @@
                 <Russian>Передача денег</Russian>
                 <Chinesesimp>捐钱</Chinesesimp>
             </Key>
-            <Key ID="STR_A3A_OrgPlayers_donateMoney_less100">
-                <Original>You have less than 100%1 to donate.</Original>
-                <Russian>У вас при себе меньше чем 100%1.</Russian>
-                <Chinesesimp>你身上的钱还不到 100%1。</Chinesesimp>
+            <Key ID="STR_A3A_OrgPlayers_donateMoney_less250">
+                <Original>You have less than 250%1 to donate.</Original>
+                <Russian>У вас при себе меньше чем 250%1.</Russian>
+                <Chinesesimp>你身上的钱还不到 250%1。</Chinesesimp>
             </Key>
             <Key ID="STR_A3A_OrgPlayers_donateMoney_success">
-                <Original>You have donated 100%1 to the cause. This will raise your status among our forces.</Original>
-                <Russian>Вы пожертвовали 100%1 на общее благо. Это поднимет вашу репутацию среди участников нашего движения.</Russian>
-                <Chinesesimp>已为该事业捐赠了 100%1。 这将提高你在我们部队中的地位。</Chinesesimp>
+                <Original>You have donated 250%1 to the cause. This will raise your status among our forces.</Original>
+                <Russian>Вы пожертвовали 250%1 на общее благо. Это поднимет вашу репутацию среди участников нашего движения.</Russian>
+                <Chinesesimp>已为该事业捐赠了 250%1。 这将提高你在我们部队中的地位。</Chinesesimp>
             </Key>
             <Key ID="STR_A3A_OrgPlayers_donateMoney_no_player">
                 <Original>You must be looking to a player in order to give him money.</Original>
@@ -8748,9 +8740,9 @@
                 <Chinesesimp>你得看着玩家给他钱。</Chinesesimp>
             </Key>
             <Key ID="STR_A3A_OrgPlayers_donateMoney_player">
-                <Original>You have donated 100%2 to %1.</Original>
-                <Russian>Вы подарили 100%2 игроку %1.</Russian>
-                <Chinesesimp>您已将 100%2 赠予玩家 %1。</Chinesesimp>
+                <Original>You have donated 250%2 to %1.</Original>
+                <Russian>Вы подарили 250%2 игроку %1.</Russian>
+                <Chinesesimp>您已将 250%2 赠予玩家 %1。</Chinesesimp>
             </Key>
             <Key ID="STR_A3A_OrgPlayers_membership_header">
                 <Original>Membership</Original>

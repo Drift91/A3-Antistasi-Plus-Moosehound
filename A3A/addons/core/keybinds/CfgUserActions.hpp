@@ -36,11 +36,5 @@ class CfgUserActions {
         tooltip = $STR_A3A_keyActions_commMenu_desc;
         onActivate = ACTION(commanderRebelMenu);
     };
-
-    class GVAR(projectileCameraEscape) {
-        displayName = $STR_A3A_keyActions_projectileCameraEscape_title;
-        tooltip = $STR_A3A_keyActions_projectileCameraEscape_desc;
-        onActivate = ACTION(projectileCameraEscape);
-    };
 };
 #undef ACTION

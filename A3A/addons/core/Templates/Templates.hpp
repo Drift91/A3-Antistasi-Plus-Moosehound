@@ -133,7 +133,6 @@ class Templates
         description = $STR_A3AP_setupFactionsTab_ll;
     };
 
-
     class Vanilla_Exegermenos : Vanilla_Base
     {
         side = "Riv";
@@ -465,7 +464,13 @@ class Templates
         name = "3CBF CHDKZ";
         file = "3CBF_Riv_CHDKZ";
         description = $STR_A3AP_setupFactionsTab_chdkz;
-        climate[] = {"arid", "temperate"};
+    };
+
+    class 3CBF_CHDKZ_CW : 3CBF_CHDKZ
+    {
+        name = "3CBF CHDKZ (Cold War)";
+        file = "3CBF_Riv_CHDKZ_CW";
+        priority = 39;
     };
 
     class 3CBF_TI : 3CBF_Base
@@ -616,6 +621,28 @@ class Templates
         name = "3CBF USMC Temperate";
         file = "3CBF_AI_USMC_Temperate";
         climate[] = {"temperate","tropical","arctic"};
+    };
+
+    class 3CBF_SOV_CW : 3CBF_Base
+    {
+        priority = 39;
+        side = "Inv";
+        flagTexture = "\UK3CB_Factions\addons\UK3CB_Factions_CW_SOV\Flag\cw_sov_flag_co.paa";
+        name = "3CBF Red Army (Cold War)";
+        file = "3CBF_AI_SOV_CW";
+        description = $STR_A3AP_setupFactionsTab_ra;
+        equipFlags[] = {"specialRHS", "coldWar"};
+    };
+
+    class 3CBF_US_Army_CW : 3CBF_Base
+    {
+        priority = 39;
+        side = "Occ";
+        flagTexture = "a3\data_f\flags\flag_us_co.paa";
+        name = "3CBF US Army (Cold War)";
+        file = "3CBF_AI_US_Army_CW";
+        description = $STR_A3AP_setupFactionsTab_us_cw;
+        equipFlags[] = {"specialRHS", "coldWar"};
     };
 
     //************* VN ********************************************************

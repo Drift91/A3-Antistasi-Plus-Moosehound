@@ -8,8 +8,7 @@ class UserActionGroups {
             QGVAR(infoBar),
             QGVAR(earPlugs),
             QGVAR(customHintDismiss),
-            QGVAR(commanderRebelMenu),
-            QGVAR(projectileCameraEscape)
+            QGVAR(commanderRebelMenu)
         };
     };
 };

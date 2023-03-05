@@ -8,7 +8,7 @@ private _hasMarksman = "mark" in A3A_enabledDLC;
 //   Rivals Information   //
 ///////////////////////////
 
-["name", "Ion Services"] call _fnc_saveToTemplate;
+["name", "Ion PMC"] call _fnc_saveToTemplate;
 ["nameLeader", "Thomas Larkin"] call _fnc_saveToTemplate;
 
 //////////////////////////////////////

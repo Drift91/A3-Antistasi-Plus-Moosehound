@@ -11,16 +11,12 @@ Environment: Any
 Public: Yes
 
 Example:
-[] call SCRT_fnc_common_getNearFriendlyAiUnits
+[(units player) select 0] call SCRT_fnc_ai_possessFriendlyUnit;
 */
 
 #include "\a3\ui_f\hpp\definedikcodes.inc"
 
-params ["_aiUnits"];
-
-player setVariable ["A3A_possessTime", time + 15];
-
-private _unit = _aiUnits select 0;
+params ["_unit"];
 
 if (_unit == Petros) exitWith {
 	[localize "STR_control_unit_hint_header", localize "STR_control_unit_error_petros"] call A3A_fnc_customHint;
@@ -47,24 +43,25 @@ player setVariable ["originalBody", player];
 player setVariable ["A3A_blockRevive", true, true];
 
 _unit setVariable ["owner",player,true];
+_unit setVariable ["A3A_player", player]; // seems to be that owner might be somewhat affected by a lot of gameplay systems
 private _originalBody = player;
 
 private _playerEh = player addEventHandler ["HandleDamage", {
-	params ["_unit"];
-	_unit removeEventHandler ["HandleDamage",_thisEventHandler];
-	selectPlayer _unit;
+	private _player = _this select 0;
+	_player removeEventHandler ["HandleDamage",_thisEventHandler];
+	selectPlayer _player;
 	(units group player) joinsilent group player;
 	group player selectLeader player;
-	_unit setVariable ["controlReturned", true];
+	_player setVariable ["controlReturned", true];
 
 	[localize "STR_control_unit_hint_header", localize "STR_control_unit_damage_control_return_player"] call A3A_fnc_customHint;
 
 	nil;
 }];
 private _unitEh = _unit addEventHandler ["HandleDamage", {
-	params ["_unit"];
+	private _unit = _this select 0;
 	_unit removeEventHandler ["HandleDamage",_thisEventHandler];
-	selectPlayer (_unit getVariable "owner");
+	selectPlayer (_unit getVariable "A3A_player");
 	(units group player) joinsilent group player;
 	group player selectLeader player;
 	_unit setVariable ["controlReturned", true];
@@ -82,9 +79,9 @@ private _timeX = aiControlTime;
 
 private _returnActionId = _unit addAction [(localize "STR_antistasi_actions_return_control_to_ai"),{
 	params ["_unit"];
-	private _owner = _unit getVariable ["owner", (leader (group (_this select 0)))];
+	private _player = _unit getVariable "A3A_player";
 	_unit setVariable ["controlReturned", true];
-	selectPlayer _owner;
+	selectPlayer _player;
 }];
 private _healActionId = [_originalBody, "heal2"] call A3A_fnc_flagaction; 
 
@@ -116,8 +113,8 @@ player setVariable ["originalBody", nil];
 player removeEventHandler ["HandleDamage",_playerEh];
 player setVariable ["controlReturned", nil];
 
-_unit setVariable ["owner",nil,true];
 _unit setVariable ["controlReturned", nil];
+_unit setVariable ["A3A_player", nil];
 _unit removeEventHandler ["HandleDamage",_unitEh];
 
 [localize "STR_control_unit_hint_header", localize "STR_control_unit_return_to_original_body"] call A3A_fnc_customHint;
@@ -125,6 +122,7 @@ _unit removeEventHandler ["HandleDamage",_unitEh];
 sleep 1;
 
 if (player getVariable ["incapacitated",false]) exitWith {
+	player setVariable ["A3A_possessTime", time + 10];
 	if (!isNil "respawnMenu") then {(findDisplay 46) displayRemoveEventHandler ["KeyDown", respawnMenu]};
 	respawnMenu = (findDisplay 46) displayAddEventHandler ["KeyDown", SCRT_fnc_common_unconsciousEventHandler];
 };

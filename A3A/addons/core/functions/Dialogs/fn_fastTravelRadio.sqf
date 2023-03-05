@@ -1,11 +1,11 @@
 private _markersX = markersX + [respawnTeamPlayer];
 
 if (!isNil "traderMarker") then {
-	_markersX = _markersX + [traderMarker];
+	_markersX pushBack traderMarker;
 };
 
 if (!isNil "isRallyPointPlaced" && {isRallyPointPlaced}) then {
-	_markersX = _markersX + [rallyPointMarker];
+	_markersX pushBack rallyPointMarker;
 };
 
 private _esHC = false;
@@ -76,11 +76,11 @@ if (_earlyEscape) exitWith {};
 
 private _areEnemiesNearby = false;
 
-if (fastTravelEnemyCheck && {[getPosATL player] call A3A_fnc_enemyNearCheck}) exitWith {
+if (!fastTravelEnemyCheck && {[getPosATL player] call A3A_fnc_enemyNearCheck}) exitWith {
 	[localize "STR_A3A_Dialogs_fast_travel_header", localize "STR_A3A_Dialogs_fast_travel_enemiesnear_individual"] call SCRT_fnc_misc_deniedHint;
 };
 
-if (!fastTravelEnemyCheck && {_units findIf {[getPosATL _x] call A3A_fnc_enemyNearCheck} != -1}) exitWith {
+if (fastTravelEnemyCheck && {_units findIf {[getPosATL _x] call A3A_fnc_enemyNearCheck} != -1}) exitWith {
 	[localize "STR_A3A_Dialogs_fast_travel_header", localize "STR_A3A_Dialogs_fast_travel_enemiesnear_group"] call SCRT_fnc_misc_deniedHint;
 };
 

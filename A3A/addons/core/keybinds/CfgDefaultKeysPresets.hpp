@@ -8,7 +8,6 @@ class CfgDefaultKeysPresets {
             GVAR(earPlugs)[] = {DIK_END};
             GVAR(customHintDismiss)[] = {DIK_PGDN};
             GVAR(commanderRebelMenu)[] = {DIK_TAB};
-            GVAR(projectileCameraEscape)[] = {DIK_ESCAPE};
         };
     };
 };

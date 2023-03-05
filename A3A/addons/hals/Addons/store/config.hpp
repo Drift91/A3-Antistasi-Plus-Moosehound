@@ -7786,21 +7786,21 @@ class cfgHALsStore
 		{
 			displayName = $STR_ARMS_DEALER_STORE;
 			categories[] = {
-			"handgunsRhs", 
-			"launchersRhs", 
-			"riflesRhs", 
-			"sniperRiflesRhs", 
-			"specialWeaponsRhs",
-			"mgRhs", 
-			"smgRhs", 
-			"launcherMagazinesRhs", 
-			"magazinesRhs", 
-			"opticsRhs", 
-			"muzzlesRhs", 
-			"underbarrelRhs", 
-			"pointersRhs", 
-			"navigationRhs", 
-			"miscRhs"
+				"handgunsRhs", 
+				"launchersRhs", 
+				"riflesRhs", 
+				"sniperRiflesRhs", 
+				"specialWeaponsRhs",
+				"mgRhs", 
+				"smgRhs", 
+				"launcherMagazinesRhs", 
+				"magazinesRhs", 
+				"opticsRhs", 
+				"muzzlesRhs", 
+				"underbarrelRhs", 
+				"pointersRhs", 
+				"navigationRhs", 
+				"miscRhs"
 			};
 		};
 
@@ -7808,24 +7808,46 @@ class cfgHALsStore
 		{
 			displayName = $STR_ARMS_DEALER_STORE;
 			categories[] = {
-			"handguns3cbf", 
-			"launchers3cbf", 
-			"rifles3cbf", 
-			"sniperRifles3cbf", 
-			"specialWeaponsRhs",
-			"mg3cbf", 
-			"smg3cbf", 
-			"launcherMagazinesRhs", 
-			"magazinesRhs",
-			"additionalMuzzles3cbf",
-			"additionalScopes3cbf",
-			"additionalMagazines3cbf",
-			"opticsRhs", 
-			"muzzlesRhs", 
-			"underbarrelRhs", 
-			"pointersRhs", 
-			"navigationRhs", 
-			"miscRhs"
+				"handguns3cbf", 
+				"launchers3cbf", 
+				"rifles3cbf", 
+				"sniperRifles3cbf", 
+				"specialWeaponsRhs",
+				"mg3cbf", 
+				"smg3cbf", 
+				"launcherMagazinesRhs", 
+				"magazinesRhs",
+				"additionalMuzzles3cbf",
+				"additionalScopes3cbf",
+				"additionalMagazines3cbf",
+				"opticsRhs", 
+				"muzzlesRhs", 
+				"underbarrelRhs", 
+				"pointersRhs", 
+				"navigationRhs", 
+				"miscRhs"
+			};
+		};
+
+		class 3cbfcw
+		{
+			displayName = $STR_ARMS_DEALER_STORE;
+			categories[] = {
+				"handguns3cbfcw",
+				"smg3cbfcw",
+				"rifles3cbfcw",
+				"sniperRifles3cbfcw",
+				"mg3cbfcw",
+				"specialWeapons3cbfcw",
+				"launchers3cbf",
+				"launcherMagazines3cbfcw",
+				"navigation3cbfcw",
+				"underbarrel3cbfcw",
+				"pointers3cbfcw",
+				"muzzles3cbfcw",
+				"optics3cbfcw",
+				"magazines3cbfcw",
+				"misc3cbfcw"
 			};
 		};
 

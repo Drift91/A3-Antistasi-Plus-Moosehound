@@ -22,13 +22,6 @@ if (_change) then {
 
     if (_action isEqualTo "NONE") exitWith {};
     if (_action isEqualTo "MUSIC") exitWith {call A3A_fnc_music;};
-    if (_action isEqualTo "CAMERA") exitWith {
-        if(isProjectileCamEnabled) then {
-            ['ADD'] call SCRT_fnc_misc_toggleProjectileCamEventHandler;
-        } else {
-            ['REMOVE'] call SCRT_fnc_misc_toggleProjectileCamEventHandler; 
-        };
-    };
     if (_action isEqualTo "PARADROP") exitWith {
         if (isPlayerParadropable) then {
             [] spawn {
