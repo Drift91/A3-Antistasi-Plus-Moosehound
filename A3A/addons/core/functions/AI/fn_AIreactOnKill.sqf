@@ -65,13 +65,13 @@ if (!fleeing leader _group and random 1 < 0.5) then
 				{
                     private _fleeChance = switch (true) do {
                         case (_x getVariable ["isRival", false]): {
-                            100 - inactivityRivals/2
+                            random 25
                         };
                         case (side _x == Occupants): {
-                            aggressionOccupants/2
+                            sqrt aggressionOccupants * 2
                         };
                         default {
-                            aggressionInvaders/2
+                            sqrt aggressionInvaders * 2
                         };
                     };
 
@@ -129,7 +129,7 @@ if (!fleeing leader _group and random 1 < 0.5) then
                     } else {
                         //soldier with underbarrel launcher will launch flare if there is someone in his squad without NVG goggles, else smoke
                         if (_noNvgIndex != -1 && {count (getArray (configfile >> "CfgWeapons" >> primaryWeapon _x >> "muzzles")) == 2}) then {
-                            [_x,_enemy] spawn A3A_fnc_useFlares;
+                            [_x, side (group _x), _enemy] spawn A3A_fnc_useFlares;
                         } else {
                             if ((random 100) < 35) then {
                                 [_x,_x,_enemy] spawn A3A_fnc_chargeWithSmoke;
@@ -141,7 +141,7 @@ if (!fleeing leader _group and random 1 < 0.5) then
             else {
                 //if there is not a day, there are people in squad without NVG goggles and there are underbarrel launcher, then flares
                if ((sunOrMoon <1) && _noNvgIndex != -1 && count (getArray (configfile >> "CfgWeapons" >> primaryWeapon _x >> "muzzles")) == 2) then {
-                    [_x] call A3A_fnc_useFlares;
+                    [_x, side (group _x)] spawn A3A_fnc_useFlares;
 				};
 			};
 		};

@@ -16,11 +16,12 @@ private _sideX = if (sidesX getVariable [_markerX,sideUnknown] == Occupants) the
 private _faction = Faction(_sideX);
 Info_3("Origin: %1, Hardmode: %2, Controlling Side: %3", _markerX, _difficult, _sideX);
 
-private _timeLimit = if (_difficult) then {45 * timeMultiplier} else {90 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum]; //converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString; //Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficult) then {
+	45 call SCRT_fnc_misc_getTimeLimit
+} else {
+	90 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _destinationName = [_markerX] call A3A_fnc_localizar;
 
@@ -291,8 +292,6 @@ _groups pushBack _patrolGroup;
 _cargoVehicleWp = _cargoVehicleGroup addWaypoint [position _box, 1];
 _cargoVehicleWp setWaypointType "GETOUT";
 _cargoVehicleWp setWaypointBehaviour "SAFE";
-
-Info_2("Waiting until box reaches %1 or rebel base, gets destroyed or timer expires at %2", _cargoVehicle, _dateLimit);
 
 waitUntil {
 	sleep 1;

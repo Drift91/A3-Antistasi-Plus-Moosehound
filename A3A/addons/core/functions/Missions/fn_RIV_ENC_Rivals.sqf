@@ -63,7 +63,7 @@ _vehicles append [_crater, _crashedVehicle];
 
 [_roadPosition, _effects] call _fnc_fire;
 
-private _damagedBuildings = (nearestObjects [_roadPosition, ["house"], 200]) select {(count ([_x] call BIS_fnc_buildingPositions)) > 0};
+private _damagedBuildings = (nearestObjects [_roadPosition, ["house"], 350]) select {(count ([_x] call BIS_fnc_buildingPositions)) > 0};
 private _damagedBuilding = nil;
 if (count _damagedBuildings > 0) then {
 	_damagedBuilding = selectRandom _damagedBuildings;
@@ -79,14 +79,17 @@ if (count _damagedBuildings > 0) then {
 	private _bMaxHeightAsl = ATLToASL ([_bAtlPos select 0, _bAtlPos select 1, _maxHeight]);
 
 	private _realRoofHeightAsl = ((lineIntersectsSurfaces [_bMaxHeightAsl, _bMinHeightAsl]) select 0) select 0;
+
+	if (!isNil "_realRoofHeightAsl") then {
+		private _smoke = createVehicle ["test_EmptyObjectForSmoke", _damagedBuildingPos, [], 0 , "CAN_COLLIDE"];
+		_smoke setPosASL _realRoofHeightAsl;
+		_effects pushBack _smoke;
+	};
 	_damagedBuilding animate ["door_1A_move",1];
 	_damagedBuilding animate ["door_1B_move",1];
 	_damagedBuilding animate ["door_2_rot",1];
 	_damagedBuilding animate ["door_3_rot",1];
 
-	private _smoke = createVehicle ["test_EmptyObjectForSmoke", _damagedBuildingPos, [], 0 , "CAN_COLLIDE"];
-	_smoke setPosASL _realRoofHeightAsl;
-	_effects pushBack _smoke;
 };
 
 private _leaderIntelGroup = createGroup Rivals;
@@ -308,11 +311,8 @@ _nul = [] spawn {
 
 Info("Laptop is activated, spawning additional group.");
 
-private _timeLimit = 45 * timeMultiplier;
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+(90 call SCRT_fnc_misc_getTimeLimit) params ["_dateLimitNum", "_displayTime"];
+
 
 sleep 2;
 
@@ -350,10 +350,11 @@ private _group1Position = [
 	] call BIS_fnc_findSafePos;
 private _group1 = [_group1Position, Rivals, selectRandom (A3A_faction_riv get "groupsFireteam")] call A3A_fnc_spawnGroup;
 _groups pushBack _group1;
-private _group1Wp = _group1 addWaypoint [(position _intelLeader), 5];
+private _group1Wp = _group1 addWaypoint [_laptopPosition, 5];
 _group1Wp setWaypointType "MOVE";
 _group1Wp setWaypointCombatMode "YELLOW";
 _group1Wp setWaypointSpeed "FULL";
+// _group1 spawn A3A_fnc_attackDrillAI;
 
 private _group2Position = [
 		_roadPosition, //center
@@ -368,10 +369,11 @@ private _group2Position = [
 	] call BIS_fnc_findSafePos;
 private _group2 = [_group2Position, Rivals, selectRandom (A3A_faction_riv get "groupsFireteam")] call A3A_fnc_spawnGroup;
 _groups pushBack _group2;
-private _group2Wp = _group2 addWaypoint [(position _intelLeader), 5];
+private _group2Wp = _group2 addWaypoint [_laptopPosition, 5];
 _group2Wp setWaypointType "MOVE";
 _group2Wp setWaypointCombatMode "YELLOW";
 _group2Wp setWaypointSpeed "FULL";
+// _group2 spawn A3A_fnc_attackDrillAI;
 
 {
 	[_x] call A3A_fnc_NATOinit;
@@ -397,7 +399,7 @@ private _rivalVehCrew = _rivalVehData select 1;
 {[_x] call A3A_fnc_NATOinit} forEach _rivalVehCrew;
 private _rivalVehGroup = _rivalVehData select 2;
 
-private _rivalVehGroupWp = _rivalVehGroup addWaypoint [(position _intelLeader), 5];
+private _rivalVehGroupWp = _rivalVehGroup addWaypoint [_laptopPosition, 5];
 _rivalVehGroupWp setWaypointType "MOVE";
 _rivalVehGroupWp setWaypointCombatMode "YELLOW";
 _rivalVehGroupWp setWaypointSpeed "NORMAL";
@@ -405,9 +407,11 @@ _rivalVehGroupWp setWaypointSpeed "NORMAL";
 _groups pushBack _rivalVehGroup;
 _vehicles pushBack _rivalVeh;
 
+private _aliveCount = 0;
+
 waitUntil  {
 	sleep 5;
-	private _aliveCount = {alive _x} count ((units _group1) + (units _group2));
+	_aliveCount = {alive _x} count ((units _group1) + (units _group2));
 	private _isEveryoneDead = (call SCRT_fnc_misc_getRebelPlayers) findIf {alive _x && {_x distance2D _intelLeaderPosition < 1000}} == -1;
 	Info_2("%1 Group Alive: %2", A3A_faction_riv get "name", str _aliveCount);
 	(dateToNumber date > _dateLimitNum) || {_aliveCount < 2 || {_isEveryoneDead}} 

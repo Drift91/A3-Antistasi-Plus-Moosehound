@@ -8,7 +8,7 @@ private _quantity = minefieldCost select 2;
 private _mine = minefieldCost select 3;
 
 if (_typeX == "delete") then {
-	_moneyCost = _moneyCost - (FactionGet(reb,"unitExp"));
+	_moneyCost = _moneyCost - (server getVariable FactionGet(reb,"unitExp"));
 	_hrCost = 1;
 };
 

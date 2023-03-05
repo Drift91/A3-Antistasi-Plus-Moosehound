@@ -178,11 +178,6 @@ class CfgFunctions
             class zoneCheck {};
         };
 
-        class Misc {
-            file = QPATHTOFOLDER(functions\Misc);
-            class proxyUPSMON {};
-        };
-
         class Collections {
             file = QPATHTOFOLDER(functions\Collections);
             class getNestedObject {};
@@ -224,7 +219,7 @@ class CfgFunctions
             class createAIOutposts {};
             class createAIResources {};
             class createAIMilbase {};
-            class createAIMilAdmins {};
+            class createAIMilAdmin {};
             class createAttackForceAir {};
             class createAttackForceLand {};
             class createAttackForceMixed {};
@@ -320,6 +315,7 @@ class CfgFunctions
             class updatePreference {};
             class updateReinfState {};
             class updateVehicles {};
+            class getGarrisonLimit {};
         };
 
         class init {
@@ -400,6 +396,9 @@ class CfgFunctions
             class RIV_ENC_Rivals {};
             class RIV_ATT_Cell {};
             class RIV_ATT_Hideout {};
+            class RIV_AS_Traitor {};
+            class RIV_SUPP_Salvage {};
+            class RIV_RES_Prisoners {};
             class taskDelete {};
             class taskSetState {};
             class taskUpdate {};
@@ -717,6 +716,8 @@ class CfgFunctions
             class getAdmin {};
             class localLog {};
             class log {};
+            class setIdentity {};
+            class setIdentityLocal {};
             class setPos {};
             class vehicleTextureSync {};
             class vehicleWillCollideAtPosition {};

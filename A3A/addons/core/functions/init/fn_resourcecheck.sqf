@@ -15,6 +15,7 @@ private _suppBoost = nil;
 private _resBoost = nil;
 
 private _rivalsTaskChance = 5;
+private _traderTaskChance = 5;
 
 while {true} do {
 	nextTick = time + 600;
@@ -69,8 +70,6 @@ while {true} do {
 			["TaskSucceeded", ["", format [localize "STR_notifiers_city_joined",_city,FactionGet(reb,"name")]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
 			sidesX setVariable [_city,teamPlayer,true];
 			[Occupants, 10, 60] remoteExec ["A3A_fnc_addAggression",2];
-			_mrkD = format ["Dum%1",_city];
-			_mrkD setMarkerColor colorTeamPlayer;
 			garrison setVariable [_city,[],true];
 			[_city] call A3A_fnc_mrkUpdate;
 
@@ -88,8 +87,6 @@ while {true} do {
 			["TaskFailed", ["", format [localize "STR_notifiers_city_joined",_city,FactionGet(occ,"name")]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
 			sidesX setVariable [_city,Occupants,true];
 			[Occupants, -10, 45] remoteExec ["A3A_fnc_addAggression",2];
-			_mrkD = format ["Dum%1",_city];
-			_mrkD setMarkerColor colorOccupants;
 			garrison setVariable [_city,[],true];
 			[_city] call A3A_fnc_mrkUpdate;
 			sleep 5;
@@ -225,7 +222,7 @@ while {true} do {
 	};
 	sleep 4;
 
-	if (areRivalsEnabled && {tierWar > 2 && {!areRivalsDiscovered && {!isRivalsDiscoveryQuestAssigned}}}) then {
+	if (areRivalsEnabled && tierWar > 3 && !areRivalsDiscovered && !isRivalsDiscoveryQuestAssigned) then {
 		Info_1("Rivals roll: %1", _rivalsTaskChance);
 		if (random 100 < _rivalsTaskChance) then {
 			Info("Assigning Rivals Discovery Task...");
@@ -235,6 +232,16 @@ while {true} do {
 				_rivalsTaskChance + 5,
 				_rivalsTaskChance + 10
 			] select (sunOrMoon < 1);
+		};
+	};
+
+	if (tierWar > 2 && !isTraderQuestCompleted && !isTraderQuestAssigned) then {
+		Info_1("Arms Dealer roll: %1", _traderTaskChance);
+		if (random 100 < _traderTaskChance) then {
+			Info("Assigning Arms Dealer Task...");
+			[] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
+		} else {
+			_traderTaskChance = _traderTaskChance + 2;
 		};
 	};
 

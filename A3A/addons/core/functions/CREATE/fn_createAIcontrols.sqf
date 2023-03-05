@@ -21,7 +21,7 @@ private _groups = [];
 
 private _isFIA = random 10 > (tierWar + difficultyCoef) && {!([_markerX] call A3A_fnc_isFrontline)};
 private _leave = false;
-private _isControl = if (isOnRoad _positionX) then {true} else {false};
+private _isControl = isOnRoad _positionX;
 
 if (_isControl) then {
 	// Attempt to find nearby road with two connected roads
@@ -52,7 +52,7 @@ if (_isControl) then {
 		private _bunker = _bunkerType createVehicle _pos;
 		_vehiclesX pushBack _bunker;
 		_bunker setDir _dirveh;
-		
+
 		_pos = getPosATL _bunker;
 		private _typeVehX = selectRandom (_faction get "staticMGs");
 		private _veh = _typeVehX createVehicle _positionX;
@@ -71,7 +71,7 @@ if (_isControl) then {
 		_bunker = _bunkerType createVehicle _pos;
 		_vehiclesX pushBack _bunker;
 		_bunker setDir _dirveh + 180;
-		
+
 		_pos = getPosATL _bunker; //useless?
 		_pos = [getPos _bunker, 6, getDir _bunker] call BIS_fnc_relPos;
 		_typeVehX = _faction get "flag";
@@ -101,8 +101,8 @@ if (_isControl) then {
 				[_dog,_groupX] spawn A3A_fnc_guardDog;
 			};
 
-			[leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","NOVEH2","NOFOLLOW"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
-			
+		 	_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","NOVEH2","NOFOLLOW"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
+
 			// Forced non-spawner as they're very static.
 			{[_x,"",false] call A3A_fnc_NATOinit; _soldiers pushBack _x} forEach units _groupX;
 			_groups pushBack _groupX;
@@ -165,7 +165,7 @@ if (_isControl) then {
 		};
 		private _groupX = [_positionX,_sideX, _cfg] call A3A_fnc_spawnGroup;
 
-		[leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+		_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 
 		private _typeVehX = selectRandom (_faction get "uavsPortable");
 		if !(isNil "_typeVehX") then {

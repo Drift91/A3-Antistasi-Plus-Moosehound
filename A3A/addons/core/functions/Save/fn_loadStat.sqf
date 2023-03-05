@@ -47,7 +47,7 @@ private _fnc_remoteExecObjectJIPSafe = {
 if (isNil "specialVarLoads") then {
     specialVarLoads = [
         "minesX","staticsX","antennas","mrkNATO","mrkSDK",
-        "posHQ","hr","armas","items","backpcks","ammunition","dateX","prestigeOPFOR",
+        "posHQ","hr","dateX","prestigeOPFOR",
         "prestigeBLUFOR","resourcesFIA","skillFIA","destroyedSites",
         "garrison","tasks","membersX","destroyedBuildings","idlebases",
         "chopForest","weather","killZones","jna_dataList","controlsSDK","mrkCSAT","nextTick",
@@ -129,6 +129,13 @@ if (_varName in specialVarLoads) then {
             aggressionStackInvaders = +(_varValue select 1);
             [true] spawn A3A_fnc_calculateAggression;
         };
+
+        case 'inactivityRivals': {
+			inactivityLevelRivals = _varValue select 0;
+            publicVariable "inactivityLevelRivals";
+			inactivityStackRivals = +(_varValue select 1);
+			[true] call SCRT_fnc_rivals_calculateActivity;
+		};
 
         case 'hr': {
             server setVariable ["HR",_varValue,true];
@@ -240,6 +247,7 @@ if (_varName in specialVarLoads) then {
 
                 garrison setVariable [_marker, _garrison, true];
                 if (count _x > 2) then { garrison setVariable [_marker + "_lootCD", _x select 2, true] };
+                if (count _x > 3) then { garrison setVariable [_marker + "_powCD", _x select 3, true] };
             } forEach _varvalue;
         };
 
@@ -429,11 +437,6 @@ if (_varName in specialVarLoads) then {
             //             };
             //             case "DEF_HQ": {
             //                 [] spawn A3A_fnc_attackHQ;
-            //             };
-            //             case "ENC": {
-            //                 isTraderQuestAssigned = true;
-            //                 publicVariable "isTraderQuestAssigned";
-            //                 [] remoteExec ["SCRT_fnc_trader_prepareTraderQuest", 2];
             //             };
             //             default {
             //                 [_x,clientOwner,true] call A3A_fnc_missionRequest;
@@ -662,12 +665,6 @@ if (_varName in specialVarLoads) then {
         case 'randomizeRebelLoadoutUniforms': {
 			randomizeRebelLoadoutUniforms = _varValue;
 			publicVariable "randomizeRebelLoadoutUniforms";
-		};
-
-        case 'inactivityRivals': {
-			inactivityLevelRivals = _varValue select 0;
-			inactivityStackRivals = +(_varValue select 1);
-			// [true] call SCRT_fnc_rivals_calculateActivity;
 		};
 
 		case 'rivalsLocationsMap': {

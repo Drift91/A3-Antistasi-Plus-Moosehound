@@ -52,9 +52,27 @@ FIX_LINE_NUMBERS()
 #define REASON_CLOTHES2 13
 #define REASON_HIGHWAY 14
 #define REASON_SPOTBOMBTRUCK 15
+#define REASON_CARRYUNDERCOVERBREAK 16
 
 
 private _result = [] call A3A_fnc_canGoUndercover;
+private _canGoUndercoverValue = _result select 0;
+private _canGoUndercoverReason = _result select 1;
+
+if(!_canGoUndercoverValue && {_canGoUndercoverReason isEqualTo (localize "STR_A3A_goUndercover_error_alreadyundercover_output")}) exitWith {};
+
+if(!_canGoUndercoverValue && {_canGoUndercoverReason isEqualTo (localize "STR_A3A_goUndercover_error_spotting_output")}) exitWith {
+    if !(isNull (objectParent player)) then {
+        (objectParent player) setVariable ["A3A_reported", true, true];
+        {
+            if ((isPlayer _x) && (captive _x)) then
+            {
+                [_x, false] remoteExec["setCaptive"];
+                _x setCaptive false;
+            };
+        } forEach ((crew(objectParent player)) + (assignedCargo(objectParent player)) - [player]);
+    };
+};
 
 private _fnc_checkBaseUndercoverBreak = {
     params ["_secureBases"];
@@ -122,22 +140,18 @@ private _fnc_checkClothesVehicle = {
     false;
 };
 
-if(!(_result select 0)) exitWith
-{
-    if((_result select 1) == "Spotted by enemies") then
-    {
-        if !(isNull (objectParent player)) then
-        {
-            (objectParent player) setVariable ["A3A_reported", true, true];
-            {
-                if ((isPlayer _x) && (captive _x)) then
-                {
-                    [_x, false] remoteExec["setCaptive"];
-                    _x setCaptive false;
-                };
-            } forEach ((crew(objectParent player)) + (assignedCargo(objectParent player)) - [player]);
-        };
+private _fnc_getTimeLimit = {
+    private _timeLimit = 30 * timeMultiplier;
+
+    date params ["_year", "_month", "_day", "_hours", "_minutes"];
+
+    private _dateLimit = if ((_hours + _timeLimit % 60) > 1) then {
+        [_year, _month, _day, _hours + (_timeLimit / 60), _minutes + (_timeLimit % 60)];
+    } else {
+        [_year, _month, _day, _hours, _minutes + _timeLimit];
     };
+
+    dateToNumber _dateLimit
 };
 
 private _layer = ["A3A_infoCenter"] call BIS_fnc_rscLayer;
@@ -146,8 +160,7 @@ private _layer = ["A3A_infoCenter"] call BIS_fnc_rscLayer;
 [player, true] remoteExec["setCaptive", 0, player];
 player setCaptive true;
 [] spawn A3A_fnc_statistics;
-if (player == leader group player) then
-{
+if (player == leader group player) then {
     {
         if ((!isplayer _x) && (local _x) && (_x getVariable["owner", _x] == player)) then
         {
@@ -156,9 +169,8 @@ if (player == leader group player) then
     } forEach units group player;
 };
 
-private _roadblocks = controlsX select {isOnRoad(getMarkerPos _x)};
 private _secureBases = (
-    (airportsX + outposts + seaports + milbases + _roadblocks) select {sidesX getVariable [_x, sideUnknown] != teamPlayer}
+    (airportsX + outposts + seaports + milbases + (controlsX select {isOnRoad(getMarkerPos _x)})) select {sidesX getVariable [_x, sideUnknown] != teamPlayer}
 ) + (milAdministrationsX select {sidesX getVariable [_x,sideUnknown] == Occupants});
 private _reason = -1;
 ["Undercover", [""]] call EFUNC(Events,triggerEvent);
@@ -276,7 +288,7 @@ while {_reason isEqualTo -1} do
         };
         if(player getVariable ["carryUndercoverBreak", false]) exitWith
         {
-            _reason = "carryUndercoverBreak";
+            _reason = REASON_CARRYUNDERCOVERBREAK;
         };
 
         if(_reason isNotEqualTo -1) exitWith {};
@@ -285,10 +297,9 @@ while {_reason isEqualTo -1} do
     };
 };
 
-Debug_1("Final undercover break reason: %1", _reason);
+Info_1("Final undercover break reason: %1", _reason);
 
-if (captive player) then
-{
+if (captive player) then {
     [player, false] remoteExec["setCaptive"];
     player setCaptive false;
 };
@@ -303,8 +314,6 @@ if !(isNull (objectParent player)) then
         }
     } forEach((assignedCargo(vehicle player)) + (crew(vehicle player)) - [player]);
 };
-
-private _timeLimit = 30 * timeMultiplier;
 
 private _layer = ["A3A_infoCenter"] call BIS_fnc_rscLayer;
 [(localize "STR_info_bar_undercover_off"), 0, 0, 4, 0, 0, _layer] spawn bis_fnc_dynamicText;
@@ -321,7 +330,7 @@ switch (_reason) do
         }
         else
         {
-            player setVariable["compromised", (dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + 30])];
+            player setVariable["compromised", [] call _fnc_getTimeLimit];
         };
     };
     case REASON_VNOCIVIL:
@@ -350,15 +359,15 @@ switch (_reason) do
     {
         [localize "STR_info_bar_undercover_break_title", localize "STR_info_bar_undercover_break_reason_mil_items_1"] call A3A_fnc_customHint;
     };
-    case "carryUndercoverBreak":
+    case REASON_CARRYUNDERCOVERBREAK:
     {
         [localize "STR_info_bar_undercover_break_title", localize "STR_info_bar_undercover_break_reason_mil_carry"] call A3A_fnc_customHint;
-        player setVariable["compromised", dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit]];
+        player setVariable["compromised", [] call _fnc_getTimeLimit];
     };
     case REASON_CLOTHES2:
     {
         [localize "STR_info_bar_undercover_break_title", localize "STR_info_bar_undercover_break_reason_mil_items_2"] call A3A_fnc_customHint;
-        player setVariable["compromised", dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit]];
+        player setVariable["compromised", [] call _fnc_getTimeLimit];
     };
     case REASON_BADMEDIC1:
     {
@@ -367,7 +376,7 @@ switch (_reason) do
     case REASON_BADMEDIC2:
     {
         [localize "STR_info_bar_undercover_break_title", localize "STR_info_bar_undercover_break_reason_bad_medic_2"] call A3A_fnc_customHint;
-        player setVariable["compromised", dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit]];
+        player setVariable["compromised", [] call _fnc_getTimeLimit];
     };
     case REASON_COMPROMISED:
     {
@@ -379,7 +388,7 @@ switch (_reason) do
         if !(isNull objectParent player) then {
             (objectParent player) setVariable ["A3A_reported", true, true];
         } else {
-            player setVariable["compromised", (dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit])];
+            player setVariable["compromised", [] call _fnc_getTimeLimit];
         };
     };
     case REASON_NOFLY:
@@ -396,7 +405,7 @@ switch (_reason) do
         if !(isNull objectParent player) then {
             (objectParent player) setVariable ["A3A_reported", true, true];
         } else {
-            player setVariable["compromised", (dateToNumber[date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit])];
+            player setVariable["compromised", [] call _fnc_getTimeLimit];
         };
     };
     default

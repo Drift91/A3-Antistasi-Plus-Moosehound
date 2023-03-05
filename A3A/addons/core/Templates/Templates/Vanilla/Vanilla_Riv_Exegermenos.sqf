@@ -71,17 +71,16 @@ if (_hasLawsOfWar) then {
 ["vehiclesRivalsHelis", []] call _fnc_saveToTemplate;			
 ["vehiclesRivalsUavs", ["O_UAV_01_F"]] call _fnc_saveToTemplate;			
 
-["staticMGs", ["O_G_HMG_02_high_F"]] call _fnc_saveToTemplate;
-["staticGMGs", []] call _fnc_saveToTemplate;
-
+["staticLowWeapons", ["O_G_HMG_02_F"]] call _fnc_saveToTemplate;
 ["staticATs", ["O_static_AT_F"]] call _fnc_saveToTemplate;
-["staticAAs", ["O_static_AA_F"]] call _fnc_saveToTemplate;
-["staticMortars", ["O_Mortar_01_F"]] call _fnc_saveToTemplate;
 
 ["mortarMagazineHE", "8Rnd_82mm_Mo_shells"] call _fnc_saveToTemplate;
 
 ["handGrenadeAmmo", ["GrenadeHand"]] call _fnc_saveToTemplate;
 ["mortarAmmo", ["Sh_82mm_AMOS"]] call _fnc_saveToTemplate;
+
+["minefieldAT", ["ATMine"]] call _fnc_saveToTemplate;
+["minefieldAPERS", ["APERSMine", "APERSBoundingMine"]] call _fnc_saveToTemplate;
 
 //////////////////////////
 //       Loadouts       //
@@ -97,7 +96,10 @@ private _tunedRifles = [
 	["arifle_TRG21_F", "", "acc_flashlight", "optic_ACO_grn", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""],
 	["arifle_Mk20_plain_F", "", "acc_flashlight", "optic_ACO_grn", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""]
 ];
-private _enforcerRifles = [];
+private _enforcerRifles = [
+	["arifle_TRG21_F", "", "", "", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""],
+	["arifle_Mk20_plain_F", "", "", "", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""]
+];
 private _carbines = [
 	["arifle_TRG20_F", "", "", "", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""],
 	["arifle_Mk20C_plain_F", "", "", "", ["30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag", "30Rnd_556x45_Stanag_Tracer_Green"], [], ""]

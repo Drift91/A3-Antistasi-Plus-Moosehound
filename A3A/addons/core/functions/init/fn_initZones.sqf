@@ -340,7 +340,7 @@ private _milAdministrationTypes = [
 private _milAdminPositions = getArray (_mapInfo/"milAdministrations");
 
 {
-	private _milAdmins = nearestObjects [_x, _milAdministrationTypes, 30];
+	private _milAdmins = (nearestObjects [_x, _milAdministrationTypes, 30]) select {!isObjectHidden _x && {alive _x}};
 	if (_milAdmins isEqualTo []) then {
 		continue;
 	};

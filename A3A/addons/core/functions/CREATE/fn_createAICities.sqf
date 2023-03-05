@@ -51,9 +51,9 @@ while {(spawner getVariable _markerX != 2) and {_countX < _num}} do {
 			private _dog = [_groupX, "Fin_random_F",_positionX,[],0,"FORM"] call A3A_fnc_createUnit;
 			_dogs pushBack _dog;
 			[_dog] spawn A3A_fnc_guardDog;
+			};
 		};
-	};
-	_nul = [leader _groupX, _markerX, "LIMITED","SAFE","RANDOM","SPAWNED","NOVEH2", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+	_nul = [leader _groupX, _markerX, "LIMITED", "SAFE", "RANDOM", "SPAWNED","NOVEH2", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 	_groups pushBack _groupX;
 	_countX = _countX + 1;
 };

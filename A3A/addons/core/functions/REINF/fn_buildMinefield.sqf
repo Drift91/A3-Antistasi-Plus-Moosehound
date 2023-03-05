@@ -64,8 +64,8 @@ if ((_truckX distance _positionTel < 50) and ({alive _x} count units _groupX > 0
 		waitUntil {!(isPlayer leader _groupX)};
 		};
 	theBoss hcRemoveGroup _groupX;
-	[petros,"hint", localize "STR_hints_build_minefield_engie_start"] remoteExec ["A3A_fnc_commsMP",[teamPlayer,civilian]];
-	_nul = [leader _groupX, _mrk, "SAFE","SPAWNED", "SHOWMARKER"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+	[petros,"hint",localize "STR_hints_build_minefield_engie_start"] remoteExec ["A3A_fnc_commsMP",[teamPlayer,civilian]];
+	_nul = [leader _groupX, _mrk, "SAFE","SPAWNED", "SHOWMARKER"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 	sleep 30*_quantity;
 	if ((alive _truckX) and ({alive _x} count units _groupX > 0)) then
 		{

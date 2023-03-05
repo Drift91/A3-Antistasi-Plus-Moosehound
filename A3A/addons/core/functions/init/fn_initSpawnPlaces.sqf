@@ -60,7 +60,7 @@ _markerSize = markerSize _marker;
 _distance = sqrt ((_markerSize select 0) * (_markerSize select 0) + (_markerSize select 1) * (_markerSize select 1));
 
 //TODO: fix garage row "Land_GarageRow_01_large_F"
-_buildings = nearestObjects [getMarkerPos _marker, ["Land_Hangar_2", "Land_i_Shed_Ind_F","land_bunker_garage","Helipad_Base_F", "Land_vn_b_helipad_01", "Land_BludpadCircle", "Land_Hangar_F", "Land_TentHangar_V1_F", "Land_Airport_01_hangar_F", "Land_Mil_hangar_EP1", "Land_Ss_hangar", "Land_Ss_hangard", "Land_vn_helipad_base", "Land_vn_airport_01_hangar_f", "Land_vn_usaf_hangar_01", "Land_vn_usaf_hangar_02", "Land_vn_usaf_hangar_03"], _distance, true];
+_buildings = nearestObjects [getMarkerPos _marker, ["Land_Hangar_2","land_bunker_garage","Helipad_Base_F", "Land_vn_b_helipad_01", "Land_BludpadCircle", "Land_Hangar_F", "Land_TentHangar_V1_F", "Land_Airport_01_hangar_F", "Land_Mil_hangar_EP1", "Land_Ss_hangar", "Land_Ss_hangard", "Land_vn_helipad_base", "Land_vn_airport_01_hangar_f", "Land_vn_usaf_hangar_01", "Land_vn_usaf_hangar_02", "Land_vn_usaf_hangar_03"], _distance, true];
 
 _hangars = [];
 _helipads = [];
@@ -76,7 +76,7 @@ _garages = [];
       case (_x isKindOf "Helipad_Base_F"): {
         _helipads pushBack _x;
       };
-      case (_type in ["Land_Hangar_2","land_bunker_garage","Land_i_Shed_Ind_F"]): {
+      case (_type in ["Land_Hangar_2","land_bunker_garage"]): {
         _garages pushBack _x;
       };
       default {
@@ -195,11 +195,6 @@ _planeSpawns = [];
     //   _pos = _pos vectorAdd [8, -3.5, 0.3];
     //   _dir = _dir - 180;
     // };
-
-    if (_x isKindOf "Land_i_Shed_Ind_F") then {
-      _pos = _pos vectorAdd [-3,0, 0.3];
-      _dir = _dir - 90;
-    };
 
     if (_x isKindOf "Land_Hangar_2") then {
       _pos = _pos vectorAdd [0,6, 0.3];

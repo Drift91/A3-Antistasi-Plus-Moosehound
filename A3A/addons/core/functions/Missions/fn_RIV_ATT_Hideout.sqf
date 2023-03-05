@@ -11,11 +11,7 @@ Info_1("Seize Hideout task initialization started, marker: %1.", _marker);
 private _vehicles = [];
 private _groups = [];
 
-private _timeLimit = 90 * timeMultiplier;
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;
+(90 call SCRT_fnc_misc_getTimeLimit) params ["_dateLimitNum", "_displayTime"];
 
 private _isDifficult = if (random 10 < tierWar) then {true} else {false};
 
@@ -40,7 +36,7 @@ private _radGrad = [_hideoutPosition, 0] call BIS_fnc_terrainGradAngle;
 private _outOfBounds = _hideoutPosition findIf { (_x < 0) || {_x > worldSize}} != -1;
 
 private _enemyBases = (airportsX + milbases + outposts + seaports + factories + resourcesX) select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
-private _isTooCloseToOutposts = _enemyBases findIf { _hideoutPosition distance2d (getMarkerPos _x) < 300 || _hideoutPosition inArea _x } != -1;
+private _isTooCloseToOutposts = _enemyBases findIf { _hideoutPosition distance2d (getMarkerPos _x) < 500 || _hideoutPosition inArea _x } != -1;
 
 //mitigation of negative terrain gradient
 if(!(_radGrad > -0.25 && _radGrad < 0.25) || {isOnRoad _hideoutPosition || {surfaceIsWater _hideoutPosition || {_outOfBounds || {_isTooCloseToOutposts}}}}) then {
@@ -227,7 +223,7 @@ if (dateToNumber date < _dateLimitNum) then {
         ] call BIS_fnc_findSafePos;
         private _patrolGroup = [_position, Rivals, (selectRandom _patrolPool)] call A3A_fnc_spawnGroup;
         {[_x] call A3A_fnc_NATOinit;} forEach (units _patrolGroup);
-        [leader _patrolGroup, _marker, "SAFE","SPAWNED", "RANDOM", "NOVEH2", "LIMITED"] call A3A_fnc_proxyUPSMON;
+        _nul = [leader _patrolGroup, _marker, "SAFE","SPAWNED", "RANDOM", "NOVEH2", "LIMITED"] spawn UPSMON_fnc_UPSMON;
 
         _groups pushBack _patrolGroup;
     };
@@ -273,7 +269,6 @@ if (dateToNumber date < _dateLimitNum) then {
     _groups pushBack _patrolVehGroup;
     _vehicles pushBack _patrolVeh;
 
-    // [leader _patrolVehGroup, _marker, "SAFE","SPAWNED", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
     [_patrolVehGroup, _hideoutPosition, 250] call bis_fnc_taskPatrol;
 
     _nul = [_hideoutPosition, _lootContainer, _isDifficult] spawn {
@@ -324,7 +319,7 @@ switch(true) do {
         [25,theBoss] call A3A_fnc_addScorePlayer;
         [400,theBoss, true] call A3A_fnc_addMoneyPlayer;
 
-        [_marker, "HIDEOUT"] call SCRT_fnc_rivals_destroyLocation;
+        [_marker, "HIDEOUT"] remoteExecCall ["SCRT_fnc_rivals_destroyLocation",2];
     };
     default {
         Error("Unexpected behaviour, cancelling mission.");
@@ -332,9 +327,9 @@ switch(true) do {
     };
 };
 
-sleep 30;
+[_taskId, "RIV_ATT", 10] spawn A3A_fnc_taskDelete;
 
-[_taskId, "RIV_ATT", 60] spawn A3A_fnc_taskDelete;
+sleep 30;
 
 {[_x] spawn A3A_fnc_vehDespawner} forEach _vehicles;
 {[_x] spawn A3A_fnc_groupDespawner} forEach _groups;

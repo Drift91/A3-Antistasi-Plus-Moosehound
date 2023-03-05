@@ -10,11 +10,6 @@ if (_hr < 1) exitWith {
 };
 
 private _markerX = positionXGarr;
-private _previousGarrison = garrison getVariable [_markerX,[]];
-
-if (count _previousGarrison >= ([_markerX] call SCRT_fnc_common_getGarrisonLimit)) exitWith {
-	[localize "STR_garrison_garrison_header", localize "STR_garrison_error_limit", localize "STR_notifiers_fail_type"] call SCRT_fnc_ui_showDynamicTextMessage;
-};
 
 private _resourcesFIA = server getVariable "resourcesFIA";
 private _costs = server getVariable _unitType;
@@ -37,24 +32,16 @@ if ([_positionX] call A3A_fnc_enemyNearCheck) exitWith {
 	[localize "STR_garrison_garrison_header", localize "STR_garrison_error_enemies_near", localize "STR_notifiers_fail_type"] call SCRT_fnc_ui_showDynamicTextMessage;
 };
 
-scopename "main";
-if !(player call A3A_fnc_isMember) then {
-	private _curSize = count (garrison getVariable _markerX);
-	private _maxSize = call {
-		if (_markerX in airportsX) exitWith { 30 };
-		if (_markerX in milbases) exitWith { 25 };
-		if (_markerX in outposts) exitWith { 20 };
-		15;
-	};
-	if (_curSize >= _maxSize) then {
-		[localize "STR_garrison_garrison_header", localize "STR_garrison_error_guest"] call A3A_fnc_customHint;
-		breakout "main";
-	};
+private _garrison = garrison getVariable [_markerX,[]];
+private _limit = [_markerX] call A3A_fnc_getGarrisonLimit;
+
+if (_limit != -1 && {count _garrison >= _limit}) exitWith {
+	[localize "STR_A3A_garrisons_header", localize "STR_A3A_garrison_reached_limit"] call SCRT_fnc_ui_showDynamicTextMessage;
 };
 
 [-1,-_costs] remoteExec ["A3A_fnc_resourcesFIA",2];
 
-_countX = count (garrison getVariable [_markerX,[]]);
+private _countX = count _garrison;
 [_unitType,teamPlayer,_markerX,1] remoteExec ["A3A_fnc_garrisonUpdate",2];
 waitUntil {(_countX < count (garrison getVariable [_markerX, []])) or (sidesX getVariable [_markerX,sideUnknown] != teamPlayer)};
 

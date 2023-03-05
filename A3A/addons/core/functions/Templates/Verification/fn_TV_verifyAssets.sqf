@@ -240,6 +240,7 @@ private _fnc_handleUniqueCases = { //handles unique name cases that the stored v
         case "sandbagRound";
         case "vehicleFuelTank";
         case "vehicleFuelDrum";
+        case "reviveKitBox";
         case "equipmentBox": _fnc_validateSingleClass;
 
         //array of vehicle class names
@@ -306,8 +307,9 @@ private _fnc_handleUniqueCases = { //handles unique name cases that the stored v
         case "milVoices";
         case "sfFaces";
         case "milFaces";
-        case "sfVoices";
         case "polFaces";
+        case "eliteFaces";
+        case "eliteVoices";
         case "handGrenadeAmmo";
         case "mortarAmmo";
         case "animations";
@@ -316,6 +318,11 @@ private _fnc_handleUniqueCases = { //handles unique name cases that the stored v
         case "minesAT";
         case "minesAPERS";
         case "blackMarketStock";
+        case "eliteInsignia";
+        case "polInsignia";
+        case "milInsignia";
+        case "sfInsignia";
+        case "insignia";
         case "faces": {continue};
         default { Info("Entry: "+(str _entry)+" is lacking validation") };
     };

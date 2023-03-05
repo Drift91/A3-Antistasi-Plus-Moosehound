@@ -14,11 +14,12 @@ private _posbase = getMarkerPos respawnTeamPlayer;
 
 private _faction = Faction(Occupants);
 
-private _timeLimit = if (_difficultX) then {60 * timeMultiplier} else {120 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	60 call SCRT_fnc_misc_getTimeLimit
+} else {
+	120 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _city = [citiesX, _positionX] call BIS_fnc_nearestPosition;
 private _mrkFinal = createMarker [format ["LOG%1", random 100], _positionX];
@@ -28,7 +29,7 @@ _mrkFinal setMarkerShape "ICON";
 private _bankVehicleClass = A3A_faction_reb get "vehicleCivSupply";
 
 private _pos = (getMarkerPos respawnTeamPlayer) findEmptyPosition [1,50,_bankVehicleClass];
- 
+
 private _truckX = _bankVehicleClass createVehicle _pos;
 {_x reveal _truckX} forEach (allPlayers - (entities "HeadlessClient_F"));
 [_truckX, teamPlayer] call A3A_fnc_AIVEHinit;
@@ -60,7 +61,7 @@ for "_i" from 1 to 4 do {
 	private _groupType = if (_difficultX) then { selectRandom ([_faction get "groupsTierSmall"] call SCRT_fnc_unit_flattenTier) } else { _faction get "groupPolice" };
 	_groupX = [_positionX,Occupants,_groupType] call A3A_fnc_spawnGroup;
 	sleep 1;
-	[leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2", "FORTIFY"] call A3A_fnc_proxyUPSMON;
+	_nul = [leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2", "FORTIFY"] spawn UPSMON_fnc_UPSMON;
 	{[_x,""] call A3A_fnc_NATOinit; _soldiers pushBack _x} forEach units _groupX;
 	_groups pushBack _groupX;
 };
@@ -81,7 +82,7 @@ if ((dateToNumber date > _dateLimitNum) or (!alive _truckX)) then {
 	{_friendX = _x;
 		if (_friendX distance _truckX < 300) then {
 			if ((captive _friendX) and (isPlayer _friendX)) then {
-				[_friendX,false] remoteExec ["setCaptive",0,_friendX]; 
+				[_friendX,false] remoteExec ["setCaptive",0,_friendX];
 				_friendX setCaptive false;
 			};
 			{if (side _x == Occupants) then {_x reveal [_friendX,4]};
@@ -121,7 +122,7 @@ if ((_truckX distance _posbase < 50) and (dateToNumber date < _dateLimitNum)) th
     Debug("aggroEvent | Rebels won a bank mission");
 	[Occupants, 20 * _bonus, 120] remoteExec ["A3A_fnc_addAggression",2];
 	[1800*_bonus, Occupants] remoteExec ["A3A_fnc_timingCA",2];
-	{ 
+	{
 		[20 * _bonus,_x] call A3A_fnc_addScorePlayer;
     	[1000 * _bonus,_x] call A3A_fnc_addMoneyPlayer;
 	} forEach (call SCRT_fnc_misc_getRebelPlayers);

@@ -14,17 +14,19 @@ private _sideX = sidesX getVariable [_markerX,sideUnknown];
 private _faction = Faction(_sideX);
 private _positionX = getMarkerPos _markerX;
 
-private _timeLimit = if (_difficultX) then {15  * timeMultiplier} else {30  * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
+private _limit = if (_difficultX) then {
+	30 call SCRT_fnc_misc_getTimeLimit
+} else {
+	45 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
- _nameDest = [_markerX] call A3A_fnc_localizar;
+_nameDest = [_markerX] call A3A_fnc_localizar;
 private _taskString = format [
 	localize "STR_A3A_Missions_AS_Official_task_desc",
 	_faction get "name",
 	[_markerX] call A3A_fnc_localizar,
-	numberToDate [2035,_dateLimitNum] select 3,
-	numberToDate [2035,_dateLimitNum] select 4
+	_displayTime
 ];
 
 private _taskId = "AS" + str A3A_taskCount;
@@ -35,7 +37,7 @@ private _grp = createGroup _sideX;
 private _officialClass = _faction get "unitOfficial";
 private _official = [_grp, _officialClass, _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 
-private _bodyguardClass = [_faction get "unitTierBodyguard"] call SCRT_fnc_unit_getTiered;
+private _bodyguardClass = [_faction get "unitRifle"] call SCRT_fnc_unit_getTiered;
 private _pilot = [_grp, _bodyguardClass, _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 if (_difficultX) then {
 	for "_i" from 1 to 4 do {
@@ -45,7 +47,7 @@ if (_difficultX) then {
 
 _grp selectLeader _official;
 sleep 1;
-_nul = [leader _grp, _markerX, "LIMITED", "SAFE", "SPAWNED", "NOVEH", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+_nul = [leader _grp, _markerX, "LIMITED", "SAFE", "SPAWNED", "NOVEH", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 
 {[_x] call A3A_fnc_NATOinit; _x allowFleeing 0} forEach units _grp;
 
@@ -56,7 +58,7 @@ if (!alive _official) then {
 	if (_difficultX) then {
 		[0,600] remoteExec ["A3A_fnc_resourcesFIA",2];
 		[2400, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-		{ 
+		{
 			[45,_x] call A3A_fnc_addScorePlayer;
     		[800,_x] call A3A_fnc_addMoneyPlayer;
 		} forEach (call SCRT_fnc_misc_getRebelPlayers);
@@ -66,7 +68,7 @@ if (!alive _official) then {
 	} else {
 		[0,300] remoteExec ["A3A_fnc_resourcesFIA",2];
 		[1800, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-		{ 
+		{
 			[25,_x] call A3A_fnc_addScorePlayer;
     		[500,_x] call A3A_fnc_addMoneyPlayer;
 		} forEach (call SCRT_fnc_misc_getRebelPlayers);

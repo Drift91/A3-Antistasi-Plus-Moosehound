@@ -117,12 +117,11 @@ if (spawner getVariable _spawnKey != 2) then {
 			if (!surfaceIsWater _pos) exitWith {};
 		};
 		private _groupX = createGroup civilian;
-		_groupX deleteGroupWhenEmpty true;
 		_groups pushBack _groupX;
 		private _civ = [_groupX, FactionGet(civ, "unitPress"), _pos, [],0, "NONE"] call A3A_fnc_createUnit;
 		_civ call A3A_fnc_CIVinit;
 		_civs pushBack _civ;
-		[_civ, _markerX, "LIMITED","SAFE","SPAWNED","NOFOLLOW","NOVEH2","NOSHARE","DoRelax"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+		_nul = [_civ, _markerX, "LIMITED","SAFE","SPAWNED","NOFOLLOW","NOVEH2","NOSHARE","DoRelax"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 	};
 };
 
@@ -137,7 +136,6 @@ if ([_markerX,false] call A3A_fnc_fogCheck > 0.2) then {
 			if (!isNull _road) then {
 				if (count (nearestObjects [_p1, ["Car", "Truck"], 5]) == 0) then {
 					private _groupP = createGroup civilian;
-    				_groupP deleteGroupWhenEmpty true;
 					_groupsPatrol pushBack _groupP;
 					private _roadcon = roadsConnectedto _road;
 					//_p1 = getPos (_roads select _countX);
@@ -182,11 +180,7 @@ if ([_markerX,false] call A3A_fnc_fogCheck > 0.2) then {
 	};
 };
 
-private _demoVeh = [_positionX] call SCRT_fnc_rivals_tryFindCarDemoCharge;
-
-if (!isNil "_demoVeh") then {
-	[_demoVeh] call SCRT_fnc_rivals_plantCarDemoCharge;
-};
+[_markerX] call SCRT_fnc_rivals_trySpawnCarDemo;
 
 waitUntil {sleep 1; spawner getVariable _spawnKey == 2};
 

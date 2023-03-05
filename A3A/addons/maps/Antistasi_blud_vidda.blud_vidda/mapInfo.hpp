@@ -1,6 +1,6 @@
 class blud_vidda {
 	population[] = {
-		{"DefaultKeyPoint3",20},{"DefaultKeyPoint7",500},{"DefaultKeyPoint9",140},{"DefaultKeyPoint33",110},{"DefaultKeyPoint34",50},{"DefaultKeyPoint37",300},{"DefaultKeyPoint39",100},{"DefaultKeyPoint51",160},{"DefaultKeyPoint58",80},{"DefaultKeyPoint73",80},{"DefaultKeyPoint91",135},{"DefaultKeyPoint92",70},{"DefaultKeyPoint104",40},{"DefaultKeyPoint31", 160}
+		{"DefaultKeyPoint3",40},{"DefaultKeyPoint7",360},{"DefaultKeyPoint9",163},{"DefaultKeyPoint33",122},{"DefaultKeyPoint34",60},{"DefaultKeyPoint37",312},{"DefaultKeyPoint39",109},{"DefaultKeyPoint51",176},{"DefaultKeyPoint58",92},{"DefaultKeyPoint73",98},{"DefaultKeyPoint91",154},{"DefaultKeyPoint92",86},{"DefaultKeyPoint104",63},{"DefaultKeyPoint31", 180}
 	};
 	disabledTowns[] = {"DefaultKeyPoint40", "DefaultKeyPoint35", "DefaultKeyPoint88", "DefaultKeyPoint100"};
 	antennas[] = {

@@ -92,15 +92,27 @@ _unit addEventHandler ["Deleted", A3A_fnc_enemyUnitDeletedEH];
 
 
 //Calculates the skill of the given unit
-//private _skill = (0.15 * skillMult) + (0.04 * difficultyCoef) + (0.02 * tierWar);
 private _skill = (0.1 * A3A_enemySkillMul) + (0.15 * A3A_balancePlayerScale) + (0.01 * tierWar);
-private _regularFaces = (_faction get "faces");
-private _regularVoices = (_faction get "voices");
-private ["_face", "_voice"];
+private _regularFaces = nil;
+private _regularVoices = nil;
+private _regularInsignia = nil;
+private _face = nil;
+private _voice = nil;
+private _insignia = nil;
+
+if (_isRival) then {
+    _regularFaces = A3A_faction_riv get "faces";
+    _regularVoices = A3A_faction_riv get "voices";
+    _regularInsignia = A3A_faction_riv get "insignia";
+} else {
+    _regularFaces = _faction get "faces";
+    _regularVoices = _faction get "voices";
+    _regularInsignia = _faction get "insignia";
+};
 
 switch (true) do {
     case (_isRival): {
-        _skill = _skill * 0.8;
+        _skill = _skill * 0.85;
         _face = selectRandom (A3A_faction_riv get "faces");
         _voice = selectRandom (A3A_faction_riv get "voices");
     };
@@ -108,16 +120,25 @@ switch (true) do {
         _skill = _skill * 0.7;
         _face = selectRandom (_faction getOrDefault ["milFaces", _regularFaces]);
         _voice = selectRandom (_faction getOrDefault ["milVoices", _regularVoices]);
+        _insignia = selectRandom (_faction getOrDefault ["milInsignia", _regularInsignia]);
     };
     case (_unitPrefix isEqualTo "police"): {
         _skill = _skill * 0.5;
         _face = selectRandom (_faction getOrDefault ["polFaces", _regularFaces]);
         _voice = selectRandom (_faction getOrDefault ["polVoices", _regularVoices]);
+        _insignia = selectRandom (_faction getOrDefault ["polInsignia", _regularInsignia]);
+    };
+    case (_unitPrefix isEqualTo "elite"): {
+        _skill = _skill * 1.1;
+        _face = selectRandom (_faction getOrDefault ["eliteFaces", _regularFaces]);
+        _voice = selectRandom (_faction getOrDefault ["eliteVoices", _regularVoices]);
+        _insignia = selectRandom (_faction getOrDefault ["eliteInsignia", _regularInsignia]);
     };
     case (_unitPrefix isEqualTo "SF"): {
         _skill = _skill * 1.2;
         _face = selectRandom (_faction getOrDefault ["sfFaces", _regularFaces]);
         _voice = selectRandom (_faction getOrDefault ["sfVoices", _regularVoices]);
+        _insignia = selectRandom (_faction getOrDefault ["sfInsignia", _regularInsignia]);
     };
     case ("Traitor" in _type): {
         _face = selectRandom (A3A_faction_reb get "faces");
@@ -126,10 +147,14 @@ switch (true) do {
     default {
         _face = selectRandom _regularFaces;
         _voice = selectRandom _regularVoices;
+        _insignia = selectRandom _regularInsignia;
     };
 };
-[_unit, _face, _voice, (random [0.9, 1, 1.1])] call BIS_fnc_setIdentity;
+[_unit, _face, _voice, (random [0.9, 1, 1.1])] call A3A_fnc_setIdentity;
 _unit setSkill _skill;
+if (!isNil "_insignia" && {_insignia isNotEqualTo ""}) then {
+   [_unit, _insignia] call BIS_fnc_setUnitInsignia;
+};
 
 //Adjusts squadleaders with improved skill
 if (_type in FactionGet(all,"SquadLeaders")) then {

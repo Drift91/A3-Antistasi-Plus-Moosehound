@@ -6,6 +6,16 @@ private _playersX = false;
 private _inPlayerGroup = false;
 _unit setBleedingremaining 300;
 
+private _fnc_applyPostEffect = {
+	"colorCorrections" ppEffectAdjust [1,1,0, [0.1,0.2,0.3,-0.5], [1,1,1,0.4], [0.5,0.2,0,1]]; 
+	"colorCorrections" ppEffectCommit 0; 
+	"colorCorrections" ppEffectEnable true;
+	
+	"filmGrain" ppEffectAdjust [0.05, 1, 1, 0, 1]; 
+	"filmGrain" ppEffectCommit 0; 
+	"filmGrain" ppEffectEnable true;
+};
+
 if (isPlayer _unit) then {
 	_isPlayer = true;
 
@@ -52,6 +62,10 @@ else {
 	};
 };
 
+if (_isPlayer) then {
+	[] call _fnc_applyPostEffect;
+};
+
 _unit setFatigue 1;
 sleep 2;
 if (_isPlayer) then {
@@ -64,9 +78,9 @@ if (_isPlayer) then {
 		private _locationName = [_nearestMarker] call A3A_fnc_localizar;
 
 		if(player distance2D (getMarkerPos _nearestMarker) < 300) then {
-			[["UpdateState", format ["Lies unconscious at the %1", _locationName]]] call SCRT_fnc_misc_updateRichPresence;
+			[["UpdateState", format ["Lying incapacitated at the %1", _locationName]]] call SCRT_fnc_misc_updateRichPresence;
 		} else {
-			[["UpdateState", "Lies unconscious in the middle of nowhere"]] call SCRT_fnc_misc_updateRichPresence;
+			[["UpdateState", "Lying incapacitated in the middle of nowhere"]] call SCRT_fnc_misc_updateRichPresence;
 		};
 	};
 };
@@ -77,7 +91,7 @@ private _consciousUnits = [];
 private _helped = objNull;
 private _originalBody = objNull;
 
-while {(time < _bleedOut) && (_unit getVariable ["incapacitated",false]) && (alive _unit) && (!(_unit getVariable ["respawning",false]))} do {
+while {time < _bleedOut && {_unit getVariable ["incapacitated",false] && {alive _unit && {!(_unit getVariable ["respawning",false])}}}} do {
 	if (random 10 < 1) then {playSound3D [(selectRandom injuredSounds),_unit,false, getPosASL _unit, 1, 1, 50];};
 	if (_isPlayer) then {
 		_helped = _unit getVariable ["helped",objNull];
@@ -92,46 +106,53 @@ while {(time < _bleedOut) && (_unit getVariable ["incapacitated",false]) && (ali
 		
 		if (isNull _helped) then {
 			private _helpX = [_unit] call A3A_fnc_askHelp;
-			
-			if (isNull _helpX) then {
-				_textX = [
-					localize "STR_antistasi_actions_unconscious_action_prompt0",
-					localize "STR_antistasi_actions_unconscious_action_prompt0_possess"
-				] select (count _consciousUnits > 0);
-			}
-			else {
-				if (_helpX != _unit) then {
-					_textX = [
-						format [localize "STR_antistasi_actions_unconscious_action_prompt1", name _helpX],
-						format [localize "STR_antistasi_actions_unconscious_action_prompt1_possess", name _helpX]
-					] select (count _consciousUnits > 0);
-				} else {
-					_textX = [
-						localize "STR_antistasi_actions_unconscious_action_prompt2",
-						localize "STR_antistasi_actions_unconscious_action_prompt2_possess"
-					] select (count _consciousUnits > 0);
+
+			switch (true) do {
+				case (isNull _helpX): {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt0_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
+				};
+				case (_helpX != _unit): {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt1_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
+				};
+				default {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt2_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
 				};
 			};
-		}
-		else {
-			if (!isNil "_helpX") then {
-				if (!isNull _helpX) then {
-						_textX = [
-							format [localize "STR_antistasi_actions_unconscious_action_prompt1", name _helpX],
-							format [localize "STR_antistasi_actions_unconscious_action_prompt1_possess", name _helpX]
-						] select (count _consciousUnits > 0);
-					} else {
-						_textX = [
-							localize "STR_antistasi_actions_unconscious_action_prompt2",
-							localize "STR_antistasi_actions_unconscious_action_prompt2_possess"
-						] select (count _consciousUnits > 0);
-					};
-			}
-			else {
-				_textX = [
-					localize "STR_antistasi_actions_unconscious_action_prompt2",
-					localize "STR_antistasi_actions_unconscious_action_prompt2_possess"
-				] select (count _consciousUnits > 0);
+		} else {
+			switch (true) do {
+				case (!isNil "_helpX" && {!isNull _helpX}): {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt1_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
+				};
+				case (!isNil "_helpX" && {isNull _helpX}): {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt2_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
+				};
+				default {
+					_textX = format [
+						localize "STR_antistasi_actions_unconscious_action_prompt2_base", 
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_possess"] select (count _consciousUnits > 0),
+						["", localize "STR_antistasi_actions_unconscious_action_prompt_selfrevive"] select ("A3AP_SelfReviveKit" in (backpackItems player))
+					];
+				};
 			};
 		};
 
@@ -158,6 +179,12 @@ while {(time < _bleedOut) && (_unit getVariable ["incapacitated",false]) && (ali
 	sleep 1;
 	if !(isNull attachedTo _unit) then {_bleedOut = _bleedOut + 4};
 };
+
+"colorCorrections" ppEffectCommit 0; 
+"colorCorrections" ppEffectEnable false;
+
+"filmGrain" ppEffectCommit 0; 
+"filmGrain" ppEffectEnable false;
 
 if (_isPlayer) then {
 	(findDisplay 46) displayRemoveEventHandler ["KeyDown", respawnMenu];

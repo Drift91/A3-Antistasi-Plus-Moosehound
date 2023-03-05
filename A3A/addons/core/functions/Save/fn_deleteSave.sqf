@@ -31,7 +31,8 @@ private _savedPlayers = _namespace getVariable ["savedPlayers" + _postfix, []];
 {
 	_namespace setVariable [_x + _postfix, nil];
 
-} forEach ["countCA", "gameMode", "difficultyX", "bombRuns", "smallCAmrk", "membersX", "antennas",
+} forEach [
+	"countCA", "gameMode", "difficultyX", "bombRuns", "smallCAmrk", "membersX", "antennas",
 	"mrkSDK", "mrkCSAT", "posHQ", "dateX", "skillFIA", "destroyedSites", "distanceSPWN",
 	"chopForest", "nextTick", "weather", "destroyedBuildings", "aggressionOccupants",
 	"aggressionInvaders", "resourcesFIA", "hr", "staticsX", "jna_datalist",

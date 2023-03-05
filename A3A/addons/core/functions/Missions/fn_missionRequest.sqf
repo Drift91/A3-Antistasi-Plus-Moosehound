@@ -29,6 +29,11 @@ private _findIfNearAndHostile = {
 	_Markers
 };
 
+private _checkRivalsTaskPossibility = {
+	params ["_site"];
+	_site in ([] call SCRT_fnc_rivals_getLocations) && {!("RIV_ATT" in A3A_activeTasks) && {([] call SCRT_fnc_rivals_rollProbability)}}
+};
+
 private _possibleMarkers = [];
 switch (_type) do {
 	case "AS": {
@@ -65,7 +70,11 @@ switch (_type) do {
 					[[_site],"A3A_fnc_AS_Official"] remoteExec ["A3A_fnc_scheduler",2];
 				};
 				case (_site in citiesX): {
-					[[_site],"A3A_fnc_AS_Traitor"] remoteExec ["A3A_fnc_scheduler",2];
+					if (([_site] call _checkRivalsTaskPossibility)) then {
+						[[_site],"A3A_fnc_RIV_AS_Traitor"] remoteExec ["A3A_fnc_scheduler",2];
+					} else {
+						[[_site],"A3A_fnc_AS_Traitor"] remoteExec ["A3A_fnc_scheduler",2];
+					}
 				};
 				default {
 					[[_site],"A3A_fnc_AS_SpecOP"] remoteExec ["A3A_fnc_scheduler",2];
@@ -125,7 +134,7 @@ switch (_type) do {
 		if (count _possibleMarkers == 0) then {
 			if (!_silent) then {
 				[petros, "globalChat", localize "STR_chats_mission_request_no_DES"] remoteExec ["A3A_fnc_commsMP",_requester];
-				[petros,"hint",format ["STR_chats_mission_request_no_DES_hint_text", str distanceMission], localize "STR_chats_mission_request_header"] remoteExec ["A3A_fnc_commsMP",_requester];
+				[petros,"hint",format [localize "STR_chats_mission_request_no_DES_hint_text", str distanceMission], localize "STR_chats_mission_request_header"] remoteExec ["A3A_fnc_commsMP",_requester];
 			};
 		} else {
 			private _site = selectRandom _possibleMarkers;
@@ -169,7 +178,7 @@ switch (_type) do {
 		if (count _possibleMarkers == 0) then {
 			if (!_silent) then {
 				[petros, "globalChat", localize "STR_chats_mission_request_no_LOG"] remoteExec ["A3A_fnc_commsMP",_requester];
-				[petros,"hint", format ["STR_chats_mission_request_no_LOG_hint_text", str distanceMission], localize "STR_chats_mission_request_header"] remoteExec ["A3A_fnc_commsMP",_requester];
+				[petros,"hint", format [localize "STR_chats_mission_request_no_LOG_hint_text", str distanceMission], localize "STR_chats_mission_request_header"] remoteExec ["A3A_fnc_commsMP",_requester];
 			};
 		} else {
 			private _site = selectRandom _possibleMarkers;
@@ -217,7 +226,12 @@ switch (_type) do {
 		} else {
             Debug_1("City weights: %1", _weightedMarkers);
 			private _site = selectRandomWeighted _weightedMarkers;
-			[[_site],"A3A_fnc_SUPP_Supplies"] remoteExec ["A3A_fnc_scheduler",2];
+
+			if (([_site] call _checkRivalsTaskPossibility)) then {
+				[[_site],"A3A_fnc_RIV_SUPP_Salvage"] remoteExec ["A3A_fnc_scheduler",2];	
+			} else {
+				[[_site],"A3A_fnc_SUPP_Supplies"] remoteExec ["A3A_fnc_scheduler",2];
+			};
 		};
 	};
 
@@ -237,7 +251,7 @@ switch (_type) do {
 			private _site = selectRandom _possibleMarkers;
 
 			private _shipwreckPosition = [0,0,0];
-			if (!(toLowerAnsi worldName in ["enoch", "vn_khe_sanh", "esseker", "sefrouramal"]) && {random 100 < 20}) then {
+			if (!(toLowerAnsi worldName in ["enoch", "vn_khe_sanh", "esseker", "sefrouramal", "takistan"]) && {random 100 < 20}) then {
 				_shipwreckPosition = [
 					(getMarkerPos _site),
 					0,
@@ -262,7 +276,11 @@ switch (_type) do {
 					[[_site],"A3A_fnc_RES_Refugees"] remoteExec ["A3A_fnc_scheduler",2];
 				};
 				default {
-					[[_site],"A3A_fnc_RES_Prisoners"] remoteExec ["A3A_fnc_scheduler",2]
+					if ([_site] call _checkRivalsTaskPossibility) then {
+						[[_site],"A3A_fnc_RIV_RES_Prisoners"] remoteExec ["A3A_fnc_scheduler",2];
+					} else {
+						[[_site],"A3A_fnc_RES_Prisoners"] remoteExec ["A3A_fnc_scheduler",2];
+					};
 				};
 			};
 			if (_site in citiesX) then {[[_site],"A3A_fnc_RES_Refugees"] remoteExec ["A3A_fnc_scheduler",2]} else {[[_site],"A3A_fnc_RES_Prisoners"] remoteExec ["A3A_fnc_scheduler",2]};

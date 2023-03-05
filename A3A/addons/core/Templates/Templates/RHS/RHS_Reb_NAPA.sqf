@@ -89,10 +89,6 @@ private _hasLawsOfWar = "orange" in A3A_enabledDLC;
 //       Antistasi Plus Stuff       //
 //////////////////////////////////////
 
-["lootCrate", "Box_Syndicate_Ammo_F"] call _fnc_saveToTemplate;
-["rallyPoint", "B_RadioBag_01_wdl_F"] call _fnc_saveToTemplate;
-
-
 ["blackMarketStock", [
     ["RHS_TOW_TriPod_WD", 3000, "STATICAT", {tierWar > 3}],
     ["rhsgref_nat_AGS30_TriPod", 3000, "STATICMG", {tierWar > 3}],
@@ -174,9 +170,7 @@ private _rebUniforms = [
     "rhsgref_uniform_og107_erdl",
     "rhsgref_uniform_tigerstripe",
     "rhsgref_uniform_woodland",
-    "rhsgref_uniform_woodland_olive",
-    "rhsgref_uniform_TLA_1",
-    "rhsgref_uniform_TLA_2"
+    "rhsgref_uniform_woodland_olive"
 ];
 
 ["uniforms", _rebUniforms] call _fnc_saveToTemplate;

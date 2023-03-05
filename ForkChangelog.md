@@ -1,5 +1,136 @@
 # Changelog
 
+## 2.1.2
+### Changes
+- Full commander menu will be available at trader location, not only HQ
+- Fixed problematic case of AI flares missing when enemy is missing too
+- Fixed missing Rivals surrender crate checking for auto loot action 
+- Fixed datetime limit for missions showing incorrect values
+- Fixed non-appliance of modifications on vehicles being put out of garage
+- Rivals car demo event tweaks - it will spawn only in Rivals-infested cities, will have probability tied to rivals activity, it will spawn car instead of planting charge into already existing car thus eliminating situations when players car could be affected 
+- Moved Rivals appearance War Level from 3 to 4
+- Added passive chance to obtain info about Arms Dealer starting War Level 3 as a fallback for bad luck
+- Minor Rivals activity reduction on Rivals troops eliminations 
+- Minor localization fixes
+- Increased base Rivals events cooldowns from 1200 to 1600 seconds
+- Rivals imprisonment will add small progress to next Rivals location reveal
+- Reduced base time to call support from 30 seconds to 15
+- 15 seconds cooldown on AI Control while laying wounded
+- (3CB Factions) Fixed ARD being named TKA
+- (SOGPF) Changed civilian helicopter model to one of the AH-1 variants
+
+## 2.1.1
+### Additions
+- Simplified Chinese localization (credits to vbnshi)
+
+### Changes
+- Fixed accidential explicitly disabled AI possession feature
+- Reduced mass of self-revive kit from 160 to 80
+- Reduced price of self-revive kit box from 3000 to 2100
+
+## 2.1
+### Additions
+- S.O.G. Prairie Fire CDLC support
+- Cam Lao Nam support
+- Khe Sanh support
+- Tanoa support
+- Takistan support
+- Sehreno support
+- Multiple Rivals factions per modset support, startup menu changes to accomodate it
+- Loot Crate Gather Distance parameter
+- Overall Enemy Balance parameter changes - new Below Normal (former pre-2.1 Normal value) and Above Normal (sligtly harder than Normal, former pre-2.1 High value) values,  Normal and High parameter values will be slightly harder
+- Special item for SP or low-population MP - Combat Readiness Recovery Kit, allows owner of such kit instantly revive someone including user of such kit, one-time use, could be bought in Vehicle Box store in "Other" tab, could be turned on via startup parameter
+- Ability to possess any near friendly AI squadmate while laying incapacitated to help your original body (press T while being incapacitated, could be turned off via params menu)
+- Rivals mission subvariants for Kill the Traitor and Rescue Prisoners mission types
+- New mission type - Salvage Ambushed Convoy
+- Inisgnia/patches support for enemy units 
+- (3CB Factions) Takistan Army, Horizon Island Legion, Ardistan Army factions
+- (3CB Factions) Takistan civilians
+- (3CB Factions) TKM rebel faction
+- (3CB Factions) Syndikat rival faction
+- (3CB Factions) Arid Civilians faction
+- (Vanilla) NATO Tropical faction 
+- (Vanilla) Syndikat, Livonian Looters rebel factions
+- (Vanilla) L'Ensemble rival faction
+- (SOGPF) MACV, ARVN, PAVN enemy factions
+- (SOGPF) VM, VC rebel factions
+- (SOGPF) Vietnam civilian faction
+- (SOGPF) Pathet Lao rival faction
+
+### Changes
+- Community Version 3.1 integration
+- Increased durability of loot crates, slight rework of load/unload invulnerability
+- Seaports will be used for airspace control
+- Expanded guard unit pool with LATs, machinegunners, grenadiers
+- Expanded tower guard unit pool with snipers and riflemen
+- Expanded guard building pool with new buildings
+- Fixed Rebel Loadout arsenal finite items usage exploit
+- Fixed ability to do big attacks for factions that were defeated before
+- Fixed Destroy Artillery minor error about event handler
+- Fixed Rivals tasks inability to work if there are no buildings in town
+- Fixed logic pitfall where player's civilian car could be sould be charged with explosive by Rivials in their activity zone
+- Fixed rebel AA sell price exploit
+- Fixed rare case when squad leader belongings weren't deleted after some time after intel search action
+- Fixed non-removable pallets from Deliver Supplies mission
+- Fixed no outcome out of enemy leader interrogation on dedicated server
+- Fixed despawn issues of Post Ambush random event
+- Fixed "activityIsChanging" headless client error
+- Fixed intel tables hanging in the air on dedicated servers
+- Fixed cost-free custom outposts on dedicated server
+- Fixed inability to cancel outpost task on dedicated servers
+- Fixed script A3A_template_Inv error on rebel airstrike on dedicated servers
+- Fixed Rivals Activity Level broadcasting to clients on dedicated server on load
+- Fixed present "Equip on Buy" button when headless clients are active on ds/hc configuration
+- Fixed bug that prevented commander from placing or removing minefields
+- Fixed some missing strings, typos, localization errors
+- Fixed non-working paradrop and loot helicopters if napalm was disabled
+- Fixed fast travel invincibility exploit
+- Fixed defuse icons
+- Fixed non-locked driver seat on towable vehicle on dedicated server
+- Fixed logic pitfall which led to no intel until Arms Dealer quest
+- Fixed non-restorable undercover state after crate carry
+- Fixed balance cost and threat assesment for light APCs, militia APCs and airborne vehicles
+- Fixed inability to assign attacks on Rivals hideouts and cells if there are no unknown locations
+- Headgear in arsenal will have distinct colors depending on their scarcity
+- Air vehicles can be put into garage even when there is no captured airport yet
+- Military Administration capture/destruction will increase support in it's city
+- Post-effect will be applied while laying in wounded state
+- Transport, light attack and attack helicopters may spawn at helipads on airbases, transport helicopters and light attack helicopters may spawn at milbases
+- Prisoners will spawn in military administration in all cases (not only Capture The Military Administration task as it was before), they will have spawn cooldown to prevent HR farming
+- Investigate the Battleground mission will be rolled in mission distance radius instead of frontline cities only
+- Changed Artillery Menu default keybind from Shift + Y to Shift + U as it had conflict with Shift + Y Zeus menu call
+- Civilians will no longer spawn in cities destroyed by Invaders
+- Enemy squad will no longer spawn in difficult variant of Deliver Supplies mission for friendly cities
+- UAV Flyby Rivals event strike notification distance increased from 25 meters to 35 meters to give players a little bit more time to react
+- Reduced probability of Mechanized Airborne QRF
+- Rivals random event cooldown will depend on Rivals Difficulty parameter and current level of rivals activity (more active -> less cooldown)
+- Improved Mechanized Airborne QRF attacking behaviour
+- Increased chance to learn about Arms Dealer via interrogations and intel searches from 15% to 20%
+- Increased probability of rival event happening on 5% on each activity level
+- Increased base delay for air superiority fighter (300->600 seconds) and CAS support (300->450 seconds) to give rebels more room for air/heavy vehicles usage
+- Medics will fully heal on revive, non-medics will heal to 75% on revive
+- (Vanilla) 4WD jeep will be added into civilian vehicles pool if Apex DLC is turned on
+- (RHS) Fixed wrong classnames for AFRF surrender and equipment boxes
+- (3CB Factions) Switched LDF to Occupants factions section
+- (Takistan) Removed resource marker, moved initial HQ position farther from Occupant airbase
+- (Sefrou Ramal) Moved Military Administration to less problematic landscape
+- (Cam Lao Nam) Fixed some problematic outposts without vehicles, removed outposts without roads, disabled simulation on some dynamic objects
+- (Khe Sanh) Added PaCa to populated villages list
+- (Chernarus 2020) Manual population config, overall population cut from ~11000 to ~8000, disabled Arsenovo and Krasnoe villages
+- (Vidda) Tuned population a bit
+- (Esseker) manual population config
+- (3CB Factions) Removed all cars which are non-authentic to Eastern European setting (pickups, Land Rovers etc)
+- (3CB Factions) Replaced vanilla cops with military police/rear echelon/national guard for USMC and US Army factions
+- (RHS) Fixed usage of 3CB Factions backpacks in pure RHS USMC Temperate faction
+- (SOGPF) Added M1 Garand, M1982A2, L1A1, L2A1, F1 SMG, new m16 and XM177 variants to Arms Dealer stock
+- (Vanilla) Removed XMS rifles for militia-tier units in NATO templates
+- (Vanilla) Arms Dealer will sell 4WD vehicles if Apex is enabled
+
+### Removals
+- Removed Truely Random Crates parameter
+- Removed "Buy Loot Crate" action on vehicle box as loot crate was moved to general store to "Other" tab
+
+
 ## 2.0.2
 ### Changes
 - (RHS) Fixed empty classes in Arms Dealer stock
@@ -172,7 +303,6 @@
 - (3CB Factions) Added LADA, SUV, Hilux PKM logistic nodes
 
 ### Removals
-- CUP, SOGPF, GM support wasn't ported, templates will be remade from scratch among with new ones in the next versions of Antistasi Plus
 - Other terrains are not yet supported, many of them will be ported in the next versions of Antistasi Plus
 - Faction Defeat mission parameter has been removed, Occupants and Invaders can be always fully defeated
 - Removed PVP
@@ -190,10 +320,9 @@
 - Removed enemy intel search money drop probability (they may carry money in their inventory instead)
 
 ## 1.9 
-*unreleased, discontinued and unavailable for public access version, most of it's changes were ported to 2.0 thus moved from 1.9 section to section above, this changelog represents leftover unported changes by various reasons*
+*unreleased, discontinued and unavailable for public access version (final version before migrating from mission to mod), most of it's changes were ported to 2.0 thus moved from 1.9 section to section above, this changelog represents leftover unported changes by various reasons*
 ### Additions
 - New convoy type - Food Convoy
-- [Experimental] Ability to possess any near friendly AI squadmate while laying wounded to help yourself
 - Iron Man Mode mission parameter - one life for Petros. If he dies, save file will be erased and mission will be ended (one-time, irreversible action for current save after full mission loading)
 
 ### Changes

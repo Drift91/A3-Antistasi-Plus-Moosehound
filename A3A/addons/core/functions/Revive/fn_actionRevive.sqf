@@ -171,7 +171,7 @@ if (!([_medic] call A3A_fnc_canFight)) exitWith
 };
 
 // Successful revive
-if (_isMedic) then {_cured setDamage 0.25} else {_cured setDamage 0.5};
+if (_isMedic) then {_cured setDamage 0} else {_cured setDamage 0.25};
 if (!_hasMedkit) then {
     if (count _medicFAKs == 0) then { _cured removeItem selectRandom _curedFAKs }
     else { _medic removeItem selectRandom _medicFAKs };

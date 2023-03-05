@@ -116,8 +116,6 @@ DECLARE_SERVER_VAR(areOccupantsDefeated, false);
 DECLARE_SERVER_VAR(areInvadersDefeated, false);
 //Whether the rebels know about rival rebel faction.
 DECLARE_SERVER_VAR(areRivalsDiscovered, false);
-//Initial Rivals Activity
-DECLARE_SERVER_VAR(inactivityRivals, 0);
 DECLARE_SERVER_VAR(inactivityStackRivals, []);
 DECLARE_SERVER_VAR(inactivityLevelRivals, 5);
 //Override uniforms on rebel loadouts
@@ -203,6 +201,8 @@ baseRivalsDecay = switch (rivalsDifficulty) do {
 		Error_1("Can't set base rivals decay - something wrong with %1 difficulty value.", str rivalsDifficulty);
 	};
 };
+publicVariable "baseRivalsDecay";
+
 
 ///////////////////////////////////////////
 //     INITIALISING ITEM CATEGORIES     ///
@@ -334,10 +334,6 @@ switch (gameMode) do {
 	};
 };
 
-//TODO: Param is temporarily disabled as feature is not production-ready yet
-unconsciousPossessAi = false;
-publicVariable "unconsciousPossessAi";
-
 // Build list of extra equipment mods so we can filter out the modern stuff as necessary
 // Might not work for everything because of configSourceMod inconsistency (eg. "rhs_weap_fnfal50_61_base")
 A3A_extraEquipMods = [];
@@ -352,30 +348,24 @@ Debug_1("Extra equip mod paths: %1", A3A_extraEquipMods);
 //         TEMPLATE LOADING        ///
 //////////////////////////////////////
 Info("Reading templates");
+
 {
-    private _side = [west, east, resistance, civilian] # _forEachIndex;
+    private _side = [west, east, resistance, civilian, east] # _forEachIndex;
     Info_2("Loading template %1 for side %2", _x, _side);
 
 	private _cfg = configFile/"A3A"/"Templates"/_x;
 	private _basepath = getText (_cfg/"basepath") + "\";
 	private _file = getText (_cfg/"file") + ".sqf";
-    [_basepath + _file, _side] call A3A_fnc_compatibilityLoadFaction;
 
-    private _type = ["Occ", "Inv", "Reb", "Civ"] # _forEachIndex;
-    missionNamespace setVariable ["A3A_"+_type+"_template", _x];			// don't actually need this atm, but whatever
-
-} forEach (_saveData get "factions");
-
-if (areRivalsEnabled) then {
-	private _rivalsFile = [A3A_Reb_template] call SCRT_fnc_rivals_getTemplateName;
-	if (!isNil "_rivalsFile") then {
-		[_rivalsFile] call A3A_fnc_loadRivals;
+	if (_forEachIndex isNotEqualTo 4) then {
+		[_basepath + _file, _side] call A3A_fnc_compatibilityLoadFaction;
 	} else {
-		Error("Rivals are not loaded for some reason, this could lead to some issues during mission run.");
+		[_basepath + _file] call A3A_fnc_loadRivals;
 	};
-} else {
-	missionNamespace setVariable ["A3A_faction_riv", createHashMap];
-};
+
+    private _type = ["Occ", "Inv", "Reb", "Civ", "Riv"] # _forEachIndex;
+    missionNamespace setVariable ["A3A_"+_type+"_template", _x, true];			// don't actually need this atm, but whatever
+} forEach (_saveData get "factions");
 
 {
 	private _cfg = configFile/"A3A"/"AddonVics"/_x;
@@ -513,10 +503,10 @@ private _vehicleResourceCosts = createHashMap;
 
 { _vehicleResourceCosts set [_x, 20] } forEach FactionGet(all, "vehiclesLightUnarmed") + FactionGet(all, "vehiclesTrucks");
 { _vehicleResourceCosts set [_x, 50] } forEach FactionGet(all, "vehiclesLightArmed");
-{ _vehicleResourceCosts set [_x, 60] } forEach FactionGet(all, "vehiclesLightAPCs");
+{ _vehicleResourceCosts set [_x, 70] } forEach FactionGet(all, "vehiclesLightAPCs");
 { _vehicleResourceCosts set [_x, 100] } forEach FactionGet(all, "vehiclesAPCs");
-{ _vehicleResourceCosts set [_x, 180] } forEach FactionGet(all, "vehiclesLightTanks");
 { _vehicleResourceCosts set [_x, 150] } forEach FactionGet(all, "vehiclesAA") + FactionGet(all, "vehiclesArtillery") + FactionGet(all, "vehiclesIFVs");
+{ _vehicleResourceCosts set [_x, 165] } forEach FactionGet(all, "vehiclesLightTanks");
 { _vehicleResourceCosts set [_x, 230] } forEach FactionGet(all, "vehiclesTanks");
 
 { _vehicleResourceCosts set [_x, 70] } forEach FactionGet(all, "vehiclesHelisLight");
@@ -530,13 +520,12 @@ private _vehicleResourceCosts = createHashMap;
 private _groundVehicleThreat = createHashMap;
 
 { _groundVehicleThreat set [_x, 40] } forEach FactionGet(all, "staticMG");
-{ _groundVehicleThreat set [_x, 80] } forEach FactionGet(all, "vehiclesLightArmed") + FactionGet(all, "vehiclesLightAPCs");
+{ _groundVehicleThreat set [_x, 80] } forEach FactionGet(all, "vehiclesLightArmed");
 { _groundVehicleThreat set [_x, 80] } forEach FactionGet(all, "staticAA") + FactionGet(all, "staticAT") + FactionGet(all, "staticMortars") + [FactionGet(Reb, "vehicleAT")];
-
-{ _groundVehicleThreat set [_x, 100] } forEach FactionGet(all, "vehiclesLightAPCs");
+{ _groundVehicleThreat set [_x, 90] } forEach FactionGet(all, "vehiclesLightAPCs");
 { _groundVehicleThreat set [_x, 120] } forEach FactionGet(all, "vehiclesAPCs");
+{ _groundVehicleThreat set [_x, 180] } forEach FactionGet(all, "vehiclesLightTanks");
 { _groundVehicleThreat set [_x, 200] } forEach FactionGet(all, "vehiclesAA") + FactionGet(all, "vehiclesArtillery") + FactionGet(all, "vehiclesIFVs");
-{ _groundVehicleThreat set [_x, 225] } forEach FactionGet(all, "vehiclesLightTanks");
 { _groundVehicleThreat set [_x, 300] } forEach FactionGet(all, "vehiclesTanks");
 
 

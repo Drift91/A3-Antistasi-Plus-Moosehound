@@ -133,59 +133,29 @@ private _fnc_pickRandomFromAProbablyNotInB = {
 };
 
 //Pick a weapon for the crate. Pick carefully, unless in CHAOS MODE, in which case, we just pick totally at random.
-private _fnc_pickWeapon = if (bobChaosCrates) then
-{
-	{
-		private _category = (selectRandom _weaponLootInfo) select 0;
-		selectRandom _category;
-	}
-}
-else
-{
-	{
-		private _category = selectRandomWeighted _weaponLootWeighting;
-		if (isNil "_category") exitWith {};
+private _fnc_pickWeapon = {
+	private _category = selectRandomWeighted _weaponLootWeighting;
+	if (isNil "_category") exitWith {};
 
-        Verbose_1("Selected Weapon Category: %1", _category);
-		//Category is in format [allX, unlockedX];
-		[_category select 0, _category select 1] call _fnc_pickRandomFromAProbablyNotInB;
-	}
+	Verbose_1("Selected Weapon Category: %1", _category);
+	//Category is in format [allX, unlockedX];
+	[_category select 0, _category select 1] call _fnc_pickRandomFromAProbablyNotInB;
 };
 
 //Pick the amount of X to spawn. Use gaussian distribution, unless we're in CHAOS MODE.
-private _fnc_pickAmount = if (bobChaosCrates) then
-{
-	{
-		params ["_max"];
-		round random _max;
-	}
-}
-else
-{
-	{
-		params ["_max"];
-		//Never have a greater than 50% chance of getting nothing
-		if (_max * _quantityScalingFactor < 1) then {
-			round random 1
-		} else {
-			round (random [1, floor (_max/2), _max] * _quantityScalingFactor)
-		}
+private _fnc_pickAmount = {
+	params ["_max"];
+	//Never have a greater than 50% chance of getting nothing
+	if (_max * _quantityScalingFactor < 1) then {
+		round random 1
+	} else {
+		round (random [1, floor (_max/2), _max] * _quantityScalingFactor)
 	}
 };
 
-private _fnc_pickNumberOfTypes = if (bobChaosCrates) then
-{
-	{
-		params ["_max"];
-		floor random _max;
-	}
-}
-else
-{
-	{
-		params ["_max"];
-		floor random [1, floor (_max/2), _max];
-	}
+private _fnc_pickNumberOfTypes = {
+	params ["_max"];
+	floor random [1, floor (_max/2), _max];
 };
 
 //Weapons Loot

@@ -50,9 +50,6 @@ private _hasContact = "enoch" in A3A_enabledDLC;
 //       Antistasi Plus Stuff       //
 //////////////////////////////////////
 
-["lootCrate", "Box_Syndicate_Ammo_F"] call _fnc_saveToTemplate;
-["rallyPoint", "B_RadioBag_01_wdl_F"] call _fnc_saveToTemplate;
-
 //classname, price, type, availability condition
 ["blackMarketStock", [
     ["I_UAV_02_lxWS", 3500, "UAV", {tierWar > 2}], 

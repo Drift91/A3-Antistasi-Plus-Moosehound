@@ -32,30 +32,26 @@ params ["_faction", "_prefix"];
 //---------------|
 if (_prefix in ["occ", "inv"]) exitWith {
     //singular tiered units
-    _faction set ["unitTierGrunt", [
-        unit(militia, "Rifleman"),
-        unit(military, "Rifleman"),
-        unit(elite, "Rifleman")
-    ]];
-
-    _faction set ["unitTierMarksman", [
-        unit(militia, "Marksman"),
-        unit(military, "Marksman"),
-        unit(elite, "Marksman")
-    ]];
-
     _faction set ["unitTierStaticCrew", [
         unit(militia, "Rifleman"),
         unit(military, "Rifleman"),
         unit(elite, "Rifleman")
     ]];
 
-    _faction set ["unitTierBodyguard", [
-        unit(militia, "Rifleman"),
-        unit(military, "Rifleman"),
-        unit(elite, "Rifleman")
+    _faction set ["unitRifle", [unit(militia, "Rifleman"),unit(military, "Rifleman"),unit(elite, "Rifleman")]];
+
+    _faction set ["unitTierGuard", [
+        [unit(militia, "Rifleman"),unit(military, "Rifleman"),unit(elite, "Rifleman")],
+        [unit(militia, "Grenadier"), unit(military, "Grenadier"),unit(elite, "Grenadier")],
+        [unit(militia, "LAT"), unit(military, "LAT"),unit(elite, "LAT")],
+        [unit(militia, "MachineGunner"), unit(military, "MachineGunner"),unit(elite, "MachineGunner")]
     ]];
-    _faction set ["unitRifle", _faction get "unitTierBodyguard"];
+
+    _faction set ["unitTierTower", [
+        [unit(militia, "Rifleman"),unit(military, "Rifleman"),unit(elite, "Rifleman")],
+        [unit(militia, "Marksman"),unit(military, "Marksman"),unit(elite, "Marksman")],
+        [unit(militia, "Sniper"), unit(military, "Sniper"),unit(elite, "Sniper")]
+    ]];
 
     //singular units
     _faction set ["unitOfficial", unit(other, "Official")];
@@ -206,16 +202,17 @@ if (_prefix in ["occ", "inv"]) exitWith {
             unit(SF, "SquadLeader"),
             unit(SF, "Rifleman"),
             unit(SF, "Radioman"),
-            unit(SF, "MachineGunner"),
-            unit(SF, "LAT"),
+            selectRandom [unit(SF, "Grenadier"), unit(SF, "MachineGunner")],
+            selectRandomWeighted [unit(SF, "LAT"), 2, unit(SF, "AT"), 1],
             unit(SF, "Medic"),
-            unit(SF, "Marksman"),
+            selectRandomWeighted [unit(SF, "Marksman"), 2, unit(SF, "Sniper"), 1],
             selectRandom [
                 unit(SF, "ExplosivesExpert")
-                , unit(SF, "AT")
+                , unit(SF, "AA")
                 , unit(SF, "Grenadier")
                 , unit(SF, "Sniper")
                 , unit(SF, "Engineer")
+                , unit(SF, "MachineGunner")
             ]
         ];
     };
@@ -280,9 +277,14 @@ if (_prefix in ["occ", "inv"]) exitWith {
 
 if (_prefix isEqualTo "riv") exitWith {
     _faction set ["unitCL", unit(militia, "CellLeader")];
+
     _faction set ["unitRifle", unit(militia, "Minuteman")];
     _faction set ["unitPartisan", unit(militia, "Partisan")];
     _faction set ["unitEnforcer", unit(militia, "Enforcer")];
+    _faction set ["unitMercenary", unit(militia, "Mercenary")];
+    _faction set ["unitSaboteur", unit(militia, "Oppressor")];
+    _faction set ["unitOppressor", unit(militia, "Saboteur")];
+
     _faction set ["unitCommander", unit(militia, "Commander")];
     _faction set ["unitCrew", unit(militia, "Crew")];
     _faction set ["unitPilot", unit(militia, "Pilot")];

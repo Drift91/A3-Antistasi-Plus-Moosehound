@@ -12,7 +12,7 @@ if (_marker in airportsX) then {
     _mrkD setMarkerColorLocal "Default";
 } else {
     if (_marker in destroyedSites and _marker in citiesX) exitWith { _mrkD setMarkerColorLocal "ColorBlack" };
-    if (_mrkSide == teamPlayer) exitWith { 
+    if (_mrkSide == teamPlayer) exitWith {
         if (_marker in milbases) then {
             _mrkD setMarkerTypeLocal "n_hq";
         };
@@ -40,7 +40,7 @@ private _mrkText = call {
     if (_marker in resourcesX) exitWith { localize "STR_resources" };
     if (_marker in factories) exitWith { localize "STR_factory" };
     if (_marker in milbases) exitWith { format [localize "STR_milbase", _faction get "name"] };
-    if (_marker in seaports) exitWith { 
+    if (_marker in seaports) exitWith {
         if (toLowerANSI worldName in ["enoch", "vn_khe_sanh", "esseker"]) then {
             localize "STR_port_river"
         } else {
@@ -52,7 +52,13 @@ private _mrkText = call {
 
 if (_mrkSide == teamPlayer) then {
     private _numTroops = count (garrison getVariable [_marker, []]);
-    private _limit = [_marker] call SCRT_fnc_common_getGarrisonLimit;
-    if (_numTroops > 0) then { _mrkText = format ["%1: %2/%3", _mrkText, _numTroops, _limit] };
+    private _limit = [_marker] call A3A_fnc_getGarrisonLimit;
+    if (_numTroops > 0) then {
+        _mrkText = format ["%1: %2%3",
+            _mrkText,
+            _numTroops,
+            if (_limit != -1) then {format ["/%1", _limit]} else {""}
+        ];
+    };
 };
 _mrkD setMarkerText _mrkText;

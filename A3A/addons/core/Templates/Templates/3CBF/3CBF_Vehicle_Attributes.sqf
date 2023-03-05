@@ -11,6 +11,7 @@
 */
 
     // Strong by light-armed standards
+    ["UK3CB_TKA_B_M1117", ["cost", 80], ["threat", 100]],
     ["UK3CB_AAF_B_M1117", ["cost", 80], ["threat", 100]],
     ["UK3CB_ANA_B_M1117", ["cost", 80], ["threat", 100]],
     ["UK3CB_TKA_O_GAZ_Vodnik_Cannon", ["cost", 80], ["threat", 100]],

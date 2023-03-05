@@ -373,13 +373,13 @@ SA_Attach_Tow_Ropes = {
 				if (isPlayer _driver) then {
 					[localize "STR_antistasi_actions_towing_hint_header", localize "STR_antistasi_actions_driver_towing_notification_hint"] remoteExec ["A3A_fnc_customHint", _driver];
 				};
-				_cargo lockDriver true;
+				[_cargo, true] remoteExec ["lockDriver", _cargo];
 				[_cargo, _cargoHitch, [0,0,-1]] ropeAttachTo (_towRopes select 0);
 				[_vehicle, _vehicleHitch, _cargo, _cargoHitch, _ropeLength, true] spawn SA_Simulate_Towing;
 
 				_vehicle addEventHandler ["RopeBreak", {
 					params ["_vehicle", "_rope", "_cargo"];
-					_cargo lockDriver false;
+					[_cargo, false] remoteExec ["lockDriver", _cargo];
 					_cargo removeEventHandler ["RopeBreak", _thisEventHandler];
 				}];
 			} else {

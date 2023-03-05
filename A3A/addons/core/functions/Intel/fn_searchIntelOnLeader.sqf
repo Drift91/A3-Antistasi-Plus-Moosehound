@@ -17,13 +17,12 @@ _caller setVariable ["intelSearchTime",time + _timeForSearch];
 _caller setVariable ["intelAnimsDone",false];
 _caller setVariable ["intelFound",false];
 _caller setVariable ["cancelIntelSearch",false];
+_caller setVariable ["A3A_searchedSquadLeader", _squadLeader];
 
 _squadLeader setVariable ["intelSearchDone", true, true];
 
 _caller playMoveNow selectRandom medicAnims;
 private _cancelAction = _caller addAction [(localize "STR_cancel_search_action"), {(_this select 1) setVariable ["cancelIntelSearch",true]},nil,6,true,true,"","(isPlayer _this)"];
-
-searchedSquadLeader = _squadLeader;
 
 _caller addEventHandler
 [
@@ -38,25 +37,28 @@ _caller addEventHandler
         ) then {
             _caller playMoveNow selectRandom medicAnims;
 
-            private _belongings = searchedSquadLeader getVariable ["belongings", []];
-            private _belongingsCount = round random [1,2,4];
+            private _squadLeader = _caller getVariable ["A3A_searchedSquadLeader", objNull];
 
-            if ((count _belongings) < _belongingsCount) then {
-                private _position = [(getPos searchedSquadLeader), 0.7, (random 360)] call SCRT_fnc_misc_extendPosition;
+            if (!isNull _squadLeader) then {
+                private _belongings = _squadLeader getVariable ["A3A_belongings", []];
+                private _belongingsCount = round random [1,2,4];
 
-                if (searchedSquadLeader call SCRT_fnc_misc_isInHouse) then {
-                    private _height = (getPosATL searchedSquadLeader) select 2;
-                    _position = [_position select 0, _position select 1, _height];
+                if ((count _belongings) < _belongingsCount) then {
+                    private _position = [(getPos _squadLeader), 0.7, (random 360)] call SCRT_fnc_misc_extendPosition;
+                    if (_squadLeader call SCRT_fnc_misc_isInHouse) then {
+                        private _height = (getPosATL _squadLeader) select 2;
+                        _position = [_position select 0, _position select 1, _height];
+                    };
+
+                    private _belonging = [
+                        (selectRandom belongings),
+                        _position,
+                        (random 360)
+                    ] call SCRT_fnc_misc_createBelonging;
+
+                    _belongings pushBack _belonging; 
+                    _squadLeader setVariable ["A3A_belongings", _belongings];
                 };
-
-                private _belonging = [
-                    (selectRandom belongings),
-                    _position,
-                    (random 360)
-                ] call SCRT_fnc_misc_createBelonging;
-
-                _belongings pushBack _belonging; 
-                searchedSquadLeader setVariable ["belongings", _belongings];
             };
         }
         else {
@@ -77,6 +79,7 @@ waitUntil {sleep 0.5; _caller getVariable ["intelAnimsDone", false]};
 
 _caller setVariable ["intelSearchTime",nil];
 _caller setVariable ["intelAnimsDone",nil];
+_caller setVariable ["A3A_searchedSquadLeader", nil];
 _caller removeAction _cancelAction;
 
 private _wasCancelled = _caller getVariable ["cancelIntelSearch", false];
@@ -87,7 +90,6 @@ if(_wasCancelled) exitWith
     [(localize "STR_intel_no_structtext_header"), (localize "STR_cancel_search_tooltip")] call A3A_fnc_customHint;
     _caller setVariable ["intelFound", nil];
     _squadLeader setVariable ["intelSearchDone", nil, true];
-    searchedSquadLeader = nil;
 };
 
 if(_caller getVariable ["intelFound", false]) then {
@@ -113,9 +115,14 @@ _caller setVariable ["intelFound", nil];
 private _bTimeOut = time + 60;
 waitUntil {sleep 0.5; time > _bTimeOut};
 
-private _belongings = searchedSquadLeader getVariable ["belongings", []];
-{
-    deleteVehicle _x;
-} forEach _belongings;
 
-searchedSquadLeader = nil;
+private _belongings = _squadLeader getVariable ["A3A_belongings", []];
+if (_belongings isNotEqualTo []) then {
+    _nil = [_belongings] spawn {
+        params ["_props"];
+        sleep random [30,45,60];
+        {deleteVehicle _x} forEach _props;
+        terminate _thisScript;
+    };
+};
+_squadLeader setVariable ["A3A_belongings", nil];

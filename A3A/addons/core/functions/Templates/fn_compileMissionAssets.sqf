@@ -86,7 +86,7 @@ Info("Identifying vehicle types");
 setVar("vehiclesPolice", OccAndInv("vehiclesPolice"));
 setVar("vehiclesAttack", OccAndInv("vehiclesAttack"));
 setVar("vehiclesAmmoTrucks", OccAndInv("vehiclesAmmoTrucks"));
-setVar("vehiclesLightAPCs", OccAndInv("vehiclesLightAPCs"));
+setVar("vehiclesLightAPCs", OccAndInv("vehiclesLightAPCs") + OccAndInv("vehiclesMilitiaAPCs") + OccAndInv("vehiclesAirborne"));
 setVar("vehiclesMedical", OccAndInv("vehiclesMedical") + ((A3A_faction_civ get "vehiclesCivMedical") select {_x isEqualType ""}));
 setVar("vehiclesAPCs", OccAndInv("vehiclesAPCs") + Riv("vehiclesRivalsAPCs") + ("APC" call _fnc_extractMarketClasses));
 setVar("vehiclesIFVs", OccAndInv("vehiclesIFVs") );
@@ -102,10 +102,10 @@ setVar("vehiclesHelisTransport", OccAndInv("vehiclesHelisTransport") );
 setVar("vehiclesPlanesAA", OccAndInv("vehiclesPlanesAA") );
 setVar("vehiclesPlanesCAS", OccAndInv("vehiclesPlanesCAS") );
 setVar("vehiclesPlanesTransport", OccAndInv("vehiclesPlanesTransport"));
-setVar("staticMortars", OccAndInv("staticMortars") + Riv("staticMortars") + [Reb("staticMortar")]);
-setVar("staticAA", OccAndInv("staticAAs") + Riv("staticAAs") + [Reb("staticAA")] + ("STATICAA" call _fnc_extractMarketClasses));
-setVar("staticAT", OccAndInv("staticATs") + Riv("staticATs") + [Reb("staticAT")] + ("STATICAT" call _fnc_extractMarketClasses));
-setVar("staticMG", OccAndInv("staticMGs") + Riv("staticMGs") + [Reb("staticMG")] + ("STATICMG" call _fnc_extractMarketClasses));
+setVar("staticMortars", OccAndInv("staticMortars") + Riv("staticMortars") + [Reb("staticMortar")] + ("STATICMORTAR" call _fnc_extractMarketClasses));
+setVar("staticAA", OccAndInv("staticAAs") + [Reb("staticAA")] + ("STATICAA" call _fnc_extractMarketClasses));
+setVar("staticAT", OccAndInv("staticATs") + [Reb("staticAT")] + ("STATICAT" call _fnc_extractMarketClasses));
+setVar("staticMG", OccAndInv("staticMGs") + Riv("staticLowWeapons") + [Reb("staticMG")] + ("STATICMG" call _fnc_extractMarketClasses));
 
 //Antistasi Plus stuff
 setVar("vehiclesAirborne", OccAndInv("vehiclesAirborne"));
@@ -189,6 +189,7 @@ private _carsArmed =
 OccAndInv("vehiclesLightArmed")
 + OccAndInv("vehiclesMilitiaLightArmed")
 + Riv("vehiclesRivalsLightArmed")
++ ("ARMEDCAR" call _fnc_extractMarketClasses)
 + [Reb("vehicleLightArmed")];
 setVar("vehiclesLightArmed", _carsArmed);
 
@@ -198,6 +199,7 @@ OccAndInv("vehiclesLightUnarmed")      // anything else?
 + OccAndInv("vehiclesMilitiaCars")
 + OccAndInv("vehiclesPolice")
 + Riv("vehiclesRivalsCars")
++ ("UNARMEDCAR" call _fnc_extractMarketClasses)
 + [Reb("vehicleLightUnarmed")];
 setVar("vehiclesLightUnarmed", _carsUnarmed);
 setVar("vehiclesLight", _carsArmed + _carsUnarmed);

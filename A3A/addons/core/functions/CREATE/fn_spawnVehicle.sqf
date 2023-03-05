@@ -73,8 +73,6 @@ switch (toLowerANSI _sim) do {
     };
 };
 
-[_veh] call SCRT_fnc_misc_tryInitVehicle;
-
 //Set the correct direction.
 _veh setDir _azi;
 

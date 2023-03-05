@@ -9,11 +9,12 @@ private _difficultX = if (random 10 < tierWar) then {true} else {false};
 private _positionX = getMarkerPos _markerX;
 private _sideX = if (sidesX getVariable [_markerX,sideUnknown] == Occupants) then {Occupants} else {Invaders};
 private _faction = Faction(_sideX);
-private _timeLimit = if (_difficultX) then {30 * timeMultiplier} else {60 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	30 call SCRT_fnc_misc_getTimeLimit
+} else {
+	60 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _nameDest = [_markerX] call A3A_fnc_localizar;
 private _typeVehX = selectRandom (_faction get "vehiclesAmmoTrucks");
@@ -49,8 +50,8 @@ if ((spawner getVariable _markerX != 2) and !(sidesX getVariable [_markerX,sideU
 	if (!debug) then {_mrk setMarkerAlphaLocal 0};
 	private _typeGroup = if (_difficultX) then {
 		selectRandom ([_faction, "groupsTierSquads"] call SCRT_fnc_unit_flattenTier)
-	} else { 
-		selectRandom ([_faction, "groupsTierSmall"] call SCRT_fnc_unit_flattenTier) 
+	} else {
+		selectRandom ([_faction, "groupsTierSmall"] call SCRT_fnc_unit_flattenTier)
 	};
 	_groupX = [_pos,_sideX, _typeGroup] call A3A_fnc_spawnGroup;
 	sleep 1;
@@ -60,11 +61,11 @@ if ((spawner getVariable _markerX != 2) and !(sidesX getVariable [_markerX,sideU
 		[_dog] spawn A3A_fnc_guardDog;
 		};
 
-	[leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2"] call A3A_fnc_proxyUPSMON;
+	_nul = [leader _groupX, _mrk, "LIMITED", "SAFE","SPAWNED", "NOVEH2"] spawn UPSMON_fnc_UPSMON;
 
 	_groupX1 = [_pos,_sideX,_typeGroup] call A3A_fnc_spawnGroup;
 	sleep 1;
-	[leader _groupX1, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2"] call A3A_fnc_proxyUPSMON;
+	_nul = [leader _groupX1, _mrk, "LIMITED", "SAFE","SPAWNED", "NOVEH2"] spawn UPSMON_fnc_UPSMON;
 
 	{[_x,""] call A3A_fnc_NATOinit} forEach units _groupX;
 	{[_x,""] call A3A_fnc_NATOinit} forEach units _groupX1;
@@ -86,7 +87,7 @@ if ((spawner getVariable _markerX != 2) and !(sidesX getVariable [_markerX,sideU
 			[_taskId, "LOG", "SUCCEEDED"] call A3A_fnc_taskSetState;
 			[0,300*_bonus] remoteExec ["A3A_fnc_resourcesFIA",2];
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ 
+			{
 				[15 * _bonus,_x] call A3A_fnc_addScorePlayer;
     			[300 * _bonus,_x] call A3A_fnc_addMoneyPlayer;
 			} forEach (call SCRT_fnc_misc_getRebelPlayers);

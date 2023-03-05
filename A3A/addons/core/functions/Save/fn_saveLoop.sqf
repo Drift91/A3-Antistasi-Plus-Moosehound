@@ -115,7 +115,7 @@ private _milAdminPositions = [];
 ["destroyedMilAdmins", _milAdminPositions] call A3A_fnc_setStatVariable;
 
 
-private ["_hrBackground","_resourcesBackground","_veh","_typeVehX","_weaponsX","_ammunition","_items","_backpcks","_containers","_arrayEst","_posVeh","_dierVeh","_prestigeOPFOR","_prestigeBLUFOR","_city","_dataX","_markersX","_garrison","_arrayMrkMF","_arrayOutpostsFIA","_positionOutpost","_typeMine","_posMine","_detected","_typesX","_exists","_friendX"];
+private ["_hrBackground","_resourcesBackground","_veh","_typeVehX","_weaponsX","_ammunition","_items","_backpcks","_containers","_arrayEst","_posVeh","_dierVeh","_prestigeOPFOR","_prestigeBLUFOR","_city","_dataX","_markersX","_garrison","_arrayMrkMF","_positionOutpost","_typeMine","_posMine","_detected","_typesX","_exists","_friendX"];
 
 _hrBackground = (server getVariable "hr") + ({(alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
 _resourcesBackground = server getVariable "resourcesFIA";
@@ -228,7 +228,12 @@ _garrison = [];
 _wurzelGarrison = [];
 
 {
-	_garrison pushBack [_x,garrison getVariable [_x,[]],garrison getVariable [_x + "_lootCD", 0]];
+	_garrison pushBack [
+		_x,
+		garrison getVariable [_x,[]],
+		garrison getVariable [_x + "_lootCD", 0],
+		garrison getVariable [_x + "_powCD", 0]
+	];
 	_wurzelGarrison pushBack [
 		_x,
 		garrison getVariable [format ["%1_garrison",_x], []],
@@ -237,7 +242,7 @@ _wurzelGarrison = [];
 	];
 } forEach _markersX;
 
-["garrison",_garrison] call A3A_fnc_setStatVariable;
+["garrison", _garrison] call A3A_fnc_setStatVariable;
 ["wurzelGarrison", _wurzelGarrison] call A3A_fnc_setStatVariable;
 ["usesWurzelGarrison", true] call A3A_fnc_setStatVariable;
 

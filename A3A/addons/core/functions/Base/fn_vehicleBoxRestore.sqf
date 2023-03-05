@@ -50,6 +50,7 @@ private _rebelPlayers = allUnits select {side _x in [teamPlayer, civilian] && {_
     _x setDamage 0;
     _x setVariable ["incapacitated",false,true];
     _x setVariable ["compromised", 0, true];
+    _x setVariable ["carryUndercoverBreak", false, true];
 } forEach _rebelPlayers;
 
 private _hqVehicles = (vehicles inAreaArray [_posHQ, 150, 150]) select {

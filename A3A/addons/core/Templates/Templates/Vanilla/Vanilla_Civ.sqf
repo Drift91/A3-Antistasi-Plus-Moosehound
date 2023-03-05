@@ -10,17 +10,25 @@ private _hasApex = "expansion" in A3A_enabledDLC;
 //       Vehicles       //
 //////////////////////////
 
-["vehiclesCivCar", [
+private _civCarsWithWeights = [
     "C_Quadbike_01_F", 0.3
-    ,"C_Hatchback_01_F", 2.0
+    ,"C_Hatchback_01_F", 1.0
     ,"C_Hatchback_01_sport_F", 0.3
-    ,"C_Offroad_01_F", 2.0
+    ,"C_Offroad_01_F", 1.0
     ,"C_SUV_01_F", 1.0
     ,"C_Van_02_vehicle_F", 1.0                // van from Orange
     ,"C_Van_02_transport_F", 0.2            // minibus
     ,"C_Offroad_02_unarmed_F", 0.5            // Apex 4WD
     ,"C_Offroad_01_comms_F", 0.1            // Contact
-    ,"C_Offroad_01_covered_F", 0.1]] call _fnc_saveToTemplate;
+    ,"C_Offroad_01_covered_F", 0.1
+];
+
+if (_hasApex) then {
+    _civCarsWithWeights append ["C_Offroad_02_unarmed_F", 1.0];
+};
+
+["vehiclesCivCar", _civCarsWithWeights] call _fnc_saveToTemplate;
+
 
 ["vehiclesCivIndustrial", [
     "C_Van_01_transport_F", 1.0
@@ -162,7 +170,9 @@ private _civhats = [
     "H_Cap_tan",
     "H_StrawHat",
     "H_StrawHat_dark",
-    "H_Hat_checker"
+    "H_Hat_checker",
+    "H_Hat_Safari_olive_F",
+    "H_Hat_Safari_sand_F"
 ];
 
 ["headgear", _civHats] call _fnc_saveToTemplate;

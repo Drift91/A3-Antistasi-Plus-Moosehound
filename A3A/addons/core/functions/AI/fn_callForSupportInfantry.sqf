@@ -22,14 +22,14 @@ if ((_side isEqualTo Occupants && areOccupantsDefeated) || {(_side isEqualTo Inv
     Info_1("%1 faction had been defeated earlier, aborting calling support.", _side);
 };
 
-if(_side != Occupants && {_side != Invaders}) exitWith {
+if(_side != Occupants && _side != Invaders) exitWith {
     Error_2("Non-enemy group %1 of side %2 managed to call callForSupportInfantry", _group, _side);
 };
 
 private _radiomanIndex = (units _group) findIf {(_x getVariable "unitType") in (FactionGet(all,"Radiomen"))};
 
 if (_radiomanIndex isEqualTo -1) exitWith {
-    Info_1("%1 Group on %2 position has no capabilities to call support, no radiomen in squad, aborting.", str _group);
+    Info_1("%1 Group has no capabilities to call support, no radiomen in squad, aborting.", str _group);
 };
 
 private _radioMan = (units _group) select _radiomanIndex;
@@ -38,7 +38,7 @@ private _radioMan = (units _group) select _radiomanIndex;
 if !(_radioMan call A3A_fnc_canFight) exitWith {};
 if((_group getVariable ["A3A_canCallSupportAt", -1]) > time) exitWith {};
 
-private _timeToCallSupport = (30 + random 15) / A3A_balancePlayerScale;
+private _timeToCallSupport = (15 + random 15) / A3A_balancePlayerScale;
 _group setVariable ["A3A_canCallSupportAt", time + 15*_timeToCallSupport];
 
 {_radioMan disableAI _x} forEach ["ANIM","AUTOTARGET","FSM","MOVE","TARGET"];

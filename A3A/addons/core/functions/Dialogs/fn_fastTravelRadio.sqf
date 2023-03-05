@@ -146,6 +146,8 @@ if (_positionTel distance getMarkerPos _base < 150) then {
 		[localize "STR_A3A_Dialogs_fast_travel_header", format [localize "STR_A3A_Dialogs_fast_travel_cancel",groupID _groupX]] call A3A_fnc_customHint;
 	};
 
+	private _movedUnits = units _groupX;
+
 	{
 		private _unit = _x;
 		if (!isPlayer _unit or {_unit == player}) then {
@@ -181,7 +183,7 @@ if (_positionTel distance getMarkerPos _base < 150) then {
 				};
 			};
 		};
-	} forEach units _groupX;
+	} forEach _movedUnits;
 	if (!_esHC) then {
 		disableUserInput false;
 		cutText [localize "STR_hints_FT_dest","BLACK IN",1]
@@ -194,7 +196,7 @@ if (_positionTel distance getMarkerPos _base < 150) then {
 	};
 	
 	sleep 5;
-	{_x allowDamage true} forEach units _groupX;
+	{_x allowDamage true} forEach _movedUnits;
 } else {
 	[localize "STR_A3A_Dialogs_fast_travel_header", localize "STR_A3A_Dialogs_fast_travel_missclick"] call SCRT_fnc_misc_deniedHint;
 };

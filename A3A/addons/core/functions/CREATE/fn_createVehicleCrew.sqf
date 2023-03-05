@@ -22,6 +22,8 @@
 
 params ["_group", "_vehicle", "_unitType"];
 
+private _isHeli = _vehicle isKindOf "Helicopter";
+
 private _newGroup = false;
 if (_group isEqualType sideUnknown) then {
 	_group = createGroup _group;
@@ -56,7 +58,7 @@ private _fnc_addCrewToTurrets = {
 		[_turretConfig, _turretPath] call _fnc_addCrewToTurrets;
 
 		if (getNumber (_turretConfig >> "hasGunner") == 0 || getNumber (_turretConfig >> "dontCreateAI") != 0) then { continue };
-		if (getNumber (_turretConfig >> "showAsCargo") > 0) then { continue };
+		if (!_isHeli && {getNumber (_turretConfig >> "showAsCargo") > 0}) then { continue };
 		if (isNull (_vehicle turretUnit _turretPath)) then {
 			private _gunner = [_group, _unitType, getPos _vehicle, [], 10] call A3A_fnc_createUnit;
 			_gunner assignAsTurret [_vehicle, _turretPath];

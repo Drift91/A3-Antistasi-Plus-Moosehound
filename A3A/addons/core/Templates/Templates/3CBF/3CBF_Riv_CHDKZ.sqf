@@ -49,17 +49,24 @@
 ["vehiclesRivalsHelis", ["rhsgref_ins_Mi8amt"]] call _fnc_saveToTemplate;			
 ["vehiclesRivalsUavs", ["O_UAV_01_F"]] call _fnc_saveToTemplate;			
 
-["staticMGs", ["rhsgref_ins_DSHKM"]] call _fnc_saveToTemplate;
-["staticGMGs", ["rhsgref_ins_DSHKM_Mini_TriPod", "rhsgref_ins_AGS30_TriPod"]] call _fnc_saveToTemplate;
-
-["staticATs", ["O_static_AT_F"]] call _fnc_saveToTemplate;
-["staticAAs", ["rhsgref_ins_Igla_AA_pod", "rhsgref_ins_ZU23"]] call _fnc_saveToTemplate;
+["staticLowWeapons", [
+	"rhsgref_ins_DSHKM_Mini_TriPod", 
+	"rhsgref_ins_AGS30_TriPod",
+	"rhsgref_ins_SPG9M", 
+	"rhsgref_ins_SPG9", 
+	"UK3CB_CHD_O_NSV", 
+	"UK3CB_CHD_O_KORD", 
+	"UK3CB_CHD_O_PKM_Low"
+]] call _fnc_saveToTemplate;
 ["staticMortars", ["rhsgref_ins_2b14"]] call _fnc_saveToTemplate;
 
 ["mortarMagazineHE", "rhs_mag_3vo18_10"] call _fnc_saveToTemplate;
 
 ["handGrenadeAmmo", ["rhs_ammo_rgd5", "rhs_ammo_f1"]] call _fnc_saveToTemplate;
 ["mortarAmmo", ["Sh_82mm_AMOS"]] call _fnc_saveToTemplate;
+
+["minefieldAT", ["rhs_mine_tm62m"]] call _fnc_saveToTemplate;
+["minefieldAPERS", ["rhs_mine_pmn2"]] call _fnc_saveToTemplate;
 
 //////////////////////////
 //       Loadouts       //
@@ -194,14 +201,6 @@ _loadoutData set ["items_sniper_extras", _mmItems];
 _loadoutData set ["items_police_extras", []];
 _loadoutData set ["items_crew_extras", []];
 _loadoutData set ["items_unarmed_extras", []];
-
-
-//TODO: сотая серия
-//зенитка
-//бубны
-//m21
-//продвинутые шлемы и броники у наёмников
-//вернуть хэви-весты
 
 _loadoutData set ["rifles", [
 	["rhs_weap_pm63", "rhs_acc_dtkakm", "", "",  ["rhs_30Rnd_762x39mm", "rhs_30Rnd_762x39mm", "rhs_30Rnd_762x39mm_tracer"], [], ""],

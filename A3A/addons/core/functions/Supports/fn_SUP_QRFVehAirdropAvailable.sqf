@@ -22,4 +22,4 @@ if (typeOf _target in _allAA) exitWith { 0 };
 
 if (_target isKindOf "Tank") exitWith { 0.3 }; //airborne veihcles usually have light anti-infantry weapons
 
-(tierWar - 4) / 8; 
+(tierWar - 5) / 8; 

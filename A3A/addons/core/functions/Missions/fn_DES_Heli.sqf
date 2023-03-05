@@ -80,11 +80,12 @@ private _taskMrk = createMarker [format ["DES%1", random 100],_posCrashMrk];
 _taskMrk setMarkerShape "ICON";
 
 //finding timelimit for mission
-private _timeLimit = 120 * timeMultiplier;
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;
+private _limit = if (_difficult) then {
+	60 call SCRT_fnc_misc_getTimeLimit
+} else {
+	120 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 //creating mission
 Info("Creating Helicopter Down mission");

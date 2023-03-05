@@ -12,11 +12,12 @@ private _positionX = getMarkerPos _markerX;
 
 private _faction = Faction(Occupants);
 
-private _timeLimit = if (_difficultX) then {30 * timeMultiplier} else {60 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	30 call SCRT_fnc_misc_getTimeLimit
+} else {
+	60 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _nameDest = [_markerX] call A3A_fnc_localizar;
 private _taskId = "SUPP" + str A3A_taskCount;
@@ -24,7 +25,7 @@ private _taskId = "SUPP" + str A3A_taskCount;
 [_taskId, "SUPP", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 //Creating the box
-private _pos = (getMarkerPos respawnTeamPlayer) findEmptyPosition [1,50,"C_Van_01_box_F"]; //special case for bigger object search to make sure that it has enough free space around it
+private _pos = (getMarkerPos respawnTeamPlayer) findEmptyPosition [1,50,"Land_FoodSacks_01_cargo_brown_F"];
 private _truckX = "Land_FoodSacks_01_cargo_brown_F" createVehicle _pos;
 _truckX enableRopeAttach true;
 _truckX allowDamage false;
@@ -66,7 +67,7 @@ if ((spawner getVariable _markerX != 2) and {!(sidesX getVariable [_markerX,side
 	] select _difficultX;
 
 	private _groupX = [_positionX, Occupants, _typeGroup] call A3A_fnc_spawnGroup;
-	[leader _groupX, _mrk, "SAFE","SPAWNED", "NOVEH2", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+	_nul = [leader _groupX, _mrk, "SAFE","SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 	{[_x] call A3A_fnc_NATOinit} forEach units _groupX;
 
 	_groups pushBack _groupX;
@@ -82,7 +83,7 @@ if ((dateToNumber date > _dateLimitNum) or {isNull _truckX}) then {
 } else {
 	private _countX = if (_difficultX) then {90} else {180};
 
-	if (_difficultX) then {
+	if (_difficultX && {spawner getVariable _markerX != 2 && {!(sidesX getVariable [_markerX,sideUnknown] == teamPlayer)}}) then {
 		Info("Rebels in area, spawning additional group.");
 
 		private _typeGroup = [
@@ -90,7 +91,7 @@ if ((dateToNumber date > _dateLimitNum) or {isNull _truckX}) then {
 			selectRandom ([_faction, "groupsTierSquads", 0] call SCRT_fnc_unit_flattenTier)
 		] select _difficultX;
 
-		private _group2Position = [_positionX, 650, 1000, 0, 0] call BIS_fnc_findSafePos;
+		private _group2Position = [_positionX, 450, 700, 0, 0] call BIS_fnc_findSafePos;
 		private _groupX2 = [_group2Position, Occupants, _typeGroup] call A3A_fnc_spawnGroup;
 		{[_x] call A3A_fnc_NATOinit} forEach units _groupX;
 		_groups pushBack _groupX2;

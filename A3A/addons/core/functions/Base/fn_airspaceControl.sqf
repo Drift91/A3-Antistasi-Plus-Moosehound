@@ -156,7 +156,7 @@ while {!(isNull _vehicle) && {alive _vehicle && {count (crew _vehicle) != 0}}} d
 
     //Get all enemy airports and outposts to not search that much options
     private _enemyAirports = airportsX select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
-    private _enemyOutposts = outposts select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
+    private _enemyOutposts = (outposts + seaports) select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
     private _enemyMilbases = milbases select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
 
     //Check vehicles undercover status

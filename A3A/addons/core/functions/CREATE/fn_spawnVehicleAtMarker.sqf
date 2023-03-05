@@ -41,7 +41,6 @@ if(_spawnParams isEqualType []) then
     //Place found spawn in vehicle now
     _vehicleObj = createVehicle [_vehicle, (_spawnParams select 0), [], 0, "CAN_COLLIDE"];
     _vehicleObj setDir (_spawnParams select 1);
-    [_vehicleObj] call SCRT_fnc_misc_tryInitVehicle;
 };
 
 _vehicleObj;

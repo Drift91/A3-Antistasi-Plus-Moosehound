@@ -78,7 +78,7 @@ if (side (group _killer) == teamPlayer) then
         };
 	};
     if (_isRival) then {
-        [2, 30] remoteExec ["SCRT_fnc_rivals_reduceActivity",2];
+        [random [3,4,5], 30] remoteExec ["SCRT_fnc_rivals_reduceActivity",2];
     };
 }
 else
@@ -91,6 +91,8 @@ else
 	{
         if (!_isRival) then {
             [0.25,0,getPos _victim] remoteExec ["A3A_fnc_citySupportChange",2];
+        } else {
+            [random [3,4,5], 30] remoteExec ["SCRT_fnc_rivals_reduceActivity",2];
         };
 	};
 };

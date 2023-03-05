@@ -60,7 +60,7 @@ Info("Server JNA preload started");
 
 // UPSMON
 Info("UPSMON init started");
-[] call compile preprocessFileLineNumbers QPATHTOFOLDER(Scripts\Init_UPSMON.sqf);
+[] call UPSMON_fnc_Init_UPSMON;
 
 Info("Background init completed");
 A3A_backgroundInitDone = true;
@@ -71,7 +71,7 @@ A3A_backgroundInitDone = true;
 // Wait until we have selected/created save data
 waitUntil {sleep 0.1; !isNil "A3A_saveData"};
 
-[localize "STR_A3A_feedback_serverinfo", localize "STR_A3A_feedback_serverinfo_starting"] remoteExec ["A3A_fnc_customHint", 0];
+A3A_startupState = "starting"; publicVariable "A3A_startupState";
 
 // Use true params list in case we're loading an autosave from a different version
 private _savedParamsHM = createHashMapFromArray (A3A_saveData get "params");
@@ -246,10 +246,9 @@ addMissionEventHandler ["EntityKilled", {
 }];
 
 
-[localize "STR_A3A_feedback_serverinfo", localize "STR_A3A_feedback_serverinfo_completed"] remoteExec ["A3A_fnc_customHint", 0];
-
 serverInitDone = true; publicVariable "serverInitDone";
 Info("Setting serverInitDone as true");
+A3A_startupState = "completed"; publicVariable "A3A_startupState";
 
 
 // ********************* Initialize loops *******************************************

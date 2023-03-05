@@ -58,7 +58,7 @@ if (_veh isKindOf "Car" or{ _veh isKindOf "Tank"}) then {
 			};
 		};
 
-		case (_typeX in FactionGet(all,"vehiclesAPCs") + FactionGet(all,"vehiclesIFVs") + FactionGet(all,"vehiclesLightAPCs") + FactionGet(all, "vehiclesAirborne")): {
+		case (_typeX in FactionGet(all,"vehiclesAPCs") + FactionGet(all,"vehiclesIFVs") + FactionGet(all,"vehiclesLightAPCs")): {
 			_veh addEventHandler ["HandleDamage",{private _veh = _this select 0; if (!canFire _veh) then {[_veh] call A3A_fnc_smokeCoverAuto; _veh removeEventHandler ["HandleDamage",_thisEventHandler]};if (((_this select 1) find "wheel" != -1) and (_this select 4=="") and (!isPlayer driver (_veh))) then {0;} else {(_this select 2);}}];
 			_veh setVariable ["within",true];
 			_veh addEventHandler ["GetOut", {private _veh = _this select 0; if (side (_this select 2) != teamPlayer) then {if (_veh getVariable "within") then {_veh setVariable ["within",false];[_veh] call A3A_fnc_smokeCoverAuto}}}];
@@ -240,6 +240,11 @@ if([typeOf _veh] call A3A_Logistics_fnc_isLoadable) then {[_veh] call A3A_Logist
 
 // deletes vehicle if it exploded on spawn...
 [_veh] spawn A3A_fnc_cleanserVeh;
+
+//initializes animiation sources and camo variants
+if (_side != teamPlayer) then {
+	[_veh] call SCRT_fnc_misc_tryInitVehicle;
+};
 
 if (!isNull _veh) then {
     ["AIVehInit", [_veh, _side]] call EFUNC(Events,triggerEvent);

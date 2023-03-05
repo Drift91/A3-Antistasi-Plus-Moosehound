@@ -136,8 +136,8 @@ if (_isLarge && {_isComputer}) then {
 		[
 			_bomb,
 			localize "STR_antistasi_actions_bomb_disarm",
-			"\Orange\Addons\ui_f_orange\Data\CfgVehicleIcons\iconExplosiveUXO_ca.paa",
-			"\Orange\Addons\ui_f_orange\Data\CfgVehicleIcons\iconExplosiveUXO_ca.paa",
+			"a3\ui_f\data\igui\cfg\holdactions\holdaction_unbind_ca.paa",
+			"a3\ui_f\data\igui\cfg\holdactions\holdaction_unbind_ca.paa",
 			"(_this distance _target < 3) and (_this getUnitTrait 'engineer')",
 			"_caller distance _target < 3",
 			{},
@@ -172,8 +172,8 @@ private _ehId = _building addEventHandler ["Killed", {
 		deleteVehicle _intel;
 	};
 
-	if (!isNull _desk) then {
-		_desk enableSimulation true;
+	if (!isNull _desk && {!simulationEnabled _desk}) then {
+		[_desk, true] remoteExec ["enableSimulationGlobal",2];
 	};
 
 	_building removeEventHandler ["Killed",_thisEventHandler];
@@ -181,7 +181,7 @@ private _ehId = _building addEventHandler ["Killed", {
 
 _nil = [_marker, _desk, _intel, _building, _ehId] spawn {
 	params ["_marker", "_desk", "_intel", "_building", "_ehId"];
-	waitUntil{sleep 10; (spawner getVariable _marker == 2)};
+	waitUntil {sleep 10; (spawner getVariable _marker == 2)};
 	deleteVehicle _desk;
 	if(!isNil "_intel") then {
 		_bomb = _intel getVariable ["trapBomb", objNull];
@@ -189,6 +189,6 @@ _nil = [_marker, _desk, _intel, _building, _ehId] spawn {
 		deleteVehicle _intel;
 	};
 
-	_building removeEventHandler ["Killed",_ehId];
+	_building removeEventHandler ["Killed", _ehId];
 	terminate _thisScript;
 };

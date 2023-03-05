@@ -6,12 +6,12 @@ if (!isServer and hasInterface) exitWith{};
 private _difficultX = if (random 10 < tierWar) then {true} else {false};
 private _positionX = getMarkerPos _markerX;
 
-
-private _timeLimit = if (_difficultX) then {45 * timeMultiplier} else {90 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-private _dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	45 call SCRT_fnc_misc_getTimeLimit
+} else {
+	90 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _markerSide = sidesX getVariable [_markerX, sideUnknown];
 

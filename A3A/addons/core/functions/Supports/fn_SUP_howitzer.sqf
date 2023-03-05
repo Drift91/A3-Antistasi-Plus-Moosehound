@@ -37,33 +37,10 @@ private _possibleBases = (airportsX + milbases) select
     {spawner getVariable _x == 2}}}
 };
 if(count _possibleBases == 0) exitWith { Debug("No bases found for howitzer support"); -1 };
-
-//Search for an outpost with a designated mortar position if possible
-private _spawnRadius = 10;
-private _spawnPos = [];
-private _spawnDir = 0;
-{
-    //howitzers use same positions as mortars
-    private _spawnParams = [_x, "Mortar"] call A3A_fnc_findSpawnPosition;
-    if (_spawnParams isEqualType []) exitWith
-    {
-        //Will occupy a mortar spawn position until the outpost spawnes in and despawns again (Currently we dont spawn mortars at outposts anyways)
-        _spawnRadius = 0;
-        _spawnPos = _spawnParams select 0;
-        _spawnDir = _spawnParams select 1;
-    };
-    [_x] spawn A3A_fnc_freeSpawnPositions;
-} forEach _possibleBases;
-
-if (_spawnPos isEqualTo []) then 
-{
-    private _base = selectRandom _possibleBases;
-    _spawnPos = markerPos _base;
-};
-
+private _base = selectRandom _possibleBases;
 
 // Spawn in howitzer
-private _vehicle = [_vehType, _spawnPos, _spawnRadius, 5, true] call A3A_fnc_safeVehicleSpawn;
+private _vehicle = [_vehType, markerPos _base, 50, 5, true] call A3A_fnc_safeVehicleSpawn;
 _vehicle setVariable ["shellType", _shellType];
 [_vehicle, _side, _resPool] call A3A_fnc_AIVehInit;
 
@@ -82,11 +59,11 @@ if (_target isEqualType objNull) then {
 };
 
 // name, side, suppType, pos, radius, remTargets, targets
-private _suppData = [_supportName, _side, "HOWITZER", _spawnPos, _maxRange, _targArray, _minRange];
+private _suppData = [_supportName, _side, "HOWITZER", markerPos _base, _maxRange, _targArray, _minRange];
 A3A_activeSupports pushBack _suppData;
 [_suppData, _vehicle, _group, _delay, _reveal] spawn A3A_fnc_SUP_mortarRoutine;
 
 [_reveal, _side, "HOWITZER", _targPos, _delay] spawn A3A_fnc_showInterceptedSetupCall;
 
 // Mortar cost (might be free?) + extra support cost for balance
-(A3A_vehicleResourceCosts getOrDefault [_vehType, 0]) + 100;
+(A3A_vehicleResourceCosts getOrDefault [_vehType, 0]) + 125;

@@ -224,6 +224,8 @@ private _categoryOverrideTable = [
 ["CUP_launch_Javelin", ["MissileLaunchers","Weapons"]],
 */
 
+["ChemicalDetector_01_watch_F", ["Unknown","Items"]],
+
 ["CUP_item_Money", ["Unknown","Items"]],
 ["CUP_item_Kostey_photos", ["Unknown","Items"]],
 ["CUP_item_Kostey_map_case", ["Unknown","Items"]],

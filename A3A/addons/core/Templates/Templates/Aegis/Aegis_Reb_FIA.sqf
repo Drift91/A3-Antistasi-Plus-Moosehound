@@ -56,9 +56,6 @@ if (_hasWs) then {
 //       Antistasi Plus Stuff       //
 //////////////////////////////////////
 
-["lootCrate", "Box_Syndicate_Ammo_F"] call _fnc_saveToTemplate;
-["rallyPoint", "B_RadioBag_01_wdl_F"] call _fnc_saveToTemplate;
-
 //classname, price, type, availability condition
 private _shopWs = if (_hasWs) then {
     [
@@ -71,7 +68,18 @@ private _shopWs = if (_hasWs) then {
 } else {
     []
 };
-private _vehiclesBlackMarket = _shopWs + [
+
+private _shopApex = if (_hasApex) then {
+    [
+        ["I_C_Offroad_02_unarmed_F", 200, "UNARMEDCAR", {true}], 
+        ["I_C_Offroad_02_LMG_F", 800, "ARMEDCAR", {true}],
+        ["I_C_Offroad_02_AT_F", 1450, "ARMEDCAR", {true}]
+    ]
+} else {
+    []
+};
+
+private _vehiclesBlackMarket = _shopWs + _shopApex + [
     ["I_UAV_01_F", 2000, "UAV", {true}],
     ["I_LT_01_AA_F", 7500, "AA", {{sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (milbases + airportsX) > 0}],
     ["I_G_APC_Wheeled_03_cannon_F", 15000, "APC", {{sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count seaports > 0}],
@@ -104,6 +112,17 @@ private _initialRebelEquipment = [
     "V_BandollierB_blk","V_BandollierB_cbr","V_BandollierB_rgr","V_BandollierB_khk","V_BandollierB_oli","V_Rangemaster_belt",
     "Binocular", "acc_flashlight","acc_flashlight_smg_01","acc_flashlight_pistol"
 ];
+
+
+if (_hasLawsOfWar) then {
+    _initialRebelEquipment append [
+        "V_Pocketed_olive_F", 
+        "V_Pocketed_coyote_F", 
+        "V_Pocketed_black_F", 
+        "V_Pocketed_hunter_F", 
+        "V_Pocketed_wdl_F"
+    ];
+};
 
 private _civilianBackpacks =  [];
 

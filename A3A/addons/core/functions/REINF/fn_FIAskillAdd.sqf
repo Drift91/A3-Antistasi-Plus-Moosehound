@@ -12,7 +12,7 @@ if (player != theBoss) exitWith {
     ] spawn SCRT_fnc_ui_showMessage;
 };
 
-if (skillFIA > SKILL_CAP) exitWith {
+if (skillFIA >= SKILL_CAP) exitWith {
     [
         localize "STR_notifiers_fail_type",
         format [localize "STR_notifiers_skill_header", FactionGet(reb, "name")],
@@ -50,5 +50,5 @@ server setVariable ["resourcesFIA",_resourcesFIA,true];
 private _display = findDisplay 60000;
 if !(str (_display) == "no display") then {
     private _title = _display displayCtrl 3102;
-    _title ctrlSetText format [localize "STR_commander_menu_skill_level_title", FactionGet(reb, "name"), skillFIA];
+    _title ctrlSetText format [localize "STR_commander_menu_skill_level_title", FactionGet(reb, "name"), skillFIA, SKILL_CAP];
 };

@@ -18,11 +18,12 @@ private _groups = [];
 private _effects = [];
 private _props = [];
 
-private _timeLimit = if (_difficulty) then  {45 * timeMultiplier} else {60 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;
+private _limit = if (_difficulty) then {
+	45 call SCRT_fnc_misc_getTimeLimit
+} else {
+	60 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _destinationName = [_markerX] call A3A_fnc_localizar;
 
@@ -97,7 +98,7 @@ _informer disableAI "TARGET";
 _informer setUnitPos "UP";
 _informer setBehaviour "CARELESS";
 _informer allowFleeing 0;
-[_informer, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call BIS_fnc_setIdentity;
+[_informer, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call A3A_fnc_setIdentity;
 
 removeAllWeapons _informer;
 removeAllAssignedItems _informer;
@@ -291,7 +292,7 @@ private _typeGroup = [
 ] select _difficulty;
 
 private _groupX = [_positionX,_side, _typeGroup] call A3A_fnc_spawnGroup;
-[leader _groupX, _mrk, "AWARE", "SPAWNED", "NOVEH2", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+_nul = [leader _groupX, _mrk, "AWARE", "SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 {[_x] call A3A_fnc_NATOinit} forEach units _groupX;
 private _dog = [_groupX, "Fin_random_F",_positionX,[],0,"FORM"] call A3A_fnc_createUnit;
 [_dog,_groupX] spawn A3A_fnc_guardDog;

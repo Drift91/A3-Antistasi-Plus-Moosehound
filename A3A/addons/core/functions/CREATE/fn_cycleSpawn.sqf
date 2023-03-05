@@ -106,7 +106,7 @@ _lineIndex = 0;
         ];
         sleep 0.25;
     } forEach _crewArray;
-    [leader _groupX, _marker, "LIMITED", "SAFE", "RANDOMUP", "SPAWNED", "NOVEH2", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+    [leader _groupX, _marker, "LIMITED", "SAFE", "RANDOMUP", "SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 
 
     private _forcePatrol = ((count _allGroups) > ((count _patrolGroups) * 3));
@@ -172,11 +172,11 @@ if(((_patrolMarkerSize select 0) < (_mainMarkerSize select 0)) || {(_patrolMarke
 _patrolMarker setMarkerSizeLocal _patrolMarkerSize;
 
 {
-  [leader _x, _marker, "LIMITED", "SAFE", "SPAWNED", "RANDOM", "NOFOLLOW", "NOVEH"] call A3A_fnc_proxyUPSMON;
+  [leader _x, _marker, "LIMITED", "SAFE", "SPAWNED", "RANDOM", "NOFOLLOW", "NOVEH"] spawn UPSMON_fnc_UPSMON;
 } forEach _stayGroups;
 
 {
-  [leader _x, _patrolMarker, "LIMITED", "SAFE", "SPAWNED", "RANDOM","NOVEH2"] call A3A_fnc_proxyUPSMON;
+  [leader _x, _patrolMarker, "LIMITED", "SAFE", "SPAWNED", "RANDOM","NOVEH2"] spawn UPSMON_fnc_UPSMON;
 } forEach _patrolGroups;
 
 /*

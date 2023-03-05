@@ -20,15 +20,13 @@ while {count _posHouse < 3} do {
 	if (count _posHouse < 3) then {_houses = _houses - [_houseX]};
 };
 
-
 private _nameDest = [_markerX] call A3A_fnc_localizar;
-private _timeLimit = if (_difficultX) then {30 * timeMultiplier} else {60 * timeMultiplier};
-
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	30 call SCRT_fnc_misc_getTimeLimit
+} else {
+	60 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _sideX = if (sidesX getVariable [_markerX,sideUnknown] == Occupants) then {Occupants} else {Invaders};
 private _faction = Faction(_sideX);
@@ -54,7 +52,7 @@ private _taskId = "RES" + str A3A_taskCount;
 _groupPOW = createGroup teamPlayer;
 for "_i" from 1 to (((count _posHouse) - 1) min 6) do {
 	_unit = [_groupPOW, FactionGet(reb,"unitUnarmed"), _posHouse select _i, [], 0, "NONE"] call A3A_fnc_createUnit;
-	[_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call BIS_fnc_setIdentity;
+	[_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call A3A_fnc_setIdentity;
 	_unit allowdamage false;
 	_unit disableAI "MOVE";
 	_unit disableAI "AUTOTARGET";
@@ -143,7 +141,7 @@ if (_sideX == Invaders) then {
 		_dog = [_groupX, "Fin_random_F",_positionX,[],0,"FORM"] call A3A_fnc_createUnit;
 		[_dog] spawn A3A_fnc_guardDog;
 		};
-	_nul = [leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2", "RANDOM", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+	_nul = [leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2","RANDOM", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 	{[_x,""] call A3A_fnc_NATOinit} forEach units _groupX;
 	_groupX1 = [_houseX buildingExit 0, Occupants, _faction get "groupPolice"] call A3A_fnc_spawnGroup;
 };
@@ -160,7 +158,7 @@ if (_sideX == Occupants) then {
 		_resourcesFIA = 100 * _countX;
 		[_hr,_resourcesFIA*_bonus] remoteExec ["A3A_fnc_resourcesFIA",2];
 		[Occupants, -10, 60] remoteExec ["A3A_fnc_addAggression",2];
-		{ 
+		{
 			[_countX*_bonus, _x] call A3A_fnc_addScorePlayer;
 			[_countX*_bonus*10,_x] call A3A_fnc_addMoneyPlayer;
 		} forEach (call SCRT_fnc_misc_getRebelPlayers);
@@ -184,11 +182,11 @@ if (_sideX == Occupants) then {
 		_hr = _countX;
 		_resourcesFIA = 100 * _countX;
 		[_hr,_resourcesFIA*_bonus] remoteExec ["A3A_fnc_resourcesFIA",2];
-		{ 
+		{
 			[_countX*_bonus, _x] call A3A_fnc_addScorePlayer;
 			[_countX*_bonus*10,_x] call A3A_fnc_addMoneyPlayer;
 		} forEach (call SCRT_fnc_misc_getRebelPlayers);
-		
+
 		private _bonusAmount = round (_countX*_bonus/2);
 		[_bonusAmount,theBoss] call A3A_fnc_addScorePlayer;
 		[(_bonusAmount*10),theBoss, true] call A3A_fnc_addMoneyPlayer;

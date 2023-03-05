@@ -3,12 +3,11 @@ FIX_LINE_NUMBERS()
 
 params ["_markerX", "_size", "_sideX", "_frontierX"];
 
-private ["_groupX","_building","_typeB","_typeVehX","_veh","_pos","_ang","_unit","_return"];
 private _positionX = getMarkerPos _markerX;
 private _buildings = nearestObjects [_positionX, listMilBld, _size, true];
 _buildings = _buildings inAreaArray _markerX;
 
-if (count _buildings == 0) exitWith {[grpNull,[],[]]};
+if (_buildings isEqualTo []) exitWith {[grpNull,[],[]]};
 
 private _faction = Faction(_sideX);
 private _vehiclesX = [];
@@ -19,11 +18,31 @@ private _typeUnit = [_faction get "unitTierStaticCrew"] call SCRT_fnc_unit_getTi
 
 //New system to place helis, does not care about heli types currently
 private _helicopterTypes = [];
-_helicopterTypes append (_faction get "vehiclesHelisLight");
+
+switch (true) do {
+    case (_markerX in milbases): {
+        _helicopterTypes append (_faction get "vehiclesHelisTransport");
+        _helicopterTypes append (_faction get "vehiclesHelisLight");
+        _helicopterTypes append (_faction get "vehiclesHelisLightAttack");
+    };
+    case (_markerX in airportsX): {
+        _helicopterTypes append (_faction get "vehiclesHelisTransport");
+        _helicopterTypes append (_faction get "vehiclesHelisLight");
+        _helicopterTypes append (_faction get "vehiclesHelisLightAttack");
+        _helicopterTypes append (_faction get "vehiclesHelisAttack");
+    };
+    default {
+        _helicopterTypes append (_faction get "vehiclesHelisLight");
+    };
+};
 private _spawnParameter = [_markerX, "Heli"] call A3A_fnc_findSpawnPosition;
 private _count = 1 + round (random 3); //Change these numbers as you want, first number is minimum, max is first plus second number
 while {_spawnParameter isEqualType [] && {_count > 0}} do {
     if (_helicopterTypes isEqualTo []) exitWith {}; //no helis to pick from
+    _helicopterTypes = _helicopterTypes select {[_x] call A3A_fnc_vehAvailable}; 
+    if (_helicopterTypes isEqualTo []) then {
+        _helicopterTypes = _faction get "vehiclesHelisLight";
+    };
     private _typeVehX = selectRandom _helicopterTypes;
     private _veh = createVehicle [_typeVehX, (_spawnParameter select 0), [],0, "CAN_COLLIDE"];
     _veh setDir (_spawnParameter select 1);
@@ -282,27 +301,6 @@ for "_i" from 0 to (count _buildings) - 1 do {
     };
 };
 
-//Spawning Marksmen on fixed buildingPos of chosen buildings
-for "_i" from 0 to (count _buildings) - 1 do
-{
-    if (spawner getVariable _markerX == 2) exitWith {};
-    private _building = _buildings select _i;
-    private _typeB = typeOf _building;
-
-    call {
-        if (isObjectHidden _building) exitWith {};            // don't put statics on destroyed buildings
-        if     ((_typeB == "Land_vn_o_snipertree_01") or (_typeB == "Land_vn_o_snipertree_02") or (_typeB == "Land_vn_o_snipertree_03") or (_typeB == "Land_vn_o_snipertree_04") or (_typeB == "Land_vn_o_platform_01") or (_typeB == "Land_vn_o_platform_02") or (_typeB == "Land_vn_o_platform_03")) exitWith
-        {
-            private _type = [_faction get "unitTierMarksman"] call SCRT_fnc_unit_getTiered;
-            private _dir = (getDir _building) - 180;
-            private _zpos = AGLToASL (_building buildingPos 0);
-            private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
-            _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
-            private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
-        };
-    };
-};
-
 //Spawning Riflemen on fixed buildingPos of chosen buildings
 for "_i" from 0 to (count _buildings) - 1 do
 {
@@ -310,11 +308,72 @@ for "_i" from 0 to (count _buildings) - 1 do
     private _building = _buildings select _i;
     private _typeB = typeOf _building;
 
+
     call {
         if (isObjectHidden _building) exitWith {};            // don't put statics on destroyed buildings
-        if     ((_typeB == "Land_vn_b_tower_01")) exitWith
+        if (_typeB isEqualTo "Land_vn_o_snipertree_01" or 
+            {_typeB isEqualTo "Land_vn_o_snipertree_02" or 
+            {_typeB isEqualTo "Land_vn_o_snipertree_03" or 
+            {_typeB isEqualTo "Land_vn_o_snipertree_04" or 
+            {_typeB isEqualTo "Land_vn_o_platform_01" or 
+            {_typeB isEqualTo "Land_vn_o_platform_02" or
+            {_typeB isEqualTo "Land_vn_o_platform_03"
+        }}}}}}
+        ) exitWith {
+                private _type = selectRandom ([_faction, "unitTierTower"] call SCRT_fnc_unit_flattenTier);
+                private _dir = (getDir _building) - 180;
+                private _zpos = AGLToASL (_building buildingPos 0);
+                private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
+                _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
+                private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
+        };
+        if (_typeB == "Land_vn_b_tower_01") exitWith
         {
-            private _type = [_faction get "unitTierGrunt"] call SCRT_fnc_unit_getTiered;
+            private _type = selectRandom ([_faction, "unitTierGuard"] call SCRT_fnc_unit_flattenTier);
+            private _dir = (getDir _building) - 180;
+            private _zpos = AGLToASL (_building buildingPos 0);
+            private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
+            _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
+            private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
+        };
+        if (_typeB isEqualTo "Land_GuardTower_01_F" || {_typeB isEqualTo "Land_vn_guardtower_01_f" || {_typeB isEqualTo "Land_MobileRadar_01_radar_F"}}) exitWith
+        {
+            private _type = selectRandom ([_faction, "unitTierTower"] call SCRT_fnc_unit_flattenTier);
+            private _dir = (getDir _building) - 180;
+            private _zpos = AGLToASL (_building buildingPos 2);
+            private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
+            _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
+            private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
+        };
+        if (_typeB isEqualTo "Land_GuardTower_02_F" || 
+            {_typeB isEqualTo "Land_vn_guardtower_02_f" || 
+            {_typeB isEqualTo "Land_vn_guardtower_03_f" || 
+            {_typeB isEqualTo "Land_vn_guardtower_04_f" ||
+            {_typeB isEqualTo "Land_Vez"
+        }}}}) exitWith
+        {
+            private _type = selectRandom ([_faction, "unitTierGuard"] call SCRT_fnc_unit_flattenTier);
+            private _dir = getDir _building;
+            private _zpos = AGLToASL (_building buildingPos 0);
+            private _pos = _zpos getPos [-0.4, _dir];
+            _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
+            private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
+        };
+        if (_typeB isEqualTo "Land_GuardHouse_02_F" || {_typeB isEqualTo "Land_GuardHouse_02_grey_F"}) exitWith
+        {
+            private _type = selectRandom ([_faction, "unitTierGuard"] call SCRT_fnc_unit_flattenTier);
+            private _dir = getDir _building;
+            private _zpos = AGLToASL (_building buildingPos 1);
+            private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
+            _pos = ASLToATL ([_pos select 0, _pos select 1, _zpos select 2]);
+            private _unit = [_type, _pos, _dir] call _fnc_spawnStaticUnit;
+        };
+        if (_typeB isEqualTo "Land_GuardBox_01_brown_F" || 
+           {_typeB isEqualTo "Land_GuardBox_01_green_F" || 
+           {_typeB isEqualTo "Land_GuardBox_01_smooth_F"
+        }}) exitWith
+        {
+            private _type = selectRandom ([_faction, "unitTierGuard"] call SCRT_fnc_unit_flattenTier);
             private _dir = (getDir _building) - 180;
             private _zpos = AGLToASL (_building buildingPos 0);
             private _pos = _zpos getPos [0, _dir];            // zeroes Z value because BIS
@@ -323,7 +382,5 @@ for "_i" from 0 to (count _buildings) - 1 do
         };
     };
 };
-
-
 
 [_groupX,_vehiclesX,_soldiers]

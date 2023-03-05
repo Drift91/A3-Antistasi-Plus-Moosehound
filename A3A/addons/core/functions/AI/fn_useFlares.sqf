@@ -1,13 +1,18 @@
 #include "..\..\script_component.hpp"
 FIX_LINE_NUMBERS()
 
-params ["_unit", "_enemy"];
+params [
+	["_unit", objNull], 
+	["_side", sideUnknown],
+	["_enemy", objNull]
+];
 
 sleep random 5;
 
 if (time < _unit getVariable ["smokeUsed",time - 1]) exitWith {};
 if (vehicle _unit != _unit) exitWith {};
-if (!isNil "_enemy" && {_enemy distance _unit > 450}) exitWith {};
+if (!isNull _enemy && {_enemy distance _unit > 450}) exitWith {};
+if (!(_unit call A3A_fnc_canFight)) exitWith {};
 
 private _flares = _unit getVariable ["remainingFlares", round random [1,2,3]];
 if (_flares <= 0) exitWith {};
@@ -15,8 +20,13 @@ if (_flares <= 0) exitWith {};
 _unit setVariable ["smokeUsed", time + 60];
 _unit setVariable ["remainingFlares", (_flares - 1)];
 
-private _target = if (!isNil "_enemy") then {_enemy} else {_unit};
-private _faction = Faction(side group _unit);
+private _target = if (!isNull _enemy) then {_enemy} else {_unit};
+private _faction = if (_side != sideUnknown) then {
+	Faction(_side);
+} else {
+	Warning("For some reason side is sideUnknown, taking fallback route.");
+	A3A_faction_occ;
+};
 private _flares = _faction get "flares";
 
 if (nearestObjects [(position _target), _flares, 100, true] isNotEqualTo []) exitWith {};

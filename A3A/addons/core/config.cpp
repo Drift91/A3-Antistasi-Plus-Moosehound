@@ -14,7 +14,10 @@ class CfgPatches {
     };
 };
 
-#include "CfgSounds.hpp"
+#include "CfgSounds.hpp" 
+#include "CfgVehicles.hpp"
+#include "CfgMarkers.hpp"
+#include "CfgWeapons.hpp"
 class A3A {
     #include "Templates.hpp"
     #include "Params.hpp"
@@ -58,18 +61,5 @@ class CfgMPGameTypes {
         id = 30;
         picture = QPATHTOFOLDER(Pictures\antistasi_plus_logo_small.paa);
         description = "";
-    };
-};
-
-class CfgMarkers {
-    class loc_MilAdministration {
-        color[] = {1,1,1,1};
-        icon = QPATHTOFOLDER(Pictures\Markers\milAdministration_CA.paa);
-        markerClass = "Locations";
-        name = "Military Administration";
-        scope = 1;
-        shadow = 0;
-        showEditorMarkerColor = 0;
-        size = 24;
     };
 };

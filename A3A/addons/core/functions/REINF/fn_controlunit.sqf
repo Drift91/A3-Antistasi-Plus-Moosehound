@@ -47,8 +47,8 @@ private _eh2 = _unit addEventHandler ["HandleDamage", {
 }];
 selectPlayer _unit;
 
-//otherwise unit will lost his identity
-[_unit, _face, _speaker] remoteExecCall ["BIS_fnc_setIdentity", 0];
+//otherwise unit will lose his identity
+[_unit, _face, _speaker] call A3A_fnc_setIdentity;
 
 private _timeX = aiControlTime;
 

@@ -27,8 +27,8 @@ private _typeX = typeOf _vehicle;
 
 A3A_vehClassToCrew getOrDefault [_typeX,
     [
-        FactionGetTiered(occ,"unitTierGrunt"), 
-        FactionGetTiered(inv,"unitTierGrunt"), 
+        FactionGetTiered(occ,"unitRifle"), 
+        FactionGetTiered(inv,"unitRifle"), 
         FactionGet(reb,"unitCrew"), 
         "C_Man_1"
     ]

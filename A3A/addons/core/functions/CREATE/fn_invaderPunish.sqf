@@ -33,7 +33,7 @@ private _size = [_mrkDest] call A3A_fnc_sizeMarker;
 
 private _nameDest = [_mrkDest] call A3A_fnc_localizar;
 private _taskId = "invaderPunish" + str A3A_taskCount;
-[[teamPlayer,civilian,Occupants],_taskId,[format [localize "STR_invaderPunish_desc",_nameDest,FactionGet(inv,"name")],format ["%1 Punishment",FactionGet(inv,"name")],_mrkDest],_posDest,false,0,true,"Defend",true] call BIS_fnc_taskCreate;
+[[teamPlayer,civilian,Occupants],_taskId,[format [localize "STR_invaderPunish_desc",_nameDest,FactionGet(inv,"name")],format [localize "STR_invaderPunish_task",FactionGet(inv,"name")],_mrkDest],_posDest,false,0,true,"Defend",true] call BIS_fnc_taskCreate;
 [_taskId, "invaderPunish", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 
@@ -78,19 +78,19 @@ while {count _civilians < _numCiv} do
     for "_i" from 1 to (4 min (_numCiv - count _civilians)) do
     {
         private _civ = [_groupCivil, FactionGet(reb, "unitUnarmed"), _pos, [], 0, "NONE"] call A3A_fnc_createUnit;
-        [_civ, selectRandom (A3A_faction_civ get "faces"), "NoVoice"] call BIS_fnc_setIdentity;
+        [_civ, selectRandom (A3A_faction_civ get "faces"), "NoVoice"] call A3A_fnc_setIdentity;
         _civ forceAddUniform selectRandom (A3A_faction_civ get "uniforms");
         _civ addHeadgear selectRandom (A3A_faction_civ get "headgear");
         [_civ, selectRandom _civWeapons, 5, 0] call BIS_fnc_addWeapon;
         _civ setSkill 0.5;
         _civilians pushBack _civ;
     };
-    [leader _groupCivil, _mrkDest, "AWARE","SPAWNED","NOVEH2"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+    [leader _groupCivil, _mrkDest, "AWARE","SPAWNED","NOVEH2"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 };
 
 
 // Termination conditions
-private _missionExpireTime = time + 3600;
+private _missionExpireTime = time + 2400;
 private _missionMinTime = time + 600;
 private _soldiers = [];
 { _soldiers append units _x } forEach _cargoGroups;

@@ -7,6 +7,13 @@ class Params
         texts[] = {$STR_params_game_mode_1,$STR_params_game_mode_2,$STR_params_game_mode_3};
         default = 1;
     };
+    class areRivalsEnabled
+    {
+        title = $STR_params_areRivalsEnabled;
+        values[] = {0,1};
+        texts[] = {$STR_params_areRivalsEnabled_0, $STR_antistasi_dialogs_generic_button_yes_text};
+        default = 1;
+    };
     class autoSave
     {
         title = $STR_params_autosave_title;
@@ -47,7 +54,7 @@ class Params
         title = $STR_params_civPedestrians;
         values[] = {0,1,3,5,7,10,15,20,25,30};
         texts[] = {"0","1","3","5","7","10","15","20","25","30"};
-        default = 5;
+        default = 10;
     };
     class distanceMission
     {
@@ -134,6 +141,13 @@ class Params
         texts[] = {$STR_antistasi_dialogs_generic_button_no_text,$STR_antistasi_dialogs_generic_button_yes_text};
         default = 1;
     };
+    class lootCrateDistance
+    {
+        title = $STR_params_lootCrateDistance;
+        values[] = {25, 50, 75, 100};
+        texts[] = {"25", "50", "75", "100"};
+        default = 50;
+    };
     class playerIcons
     {
         title = $STR_params_playerIcons;
@@ -176,13 +190,6 @@ class Params
         texts[] = {"60","120","300","900", "1800"};
         default = 60;
     };
-    class aiAccuracyCeiling
-    {
-        title = $STR_params_aiAccuracyCeiling;
-        values[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
-        texts[] = {"0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"};
-        default = 50;
-    };
     class deathPenalty
     {
         title = $STR_params_deathPenalty;
@@ -197,21 +204,6 @@ class Params
         texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
         default = 1;
     };
-    class rebelGarrisonLimit
-    {
-        title = $STR_params_rebelGarrisonLimit;
-        values[] = {10,20,30};
-        texts[] = {"10", "20", "30"};
-        default = 20;
-    };
-    //TODO: make this feature production-ready
-    // class unconsciousPossessAi
-    // {
-    //     title = $STR_params_unconsciousAiPossess;
-    //     values[] = {0};
-    //     texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
-    //     default = 0;
-    // };
     class maxConstructions
     {
         title = $STR_params_maxConstructions;
@@ -223,29 +215,22 @@ class Params
     {
         title = $STR_params_maxSupportPoints;
         values[] = {1,2,3,4,5,6};
-        texts[] = {"1","2","3","4","5","6","7","8","9"};
+        texts[] = {"1","2","3","4","5","6"};
         default = 3;
     };
-    // class maxUnits
-    // {
-    //     title = $STR_params_maxUnits;
-    //     values[] = {70,80,100,120,140,160,180,200,225,250};
-    //     texts[] = {"70","80","100","120","140","160","180","200","225","250"};
-    //     default = 140;
-    // };
+    class unconsciousPossessAi
+    {
+        title = $STR_params_unconsciousAiPossess;
+        values[] = {0,1};
+        texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
+        default = 1;
+    };
     class areRandomEventsEnabled
     {
         attr[] = {"server"};
         title = $STR_params_randomEvents;
         values[] = {0,1};
         texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
-        default = 1;
-    };
-    class areRivalsEnabled
-    {
-        title = $STR_params_areRivalsEnabled;
-        values[] = {0,1};
-        texts[] = {$STR_params_areRivalsEnabled_0, $STR_antistasi_dialogs_generic_button_yes_text};
         default = 1;
     };
     class rivalsDifficulty
@@ -309,9 +294,9 @@ class Params
     class A3A_enemyBalanceMul
     {
         title = $STR_params_overall_enemy_res_balance;
-        values[] = {3,5,7,10,14,20,28};
-        texts[] =  {$STR_params_difficulty_trivial,$STR_params_difficulty_veasy,$STR_params_difficulty_easy,$STR_params_difficulty_medium,$STR_params_difficulty_hard,$STR_params_difficulty_vhard,$STR_params_difficulty_extreme};
-        default = 10;
+        values[] = {3, 5, 7, 10, 12, 14, 16, 20, 28};
+        texts[] =  {$STR_params_difficulty_trivial, $STR_params_difficulty_veasy, $STR_params_difficulty_easy, $STR_params_difficulty_easymedium, $STR_params_difficulty_medium, $STR_params_difficulty_mediumhigh, $STR_params_difficulty_hard, $STR_params_difficulty_vhard, $STR_params_difficulty_extreme };
+        default = 12;
     };
     class A3A_enemyAttackMul
     {
@@ -325,8 +310,8 @@ class Params
     {
         attr[] = {"server"};
         title = $STR_params_resource_balance_inv;
-        values[] = {10,11,12,13,14,15};
-        texts[] =  {"1.0x","1.1x","1.2x","1.3x","1.4x","1.5x"};
+        values[] = {10,11,12,13,14,15,16,17,18,19,20};
+        texts[] =  {"1.0x","1.1x","1.2x","1.3x","1.4x","1.5x","1.6x","1.7x","1.8x","1.9x","2.0x"};
         default = 12;
     };
     class A3A_attackHQProximityMul
@@ -351,6 +336,13 @@ class Params
         texts[] = {$STR_params_A3A_enemySkillMul_veasy,$STR_params_A3A_enemySkillMul_easy,$STR_params_A3A_enemySkillMul_medium,$STR_params_A3A_enemySkillMul_hard,$STR_params_A3A_enemySkillMul_vhard};
         default = 2;
     };
+    class aiAccuracyCeiling
+    {
+        title = $STR_params_aiAccuracyCeiling;
+        values[] = {10, 20, 30, 40, 45, 50, 60, 70, 80, 90, 100};
+        texts[] = {"0.1", "0.2", "0.3", "0.4", "0.45", "0.5", "0.6", "0.7", "0.8", "0.9", "1"};
+        default = 45;
+    };
     class napalmEnabled
     {
         title = $STR_params_napalmEnabled;
@@ -374,7 +366,14 @@ class Params
         texts[] = {$STR_antistasi_dialogs_generic_button_no_text, $STR_antistasi_dialogs_generic_button_yes_text};
         default = 0;
     };
-
+    class A3A_rebelGarrisonLimit
+    {
+        title = $STR_params_rebelGarrisonLimit;
+        tooltip = $STR_params_rebelGarrisonLimit_desc;
+        values[] = {-1, 16, 24, 32};
+        texts[] = {"No limit", "16", "24", "32"};
+        default = 24;
+    };
     class SpacerEquipment
     {
         title = "";
@@ -442,6 +441,13 @@ class Params
         texts[] = {$STR_params_helmetLossChance_0,$STR_params_helmetLossChance_1,$STR_params_helmetLossChance_2,$STR_params_helmetLossChance_3};
         default = 33;
     };
+    class reviveKitsEnabled
+    {
+        title = $STR_params_reviveKitsEnabled;
+        values[] = {0,1};
+        texts[] = {$STR_antistasi_dialogs_generic_button_no_text,$STR_antistasi_dialogs_generic_button_yes_text};
+        default = 0;
+    };
 
 
     class SpacerLoot
@@ -457,13 +463,6 @@ class Params
         values[] = {""};
         texts[] = {""};
         default = "";
-    };
-    class bobChaosCrates
-    {
-        title = $STR_params_bobChaosCrates;
-        values[] = {0, 1};
-        texts[] = {$STR_antistasi_dialogs_generic_button_no_text,$STR_antistasi_dialogs_generic_button_yes_text};
-        default = 0;
     };
     class crateWepTypeMax
     {

@@ -6,6 +6,12 @@
 ["firstAidKits", ["FirstAidKit"]] call _fnc_saveToTemplate;  // However, item is tested for for help and reviving.
 ["mediKits", ["Medikit"]] call _fnc_saveToTemplate;  // However, item is tested for for help and reviving.
 
+["insignia", []] call _fnc_saveToTemplate;
+["sfInsignia", []] call _fnc_saveToTemplate;
+["milInsignia", []] call _fnc_saveToTemplate;
+["polInsignia", []] call _fnc_saveToTemplate;
+["eliteInsignia", []] call _fnc_saveToTemplate;
+
 // The bellow are optional overrides
 ["placeIntel_desk", ["Land_CampingTable_F",0]] call _fnc_saveToTemplate;  // [classname,azimuth].
 ["placeIntel_itemMedium", ["Land_Document_01_F",-155,false]] call _fnc_saveToTemplate;  // [classname,azimuth,isComputer].

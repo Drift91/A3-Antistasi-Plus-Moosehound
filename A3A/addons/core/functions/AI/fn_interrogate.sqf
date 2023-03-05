@@ -42,9 +42,9 @@ if (random 100 < _chance) then {
         _unit setVariable ["hasIntel", false, true];
 
         if (_unit getVariable ["isRival", false]) then {
-            [] call SCRT_fnc_rivals_selectIntel;
+            [] remoteExecCall ["SCRT_fnc_rivals_selectIntel", 2];
         } else {
-            ["Small", _side] call A3A_fnc_selectIntel;
+            ["Small", _side] remoteExec ["A3A_fnc_selectIntel", 2];
         };
     } else {
         _unit globalChat (selectRandom [

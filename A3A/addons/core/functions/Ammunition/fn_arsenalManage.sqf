@@ -54,6 +54,7 @@ private _allExceptNVs = _weapons + _explosives + _backpacks + _items + _optics +
 	call {
 		if (_x select 1 < minWeaps) exitWith {};
 		private _item = _x select 0;
+		if (_item isEqualTo "A3AP_SelfReviveKit") exitWith {};
 
 		private _categories = _item call A3A_fnc_equipmentClassToCategories;
 		if ("MissileLaunchers" in _categories && {allowGuidedLaunchers == 0}) exitWith {};

@@ -50,7 +50,7 @@ if (_grpIdx == -1) then {
 private _surrenderCrateType = if (_unit getVariable ["isRival", false]) then {
 	A3A_faction_riv get "surrenderCrate"
 } else {
-	Faction(side group _unit) get "surrenderCrate"
+	(Faction(_unitSide)) get "surrenderCrate"
 };
 private _boxX = _surrenderCrateType createVehicle position _unit;
 _boxX allowDamage false;

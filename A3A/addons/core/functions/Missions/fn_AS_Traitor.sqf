@@ -9,11 +9,12 @@ if (!isServer and hasInterface) exitWith{};
 private _difficultX = random 10 < tierWar;
 private _positionX = getMarkerPos _markerX;
 
-private _timeLimit = if (_difficultX) then {30 * timeMultiplier} else {60 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	30 call SCRT_fnc_misc_getTimeLimit
+} else {
+	60 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _radiusX = [_markerX] call A3A_fnc_sizeMarker;
 private _houses = (nearestObjects [_positionX, ["house"], _radiusX]) select {!((typeOf _x) in UPSMON_Bld_remove)};
@@ -45,7 +46,7 @@ if (_arrayAirports isEqualTo []) exitWith {
 private _base = [_arrayAirports, _positionX] call BIS_Fnc_nearestPosition;
 private _posBase = getMarkerPos _base;
 
-private _bodyguardClass = [FactionGet(occ,"unitTierBodyguard")] call SCRT_fnc_unit_getTiered;
+private _bodyguardClass = [FactionGet(occ,"unitRifle")] call SCRT_fnc_unit_getTiered;
 private _traitor = [_groupTraitor, FactionGet(occ,"unitTraitor"), _posTraitor, [], 0, "NONE"] call A3A_fnc_createUnit;
 _traitor allowDamage false;
 _traitor setPos _posTraitor;
@@ -91,7 +92,7 @@ while {count _roads == 0} do {
 
 private _road = _roads select 0;
 private _posroad = getPos _road;
-_roadcon = roadsConnectedto _road; 
+_roadcon = roadsConnectedto _road;
 if (count _roadCon == 0) then {
     Error_1("Road has no connection :%1.",position _road);
 };
@@ -122,7 +123,7 @@ _mrk setMarkerAlphaLocal 0;
 
 private _typeGroup = if (random 10 < tierWar) then {
 	selectRandom ([(Faction(Occupants)), "groupsTierSquads"] call SCRT_fnc_unit_flattenTier)
-} else {	
+} else {
 	FactionGet(occ,"groupPoliceSquad")
 };
 private _groupX = [_positionX,Occupants, _typeGroup] call A3A_fnc_spawnGroup;
@@ -130,15 +131,15 @@ sleep 1;
 if (random 10 < 2.5) then {
 	_dog = [_groupX, "Fin_random_F",_positionX,[],0,"FORM"] call A3A_fnc_createUnit;
 	[_dog] spawn A3A_fnc_guardDog;
-};
-[leader _groupX, _mrk, "LIMITED", "SAFE", "SPAWNED", "NOVEH2", "NOFOLLOW"] call A3A_fnc_proxyUPSMON;
+	};
+_nul = [leader _groupX, _mrk, "LIMITED", "SAFE","SPAWNED", "NOVEH2", "NOFOLLOW"] spawn UPSMON_fnc_UPSMON;
 {[_x,""] call A3A_fnc_NATOinit} forEach units _groupX;
 
 waitUntil {
-	sleep 1; 
-	traitorIntel || 
-	{dateToNumber date > _dateLimitNum or 
-	{not alive _traitor or 
+	sleep 1;
+	traitorIntel ||
+	{dateToNumber date > _dateLimitNum or
+	{not alive _traitor or
 	{{_traitor knowsAbout _x > 1.4} count ([500,0,_traitor,teamPlayer] call A3A_fnc_distanceUnits) > 0
 }}}};
 
@@ -155,10 +156,10 @@ if ({_traitor knowsAbout _x > 1.4} count ([500,0,_traitor,teamPlayer] call A3A_f
 };
 
 waitUntil  {
-	sleep 1; 
-	traitorIntel || 
-	{dateToNumber date > _dateLimitNum or 
-	{!alive _traitor or 
+	sleep 1;
+	traitorIntel ||
+	{dateToNumber date > _dateLimitNum or
+	{!alive _traitor or
 	{_traitor distance _posBase < 20
 }}}};
 
@@ -216,3 +217,5 @@ publicVariable "traitorIntel";
 [_groupX] spawn A3A_fnc_groupDespawner;
 [_groupTraitor] spawn A3A_fnc_groupDespawner;
 [_veh] spawn A3A_fnc_vehDespawner;
+
+deleteMarkerLocal _mrk;

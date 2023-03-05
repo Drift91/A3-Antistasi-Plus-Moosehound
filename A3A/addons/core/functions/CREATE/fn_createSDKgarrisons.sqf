@@ -46,7 +46,8 @@ if (_markerX != "Synd_HQ") then {
 						}];
 					};
 				};
-				_nul = [leader _groupCiv, _markerX, "LIMITED","SAFE","SPAWNED","NOFOLLOW","NOSHARE","DORELAX","NOVEH2"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+				//_nul = [_markerX,_civs] spawn destroyCheck;
+				_nul = [leader _groupCiv, _markerX, "LIMITED", "SAFE", "SPAWNED","NOFOLLOW", "NOSHARE","DORELAX","NOVEH2"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 			};
 		};
 	};
@@ -71,7 +72,7 @@ if (_typeCrew in _garrison) then {
 		private _pos = [_positionX] call A3A_fnc_mortarPos;
 		private _veh = FactionGet(reb,"staticMortar") createVehicle _pos;
 		_vehiclesX pushBack _veh;
-		_nul=[_veh] execVM QPATHTOFOLDER(scripts\UPSMON\MON_artillery_add.sqf);//TODO need delete UPSMON link
+		_nul=[_veh] spawn UPSMON_fnc_artillery_add;//TODO need delete UPSMON link
 		_unit assignAsGunner _veh;
 		_unit moveInGunner _veh;
 		[_veh, teamPlayer] call A3A_fnc_AIVEHinit;
@@ -80,7 +81,7 @@ if (_typeCrew in _garrison) then {
 	_garrison deleteAt (_garrison find _typeCrew);
 };
 
-// Move riflemen into saved static weapons in area 
+// Move riflemen into saved static weapons in area
 {
 	if !(isNil {_x getVariable "lockedForAI"}) then { continue };
 	private _index = _garrison findIf {_x isEqualTo FactionGet(reb,"unitRifle")};
@@ -90,7 +91,7 @@ if (_typeCrew in _garrison) then {
 		if (isNull _groupMortars) then { _groupMortars = createGroup teamPlayer };
 		_unit = [_groupMortars, (_garrison select _index), _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 		_unit moveInGunner _x;
-		_nul=[_x] execVM QPATHTOFOLDER(scripts\UPSMON\MON_artillery_add.sqf);//TODO need delete UPSMON link
+		_nul=[_x] spawn UPSMON_fnc_artillery_add;//TODO need delete UPSMON link
 	} else {
 		if (isNull _groupStatics) then { _groupStatics = createGroup teamPlayer };
 		_unit = [_groupStatics, (_garrison select _index), _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
@@ -129,9 +130,9 @@ while {(spawner getVariable _markerX != 2) and (_countUnits < _totalUnits)} do {
 for "_i" from 0 to (count _groups) - 1 do {
 	_groupX = _groups select _i;
 	if (_i == 0) then {
-		_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOMUP","NOVEH2","NOFOLLOW"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+		_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOMUP","NOVEH2","NOFOLLOW"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 	} else {
-		_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] call A3A_fnc_proxyUPSMON;//TODO need delete UPSMON link
+		_nul = [leader _groupX, _markerX, "LIMITED","SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] spawn UPSMON_fnc_UPSMON;//TODO need delete UPSMON link
 	};
 };
 ["locationSpawned", [_markerX, "RebelOutpost", true]] call EFUNC(Events,triggerEvent);

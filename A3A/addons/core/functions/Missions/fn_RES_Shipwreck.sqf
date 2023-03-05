@@ -102,11 +102,12 @@ _effects pushBack _fire;
 //////////////////////
 //Task
 /////////////////////
-private _timeLimit = if (_difficultX) then {60 * timeMultiplier} else {90 * timeMultiplier};
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];//converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficultX) then {
+	60 call SCRT_fnc_misc_getTimeLimit
+} else {
+	90 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _nameDest = [_markerX] call A3A_fnc_localizar;
 private _taskId = "RES" + str A3A_taskCount;
@@ -135,7 +136,7 @@ private _smugglerCount = random [3, 5, 6];
 
 for "_i" from 0 to _smugglerCount do {
     private _unit = [_grpPOW, FactionGet(reb,"unitUnarmed"), _shorePosition, [], 0, "NONE"] call A3A_fnc_createUnit;
-	[_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call BIS_fnc_setIdentity;
+    [_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call A3A_fnc_setIdentity;
 	_unit allowDamage false;
 	_unit setCaptive true;
 	_unit disableAI "MOVE";

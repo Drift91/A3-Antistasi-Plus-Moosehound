@@ -19,19 +19,21 @@ private _faction = Faction(_sideX);
 
 Info_3("Origin: %1, Hardmode: %2, Controlling Side: %3", _missionOrigin, _difficult, str _sideX);
 
-private _timeLimit = 90 * timeMultiplier;
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum]; //converts datenumber back to date array so that time formats correctly
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString; //Converts the time portion of the date array to a string for clarity in hints
+private _limit = if (_difficult) then {
+	45 call SCRT_fnc_misc_getTimeLimit
+} else {
+	90 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
+
+private _departingLimit = if (_difficult) then {
+	10 call SCRT_fnc_misc_getTimeLimit
+} else {
+	20 call SCRT_fnc_misc_getTimeLimit
+};
+_departingLimit params ["_departingDateLimitNum", "_departingDisplayTime"];
 
 private _originName = [_missionOrigin] call A3A_fnc_localizar;
-
-private _departingTimeLimit = if (_difficult) then {10 * timeMultiplier} else {20 * timeMultiplier};
-private _departingDateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _departingTimeLimit];
-private _departingDateLimitNum = dateToNumber _departingDateLimit;
-_departingDateLimit = numberToDate [date select 0, _departingDateLimitNum]; //converts datenumber back to date array so that time formats correctly
-private _departingDisplayTime = [_departingDateLimit] call A3A_fnc_dateToTimeString; //Converts the time portion of the date array to a string for clarity in hints
 
 //choosing enemy destination site
 private _potentialSites = (outposts + milbases + airportsX + resourcesX + factories + seaports) select {

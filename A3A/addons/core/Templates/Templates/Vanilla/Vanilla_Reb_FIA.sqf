@@ -57,9 +57,6 @@ if (_hasWs) then {
 //       Antistasi Plus Stuff       //
 //////////////////////////////////////
 
-["lootCrate", "Box_Syndicate_Ammo_F"] call _fnc_saveToTemplate;
-["rallyPoint", "B_RadioBag_01_wdl_F"] call _fnc_saveToTemplate;
-
 //classname, price, type, availability condition
 private _shopWs = if (_hasWs) then {
     [
@@ -72,7 +69,18 @@ private _shopWs = if (_hasWs) then {
 } else {
     []
 };
-private _vehiclesBlackMarket = _shopWs + [
+
+private _shopApex = if (_hasApex) then {
+    [
+        ["I_C_Offroad_02_unarmed_F", 200, "UNARMEDCAR", {true}], 
+        ["I_C_Offroad_02_LMG_F", 800, "ARMEDCAR", {true}],
+        ["I_C_Offroad_02_AT_F", 1450, "ARMEDCAR", {true}]
+    ]
+} else {
+    []
+};
+
+private _vehiclesBlackMarket = _shopWs + _shopApex + [
     ["I_UAV_01_F", 2000, "UAV", {true}],
     ["I_LT_01_AA_F", 7500, "AA", {{sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count (milbases + airportsX) > 0}],
     ["I_APC_Wheeled_03_cannon_F", 15000, "APC", {{sidesX getVariable [_x,sideUnknown] isEqualTo teamPlayer} count seaports > 0}],
@@ -101,6 +109,14 @@ private _initialRebelEquipment = [
     "Binocular",
     "acc_flashlight","acc_flashlight_smg_01","acc_flashlight_pistol"
 ];
+
+if (_hasLawsOfWar) then {
+    _initialRebelEquipment append [
+        "V_Pocketed_olive_F", 
+        "V_Pocketed_coyote_F", 
+        "V_Pocketed_black_F"
+    ];
+};
 
 private _civilianBackpacks =  [];
 if (_hasLawsOfWar) then {
@@ -168,22 +184,6 @@ if (_hasContact) then {
         "U_I_L_Uniform_01_tshirt_olive_F",
         "U_I_L_Uniform_01_tshirt_skull_F",
         "U_I_L_Uniform_01_tshirt_sport_F"
-    ];
-};
-
-if (_hasApex) then {
-    _dlcUniforms append [
-        "U_I_C_Soldier_Bandit_4_F",
-        "U_I_C_Soldier_Bandit_1_F",
-        "U_I_C_Soldier_Bandit_2_F",
-        "U_I_C_Soldier_Bandit_5_F",
-        "U_I_C_Soldier_Bandit_3_F",
-        "U_I_C_Soldier_Para_2_F",
-        "U_I_C_Soldier_Para_3_F",
-        "U_I_C_Soldier_Para_5_F",
-        "U_I_C_Soldier_Para_4_F",
-        "U_I_C_Soldier_Para_1_F",
-        "U_I_C_Soldier_Camo_F"
     ];
 };
 

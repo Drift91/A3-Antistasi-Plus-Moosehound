@@ -3,6 +3,7 @@ private _hasMarksman = "mark" in A3A_enabledDLC;
 private _hasLawsOfWar = "orange" in A3A_enabledDLC;
 private _hasTanks = "tank" in A3A_enabledDLC;
 private _hasLawsOfWar = "orange" in A3A_enabledDLC;
+private _hasContact = "enoch" in A3A_enabledDLC;
 
 //////////////////////////
 //   Side Information   //
@@ -70,7 +71,13 @@ private _uavsPortable = if (_hasWs) then {["I_UAV_02_lxWS", "I_UAV_01_F"]} else 
 private _militiaAPCs = if (_hasTanks) then {["I_LT_01_cannon_F"]} else {[]};
 ["vehiclesMilitiaAPCs", _militiaAPCs] call _fnc_saveToTemplate;
 
-["vehiclesPolice", ["B_GEN_Offroad_01_gen_F"]] call _fnc_saveToTemplate;
+private _policeVehs = if (_hasContact) then {
+    ["B_GEN_Offroad_01_covered_F", "B_GEN_Offroad_01_comms_F", "B_GEN_Offroad_01_gen_F"]
+} else {
+    ["B_GEN_Offroad_01_gen_F"]
+};
+
+["vehiclesPolice", _policeVehs] call _fnc_saveToTemplate;
 
 ["staticMGs", ["I_HMG_02_high_F"]] call _fnc_saveToTemplate;
 ["staticATs", ["I_static_AT_F"]] call _fnc_saveToTemplate;
@@ -86,13 +93,12 @@ private _militiaAPCs = if (_hasTanks) then {["I_LT_01_cannon_F"]} else {[]};
 
 ["howitzerMagazineHE", ""] call _fnc_saveToTemplate;
 
-//Minefield definition
+
 ["minefieldAT", ["ATMine"]] call _fnc_saveToTemplate;
 ["minefieldAPERS", ["APERSMine"]] call _fnc_saveToTemplate;
 
 //If Tank DLC
 if (_hasTanks) then {
-    // No seats so can't be APC
     _lightArmed append ["I_LT_01_AT_F", "I_LT_01_cannon_F"];
 };
 //If Western Sahara DLC
@@ -137,6 +143,9 @@ if (_hasWs) then {
 ]] call _fnc_saveToTemplate;
 ["voices", ["Male01GRE","Male02GRE","Male03GRE","Male04GRE","Male05GRE","Male06GRE"]] call _fnc_saveToTemplate;
 
+["insignia", ["AAF_1stRegiment", "", ""]] call _fnc_saveToTemplate;
+["milInsignia", ["AAF_3rdRegiment", "", ""]] call _fnc_saveToTemplate;
+
 //////////////////////////
 //       Loadouts       //
 //////////////////////////
@@ -175,7 +184,6 @@ _loadoutData set ["lightExplosives", ["DemoCharge_Remote_Mag"]];
 _loadoutData set ["heavyExplosives", ["SatchelCharge_Remote_Mag"]];
 
 _loadoutData set ["antiInfantryGrenades", ["HandGrenade", "MiniGrenade"]];
-_loadoutData set ["antiTankGrenades", []];
 _loadoutData set ["smokeGrenades", ["SmokeShell"]];
 _loadoutData set ["signalsmokeGrenades", ["SmokeShellYellow", "SmokeShellRed", "SmokeShellPurple", "SmokeShellOrange", "SmokeShellGreen", "SmokeShellBlue"]];
 
@@ -814,20 +822,17 @@ private _latTemplate = {
 
 private _atTemplate = {
     ["helmets"] call _fnc_setHelmet;
-    [selectRandomWeighted [[], 1.5, "glasses", 0.75, "goggles", 1]] call _fnc_setFacewear;
+    [selectRandomWeighted [[], 2, "glasses", 0.75, "goggles", 0.5]] call _fnc_setFacewear;
     ["vests"] call _fnc_setVest;
     ["uniforms"] call _fnc_setUniform;
     [["atBackpacks", "backpacks"] call _fnc_fallback] call _fnc_setBackpack;
 
     [selectRandom ["rifles", "carbines"]] call _fnc_setPrimary;
-    ["primary", 6] call _fnc_addMagazines;
+    ["primary", 5] call _fnc_addMagazines;
 
     [selectRandom ["ATLaunchers", "missileATLaunchers"]] call _fnc_setLauncher;
     //TODO - Add a check if it's disposable.
     ["launcher", 3] call _fnc_addMagazines;
-
-    ["sidearms"] call _fnc_setHandgun;
-    ["handgun", 2] call _fnc_addMagazines;
 
     ["items_medical_standard"] call _fnc_addItemSet;
     ["items_at_extras"] call _fnc_addItemSet;
@@ -850,20 +855,17 @@ private _aaTemplate = {
     [["atBackpacks", "backpacks"] call _fnc_fallback] call _fnc_setBackpack;
 
     [selectRandom ["rifles", "carbines"]] call _fnc_setPrimary;
-    ["primary", 6] call _fnc_addMagazines;
+    ["primary", 5] call _fnc_addMagazines;
 
     ["AALaunchers"] call _fnc_setLauncher;
     //TODO - Add a check if it's disposable.
     ["launcher", 3] call _fnc_addMagazines;
 
-    ["sidearms"] call _fnc_setHandgun;
-    ["handgun", 2] call _fnc_addMagazines;
-
     ["items_medical_standard"] call _fnc_addItemSet;
     ["items_aa_extras"] call _fnc_addItemSet;
     ["items_miscEssentials"] call _fnc_addItemSet;
     ["antiInfantryGrenades", 1] call _fnc_addItem;
-    ["smokeGrenades", 2] call _fnc_addItem;
+    ["smokeGrenades", 1] call _fnc_addItem;
 
     ["maps"] call _fnc_addMap;
     ["watches"] call _fnc_addWatch;

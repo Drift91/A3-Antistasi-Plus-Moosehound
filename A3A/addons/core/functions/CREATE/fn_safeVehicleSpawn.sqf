@@ -52,7 +52,6 @@ if (_willCollide && _force) then {
 if !(_willCollide) exitWith {
 	_vehicle setPos _spawnPosition;
 	_vehicle enableSimulation true;
-	[_vehicle] call SCRT_fnc_misc_tryInitVehicle;
 	_vehicle;
 };
 

@@ -5,6 +5,8 @@ if (!hasInterface) exitWith {};
 
 params ["_flag","_typeX"];
 
+private _actionX = -1;
+
 switch _typeX do
 {
     case "take":
@@ -29,7 +31,7 @@ switch _typeX do
     case "vehicle":
     {
         _flag addAction [
-            format ["<img image='\A3\ui_f\data\igui\cfg\simpleTasks\types\car_ca.paa' size='1.6' shadow=2 /> <t>%1</t>", localize "STR_antistasi_actions_buy_vehicle"], 
+            format ["<img image='a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa' size='1.6' shadow=2 /> <t>%1</t>", localize "STR_antistasi_actions_buy_vehicle"], 
             {
                 if ([getPosATL player] call A3A_fnc_enemyNearCheck) then {
                     [localize "STR_antistasi_actions_buy_vehicle", localize "STR_antistasi_actions_buy_vehicle_distance_check_failure"] call A3A_fnc_customHint
@@ -73,6 +75,24 @@ switch _typeX do
                     name _flag
                 ], A3A_fnc_actionRevive,nil,6,true,true,"","!(_this getVariable [""helping"",false]) and (isNull attachedTo _target)",4];
             _flag setUserActionText [_actionX,format [(localize "STR_antistasi_actions_revive"), name _flag],"<t size='2'><img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_revive_ca.paa'/></t>"];
+
+            if (reviveKitsEnabled) then {
+                [
+                    _flag,
+                    format [localize "STR_antistasi_actions_crk_use", name _flag],
+                    "a3\missions_f_exp\data\img\lobby\ui_campaign_lobby_background_tablet_button_revive02_ca.paa",
+                    "a3\missions_f_exp\data\img\lobby\ui_campaign_lobby_background_tablet_button_revive02_ca.paa",
+                    "'A3AP_SelfReviveKit' in (backpackItems player) && _this distance _target < 4 && (isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (isNull attachedTo _target) and !(_this getVariable [""helping"",false]);",
+                    "'A3AP_SelfReviveKit' in (backpackItems player) && _this distance _target < 4 && (isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (isNull attachedTo _target) and !(_this getVariable [""helping"",false]);",
+                    {},
+                    {},
+                    {
+                        params ["_target", "_caller", "_actionId", "_arguments"];
+                        [_caller, _target] call SCRT_fnc_common_revive;
+                        [_target, _actionId] call BIS_fnc_holdActionRemove;
+                    }, {}, [], 2, 0, false, false
+                ] call BIS_fnc_holdActionAdd;
+            };
         };
     };
     case "heal1":
@@ -80,10 +100,10 @@ switch _typeX do
         if (player != _flag) then
         {
             _actionX = _flag addAction [
-                format [
-                    (format ["<img size='1.8' <img image='\a3\ui_f\data\igui\cfg\simpletasks\types\help_ca.paa' /> <t>%1</t>", localize "STR_antistasi_actions_revive"]), 
-                    name _flag
-                ], A3A_fnc_actionRevive,nil,6,true,false,"","!(_this getVariable [""helping"",false]) and (isNull attachedTo _target)",4];
+                format [(format ["<img size='1.8' <img image='\a3\ui_f\data\igui\cfg\simpletasks\types\help_ca.paa' /> <t>%1</t>", localize "STR_antistasi_actions_revive"]), name _flag], 
+                A3A_fnc_actionRevive,
+                nil,
+                6,true,false,"","!(_this getVariable [""helping"",false]) and (isNull attachedTo _target)",4];
             _flag setUserActionText [_actionX,format [(localize "STR_antistasi_actions_revive"),name _flag],"<t size='2'><img image='\a3\ui_f\data\igui\cfg\simpletasks\types\help_ca.paa'/></t>"];
 
             _actionX = _flag addAction [
@@ -92,8 +112,35 @@ switch _typeX do
                     name _flag
                 ], A3A_fnc_carry,nil,5,true,false,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (isNull attachedTo _target) and !(_this getVariable [""helping"",false]);",4];
             _flag setUserActionText [_actionX,format [localize "STR_antistasi_actions_carry", name _flag],"<t size='2'><img image='\a3\ui_f\data\igui\cfg\actions\take_ca.paa'/></t>"];
+            if (reviveKitsEnabled) then {
+                [
+                    _flag,
+                    format [localize "STR_antistasi_actions_crk_use", name _flag],
+                    "a3\missions_f_exp\data\img\lobby\ui_campaign_lobby_background_tablet_button_revive02_ca.paa",
+                    "a3\missions_f_exp\data\img\lobby\ui_campaign_lobby_background_tablet_button_revive02_ca.paa",
+                    "'A3AP_SelfReviveKit' in (backpackItems player) && _this distance _target < 4 && (isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (isNull attachedTo _target) and !(_this getVariable [""helping"",false]);",
+                    "'A3AP_SelfReviveKit' in (backpackItems player) && _this distance _target < 4 && (isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (isNull attachedTo _target) and !(_this getVariable [""helping"",false]);",
+                    {},
+                    {},
+                    {
+                        params ["_target", "_caller", "_actionId", "_arguments"];
+                        [_caller, _target] call SCRT_fnc_common_revive;
+                        [_target, _actionId] call BIS_fnc_holdActionRemove;
+                    }, {}, [], 2, 0, false, false
+                ] call BIS_fnc_holdActionAdd;
+            };
+
             [_flag] call A3A_Logistics_fnc_addLoadAction;
         };
+    };
+    case "heal2":
+    {
+        _actionX = _flag addAction [
+            format [
+                (format ["<img size='1.8' <img image='\a3\ui_f\data\igui\cfg\simpletasks\types\help_ca.paa' /> <t>%1</t>", localize "STR_antistasi_actions_revive"]), 
+                name _flag
+            ], A3A_fnc_actionRevive,nil,6,true,false,"","!(_this getVariable [""helping"",false]) and (isNull attachedTo _target)",4];
+        _flag setUserActionText [_actionX,format [(localize "STR_antistasi_actions_revive"),name _flag],"<t size='2'><img image='\a3\ui_f\data\igui\cfg\simpletasks\types\help_ca.paa'/></t>"];
     };
     case "remove":
     {
@@ -175,7 +222,7 @@ switch _typeX do
             },nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4
         ];
         _flag addAction [
-            format ["<img image='\a3\ui_f\data\igui\cfg\simpletasks\types\car_ca.paa' size='1.6' shadow=2 /> <t>%1</t>",  localize "STR_antistasi_actions_buy_vehicle"], 
+            format ["<img image='a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa' size='1.6' shadow=2 /> <t>%1</t>",  localize "STR_antistasi_actions_buy_vehicle"], 
             {
                 if ([getPosATL player] call A3A_fnc_enemyNearCheck) then {
                     [localize "STR_antistasi_dialogs_buy_vehicle_frame_text", localize "STR_antistasi_actions_buy_vehicle_distance_check_failure"] call A3A_fnc_customHint;
@@ -274,3 +321,5 @@ switch _typeX do
         ];
     };
 };
+
+_actionX

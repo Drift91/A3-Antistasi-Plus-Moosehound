@@ -57,6 +57,11 @@ if (_targets isEqualTo []) exitWith {
     false;
 };
 
+if ((areInvadersDefeated && _side == Invaders) || {(areOccupantsDefeated && _side == Occupants)}) exitWith {
+    Info_1("Aborting attack by %1 because faction was defeated before.", _side);
+    false;
+};
+
 Debug("Final target choice list:");
 {
     Debug_2("Target: weight %1, %2", (_weights#_forEachIndex) toFixed 3, _x);

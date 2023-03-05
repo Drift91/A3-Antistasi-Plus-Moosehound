@@ -143,7 +143,7 @@ private _processOccupantMarker = {
 
                 case (_marker in milAdministrationsX):
                 {
-                    [[_marker], "A3A_fnc_createAIMilAdmins"] call A3A_fnc_scheduler;
+                    [[_marker], "A3A_fnc_createAIMilAdmin"] call A3A_fnc_scheduler;
                 };
             };
         };

@@ -42,8 +42,8 @@ if (A3A_customHint_MSGs isEqualTo []) then {
     private _topMSGIndex = count A3A_customHint_MSGs - 1;
 
     private _keyBind = [
-        format [localize "STR_A3AP_dismiss_2", (_alphaHex + "e5b348"), (_alphaHex + "000000"), (_alphaHex + "f0d498"), _dismissKey, str _topMSGIndex],
-        format [localize "STR_A3AP_dismiss_1", _topMSGIndex]
+        format [localize "STR_A3A_customHint_dismiss", (_alphaHex + "e5b348"), (_alphaHex + "000000"), (_alphaHex + "f0d498"), _dismissKey, str _topMSGIndex],
+        format [localize "STR_A3A_customHint_dismiss_no_key", _topMSGIndex]
     ] select (_dismissKey isEqualTo "");
 
     private _previousNotifications = ["<t color='#",_alphaHex,"e5b348' font='RobotoCondensed' align='center' valign='middle' underline='0' shadow='1' shadowColor='#",_alphaHex,"000000' shadowOffset='0.0625'>"];

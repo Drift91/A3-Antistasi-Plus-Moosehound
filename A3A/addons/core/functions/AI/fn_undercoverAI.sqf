@@ -20,9 +20,10 @@ private _loadOut = getUnitLoadout _unit;
 removeAllItems _unit;
 removeAllAssignedItems _unit;
 removeAllWeapons _unit;
-_unit forceAddUniform (selectRandom (A3A_faction_civ get "uniforms"));
 removeHeadgear _unit;
 removeGoggles _unit;
+removeVest _unit;
+_unit forceAddUniform (selectRandom (A3A_faction_civ get "uniforms"));
 
 while {captive _leader && {captive _unit}} do{
 	sleep 1;

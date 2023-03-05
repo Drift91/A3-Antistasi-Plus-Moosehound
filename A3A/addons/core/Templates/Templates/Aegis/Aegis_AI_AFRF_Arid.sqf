@@ -6,6 +6,8 @@ private _hasHelicopters = "heli" in A3A_enabledDLC;
 private _hasContact = "enoch" in A3A_enabledDLC;
 private _hasLawsOfWar = "orange" in A3A_enabledDLC;
 
+//TODO: remove arifle_AKM74_polymer and arifle_AKM74_polymer_alt
+
 //////////////////////////
 //   Side Information   //
 //////////////////////////
@@ -88,7 +90,14 @@ private _uavsPortable = if (_hasWs) then {["Aegis_O_R_UAV_02_ard_lxWS", "O_R_UAV
 ["vehiclesMilitiaTrucks", ["O_R_Truck_02_ard_F", "O_R_Truck_02_transport_ard_F"]] call _fnc_saveToTemplate;
 ["vehiclesMilitiaCars", ["O_G_Offroad_01_F"]] call _fnc_saveToTemplate;
 ["vehiclesMilitiaAPCs", ["O_R_APC_Wheeled_04_cannon_ard_F"]] call _fnc_saveToTemplate;
-["vehiclesPolice", ["B_GEN_Offroad_01_gen_F"]] call _fnc_saveToTemplate;
+
+private _policeVehs = if (_hasContact) then {
+    ["B_GEN_Offroad_01_covered_F", "B_GEN_Offroad_01_comms_F", "B_GEN_Offroad_01_gen_F"]
+} else {
+    ["B_GEN_Offroad_01_gen_F"]
+};
+
+["vehiclesPolice", _policeVehs] call _fnc_saveToTemplate;
 
 ["staticMGs", ["O_R_HMG_01_high_ard_F"]] call _fnc_saveToTemplate;
 ["staticATs", ["O_R_Static_AT_ard_F"]] call _fnc_saveToTemplate;
@@ -104,7 +113,7 @@ private _uavsPortable = if (_hasWs) then {["Aegis_O_R_UAV_02_ard_lxWS", "O_R_UAV
 
 ["howitzerMagazineHE", ""] call _fnc_saveToTemplate;
 
-//Minefield definition
+
 ["minefieldAT", ["ATMine"]] call _fnc_saveToTemplate;
 ["minefieldAPERS", ["APERSMine", "APERSBoundingMine"]] call _fnc_saveToTemplate;
 
@@ -157,6 +166,9 @@ private _uavsPortable = if (_hasWs) then {["Aegis_O_R_UAV_02_ard_lxWS", "O_R_UAV
 	"Mavros"
 ]] call _fnc_saveToTemplate; 
 
+["insignia", ["Spetsnaz454thRegiment", "", ""]] call _fnc_saveToTemplate;
+["sfInsignia", ["Spetsnaz223rdDetachment", "", ""]] call _fnc_saveToTemplate;
+
 //////////////////////////
 //       Loadouts       //
 //////////////////////////
@@ -184,7 +196,6 @@ _loadoutData set ["lightExplosives", ["DemoCharge_Remote_Mag"]];
 _loadoutData set ["heavyExplosives", ["SatchelCharge_Remote_Mag"]];
 
 _loadoutData set ["antiInfantryGrenades", ["HandGrenade_East", "HandGrenade_Guer"]];
-_loadoutData set ["antiTankGrenades", []];
 _loadoutData set ["smokeGrenades", ["SmokeShell"]];
 _loadoutData set ["signalsmokeGrenades", ["SmokeShellYellow", "SmokeShellRed", "SmokeShellPurple", "SmokeShellOrange", "SmokeShellGreen", "SmokeShellBlue"]];
 
@@ -213,6 +224,7 @@ _loadoutData set ["vests", []];
 _loadoutData set ["Hvests", []];
 _loadoutData set ["glVests", []];
 _loadoutData set ["backpacks", []];
+_loadoutData set ["atBackpacks", []];
 _loadoutData set ["longRangeRadios", ["B_RadioBag_01_arid_F"]];
 _loadoutData set ["helmets", []];
 _loadoutData set ["slHat", ["H_Watchcap_khk_hs", "H_MilCap_grn"]];
@@ -280,10 +292,11 @@ private _sfLoadoutData = _loadoutData call _fnc_copyLoadoutData;
 _sfLoadoutData set ["uniforms", ["Opf_U_O_S_Gorka_01_autumn_F", "U_O_R_Gorka_01_brown_F", "U_O_R_Gorka_01_F"]];
 _sfLoadoutData set ["vests", ["V_SmershVest_01_F", "V_SmershVest_01_radio_F"]];
 _sfLoadoutData set ["backpacks", ["B_Carryall_green_exp_F", "B_AssaultPackSpec_rgr"]];
+_sfLoadoutData set ["atBackpacks", ["B_Carryall_green_exp_F"]];
 _sfLoadoutData set ["helmets", ["H_HelmetAggressor_cover_F", "H_HelmetAggressor_F", "H_Bandanna_khk", "H_Watchcap_camo_hs", "H_Booniehat_mgrn"]];
 _sfLoadoutData set ["binoculars", ["Laserdesignator_02"]];
 _sfLoadoutData set ["NVGs", ["O_NVGoggles_grn_F"]];
-//SF Weapons
+
 _sfLoadoutData set ["slRifles", [
 ["arifle_AK12_F", "aegis_muzzle_snds_pbs_762_blk", "acc_pointer_IR", "optic_Arco_AK_blk_F", ["30Rnd_762x39_AK12_Mag_F", "30Rnd_762x39_AK12_Mag_F", "30Rnd_762x39_AK12_Mag_Tracer_F"], [], ""],
 ["arifle_AK12_arid_F", "aegis_muzzle_snds_pbs_762_arid", "acc_pointer_IR_arid_lxWS", "optic_Arco_AK_arid_F", ["30rnd_762x39_AK12_Arid_Mag_F", "30rnd_762x39_AK12_Arid_Mag_F", "30rnd_762x39_AK12_Arid_Mag_Tracer_F"], [], ""],
@@ -342,6 +355,7 @@ _eliteLoadoutData set ["vests", ["V_TacVest_grn"]];
 _eliteLoadoutData set ["glVests", ["V_HarnessOSpec_tan"]];
 _eliteLoadoutData set ["Hvests", ["V_HarnessOSpec_tan"]];
 _eliteLoadoutData set ["backpacks", ["B_Carryall_cbr", "B_Carryall_cbr", "B_FieldPack_khk"]];
+_eliteLoadoutData set ["atBackpacks", ["B_Carryall_cbr"]];
 _eliteLoadoutData set ["helmets", ["H_HelmetAggressor_cover_F", "H_HelmetAggressor_F"]];
 _eliteLoadoutData set ["binoculars", ["Laserdesignator_01_khk_F"]];
 _eliteLoadoutData set ["NVGs", ["O_NVGoggles_grn_F"]];
@@ -443,8 +457,8 @@ _militaryLoadoutData set ["vests", ["Aegis_V_OCarrierLuchnik_khk_F", "Aegis_V_OC
 _militaryLoadoutData set ["glVests", ["Aegis_V_OCarrierLuchnik_GL_arid_F", "Aegis_V_OCarrierLuchnik_CQB_arid_F"]];
 _militaryLoadoutData set ["Hvests", ["Aegis_V_OCarrierLuchnik_GL_arid_F", "Aegis_V_OCarrierLuchnik_CQB_arid_F"]];
 _militaryLoadoutData set ["backpacks", ["B_FieldPack_cbr", "B_Carryall_green_F"]];
+_militaryLoadoutData set ["atBackpacks", ["B_Carryall_green_F"]];
 _militaryLoadoutData set ["helmets", ["H_HelmetLuchnik_cover_ruarid_F", "H_HelmetLuchnik_cover_khk_F", "H_HelmetLuchnik_olive_F"]];
-_militaryLoadoutData set ["binoculars", ["Laserdesignator_02"]];
 
 private _lats = [["launch_RPG32_black_F", "", "", "", ["RPG32_F", "RPG32_F", "RPG32_HE_F"], [], ""]];
 if (_hasApex) then {
@@ -529,16 +543,14 @@ _militaryLoadoutData set ["sidearms", ["hgun_Rook40_F"]];
 ///////////////////////////////
 //    Police Loadout Data    //
 ///////////////////////////////
-
 private _policeLoadoutData = _loadoutData call _fnc_copyLoadoutData; 
 _policeLoadoutData set ["uniforms", ["U_B_GEN_Soldier_F", "U_B_GEN_Commander_F"]];
-_policeLoadoutData set ["vests", ["V_TacVest_blk_POLICE"]];
-private _helmets = ["H_Cap_police"];
+_policeLoadoutData set ["vests", ["V_TacVest_gen_F"]];
+private _helmets = ["H_MilCap_gen_F", "H_Beret_gen_F"];
 if (_hasLawsOfWar) then {
     _helmets pushBack "H_PASGT_basic_blue_F";
 };
 _policeLoadoutData set ["helmets", _helmets];
-
 _policeLoadoutData set ["policeWeapons", [
 ["sgun_Mp153_black_F", "", "", "", ["4Rnd_12Gauge_Pellets", "4Rnd_12Gauge_Pellets", "4Rnd_12Gauge_Slug"], [], ""],
 ["arifle_AKSM_F", "", "", "", ["30Rnd_545x39_Black_Mag_F", "30Rnd_545x39_Black_Mag_F", "30Rnd_545x39_Mag_Tracer_Green_F"], [], ""],
@@ -560,6 +572,7 @@ _militiaLoadoutData set ["vests", ["Aegis_V_ChestrigEast_RUarid_F", "Aegis_V_Che
 _militiaLoadoutData set ["glVests", ["V_HarnessOGL_tan"]];
 _militiaLoadoutData set ["Hvests", []];
 _militiaLoadoutData set ["backpacks", ["B_FieldPack_cbr", "B_FieldPack_cbr", "B_FieldPack_cbr", "B_Carryall_green_F"]];
+_militiaLoadoutData set ["atBackpacks", ["B_Carryall_green_F"]];
 
 private _ats = [
     ["launch_RPG32_black_F", "", "", "", ["RPG32_F", "RPG32_F", "RPG32_F"], [], ""]

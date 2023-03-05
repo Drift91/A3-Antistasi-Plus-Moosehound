@@ -14,11 +14,12 @@ private _difficult = random 10 < tierWar;
 private _sideX = if (sidesX getVariable [_markerX, sideUnknown] == Occupants) then {Occupants} else {Invaders};
 private _faction = Faction(_sideX);
 
-private _timeLimit = 90 * timeMultiplier;
-private _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
-private _dateLimitNum = dateToNumber _dateLimit;
-_dateLimit = numberToDate [date select 0, _dateLimitNum];
-private _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;
+private _limit = if (_difficult) then {
+	60 call SCRT_fnc_misc_getTimeLimit
+} else {
+	90 call SCRT_fnc_misc_getTimeLimit
+};
+_limit params ["_dateLimitNum", "_displayTime"];
 
 private _groups = [];
 private _vehicles = [];
@@ -239,7 +240,9 @@ switch (true) do {
         [-900, _sideX] remoteExec ["A3A_fnc_timingCA",2];
         [-15,theBoss] call A3A_fnc_addScorePlayer;
 
-        _artilleryVeh removeEventHandler ["Fired", _firedEh];
+        if (!isNil "_firedEh") then {
+            _artilleryVeh removeEventHandler ["Fired", _firedEh];
+        };
         [_artilleryVeh] call A3A_fnc_addArtilleryTrailEH;
         _shellCount = round(random [2,4,7]);
         sleep 1;
@@ -270,7 +273,9 @@ sleep 30;
 
 [_taskId, "DES", 1200] spawn A3A_fnc_taskDelete;
 
-_artilleryVeh removeEventHandler ["Fired", _firedEh];
+if (!isNil "_firedEh") then {
+    _artilleryVeh removeEventHandler ["Fired", _firedEh];
+};
 
 {[_x] spawn A3A_fnc_vehDespawner} forEach (_vehicles + _props);
 {[_x] spawn A3A_fnc_groupDespawner} forEach _groups;

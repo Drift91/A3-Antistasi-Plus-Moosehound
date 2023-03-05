@@ -90,7 +90,7 @@ switch (toLowerANSI _convoyType) do
     {
         _textX = format [localize "STR_A3A_Missions_AS_Convoy_task_dest_armor",_nameOrigin,_displayTime,_nameDest];
         _taskTitle = localize "STR_A3A_Missions_AS_Convoy_task_header_armor";
-        _taskIcon = "Destroy";
+        _taskIcon = "destroy";
         _typeVehObj = selectRandom (_faction get "vehiclesAA");
     };
     case "prisoners":
@@ -220,7 +220,7 @@ if (_convoyType isEqualTo "Prisoners") then
     for "_i" from 1 to (1+ round (random 11)) do
     {
         private _unit = [_grpPOW, FactionGet(reb,"unitUnarmed"), _posSpawn, [], 0, "NONE"] call A3A_fnc_createUnit;
-        [_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call BIS_fnc_setIdentity;
+        [_unit, selectRandom (A3A_faction_reb get "faces"), selectRandom (A3A_faction_reb get "voices")] call A3A_fnc_setIdentity;
         _unit setCaptive true;
         _unit disableAI "MOVE";
         _unit setBehaviour "CARELESS";

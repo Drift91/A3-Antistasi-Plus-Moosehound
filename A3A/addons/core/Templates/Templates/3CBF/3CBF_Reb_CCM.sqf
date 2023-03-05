@@ -89,9 +89,6 @@ private _hasLawsOfWar = "orange" in A3A_enabledDLC;
 //       Antistasi Plus Stuff       //
 //////////////////////////////////////
 
-["lootCrate", "Box_Syndicate_Ammo_F"] call _fnc_saveToTemplate;
-["rallyPoint", "B_RadioBag_01_wdl_F"] call _fnc_saveToTemplate;
-
 ["blackMarketStock", [
     ["rhsgref_nat_Igla_AA_pod", 3000, "STATICAA", {tierWar > 3}],
     ["UK3CB_LNM_I_Metis", 3000, "STATICAT", {tierWar > 3}],
@@ -140,7 +137,7 @@ private _initialRebelEquipment = [
     "uk3cb_ppsh41", "uk3cb_PPSH_71rnd_magazine", "uk3cb_PPSH_71rnd_magazine_RT", "uk3cb_PPSH_71rnd_magazine_RM", "uk3cb_PPSH_71rnd_magazine_R",
     "uk3cb_sks_01", "uk3cb_10rnd_magazine_sks", "uk3cb_10rnd_magazine_sks_R", "uk3cb_10rnd_magazine_sks_RT",
     "rhs_weap_m38", "rhsgref_5Rnd_762x54_m38",
-    "rhsgref_mag_rkg3em", "rhs_grenade_khattabka_vog17_mag", "rhs_grenade_khattabka_vog25_mag", "rhsgref_mag_rkg3em", "rhs_mag_rdg2_black", "rhs_mag_rdg2_white",
+    "rhs_grenade_khattabka_vog17_mag", "rhs_grenade_khattabka_vog25_mag", "rhsgref_mag_rkg3em", "rhs_mag_rdg2_black", "rhs_mag_rdg2_white",
     ["IEDUrbanSmall_Remote_Mag", 10], ["IEDLandSmall_Remote_Mag", 10], ["IEDUrbanBig_Remote_Mag", 3], ["IEDLandBig_Remote_Mag", 3],
     "Binocular",
     "B_FieldPack_oli",

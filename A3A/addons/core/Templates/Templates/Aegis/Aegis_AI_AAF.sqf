@@ -71,7 +71,7 @@ private _militiaAPCs = if (_hasTanks) then {["I_LT_01_cannon_F"]} else {[]};
 ["vehiclesMilitiaAPCs", _militiaAPCs] call _fnc_saveToTemplate;
 
 private _policeVehs = if (_hasContact) then {
-    ["Police_I_Altis_Offroad_01_police_F", "Police_I_Altis_Offroad_01_comms_F", "Police_I_Altis_Offroad_01_covered_F"]
+    ["B_GEN_Offroad_01_covered_F", "B_GEN_Offroad_01_comms_F", "B_GEN_Offroad_01_gen_F"]
 } else {
     ["B_GEN_Offroad_01_gen_F"]
 };
@@ -92,13 +92,12 @@ private _policeVehs = if (_hasContact) then {
 
 ["howitzerMagazineHE", ""] call _fnc_saveToTemplate;
 
-//Minefield definition
+
 ["minefieldAT", ["ATMine"]] call _fnc_saveToTemplate;
 ["minefieldAPERS", ["APERSMine"]] call _fnc_saveToTemplate;
 
 //If Tank DLC
 if (_hasTanks) then {
-    // No seats so can't be APC
     _lightArmed append ["I_LT_01_AT_F", "I_LT_01_cannon_F"];
 };
 //If Western Sahara DLC
@@ -143,6 +142,9 @@ if (_hasWs) then {
 ]] call _fnc_saveToTemplate;
 ["voices", ["Male01GRE","Male02GRE","Male03GRE","Male04GRE","Male05GRE","Male06GRE"]] call _fnc_saveToTemplate;
 
+["insignia", ["AAF_1stRegiment", "", ""]] call _fnc_saveToTemplate;
+["milInsignia", ["AAF_3rdRegiment", "", ""]] call _fnc_saveToTemplate;
+
 //////////////////////////
 //       Loadouts       //
 //////////////////////////
@@ -181,7 +183,6 @@ _loadoutData set ["lightExplosives", ["DemoCharge_Remote_Mag"]];
 _loadoutData set ["heavyExplosives", ["SatchelCharge_Remote_Mag"]];
 
 _loadoutData set ["antiInfantryGrenades", ["HandGrenade", "MiniGrenade"]];
-_loadoutData set ["antiTankGrenades", []];
 _loadoutData set ["smokeGrenades", ["SmokeShell"]];
 _loadoutData set ["signalsmokeGrenades", ["SmokeShellYellow", "SmokeShellRed", "SmokeShellPurple", "SmokeShellOrange", "SmokeShellGreen", "SmokeShellBlue"]];
 
@@ -405,7 +406,7 @@ _eliteLoadoutData set ["sidearms", [
 /////////////////////////////////
 
 private _militaryLoadoutData = _loadoutData call _fnc_copyLoadoutData; 
-_militaryLoadoutData set ["uniforms", ["U_I_CombatUniform_shortsleeve", "U_I_CombatUniform", "U_I_CombatUniform_tshirt"]];
+_militaryLoadoutData set ["uniforms", ["U_I_CombatUniform_shortsleeve", "U_I_CombatUniform", "U_I_CombatUniform_tshirt", "U_I_Uniform_01_tanktop_F"]];
 _militaryLoadoutData set ["slUniforms", ["U_I_OfficerUniform"]];
 _militaryLoadoutData set ["vests", ["V_PlateCarrierIA2_dgtl", "V_PlateCarrierIA1_dgtl"]];
 _militaryLoadoutData set ["Hvests", ["V_PlateCarrierIAGL_dgtl"]];
@@ -488,7 +489,6 @@ private _policeLoadoutData = _loadoutData call _fnc_copyLoadoutData;
 _policeLoadoutData set ["uniforms", ["U_C_Uniform_Formal_01_blue_F"]];
 _policeLoadoutData set ["vests", ["V_BandollierB_blk"]];
 _policeLoadoutData set ["helmets", ["H_Beret_blk_POLICE"]];
-
 _policeLoadoutData set ["SMGs", [
 ["sgun_M4_F", "", "acc_flashlight_pistol", "", ["8Rnd_12Gauge_Pellets", "8Rnd_12Gauge_Pellets", "8Rnd_12Gauge_Slug"], [], ""],
 ["SMG_03_TR_black", "", "acc_flashlight", "", [], [], ""],
@@ -502,7 +502,7 @@ _policeLoadoutData set ["sidearms", ["hgun_G17_black_F", "hgun_ACPC2_black_F"]];
 ////////////////////////////////
 
 private _militiaLoadoutData = _loadoutData call _fnc_copyLoadoutData; 
-_militiaLoadoutData set ["uniforms", ["U_I_CombatUniform", "U_I_CombatUniform_shortsleeve", "U_I_CombatUniform_tshirt"]];
+_militiaLoadoutData set ["uniforms", ["U_I_CombatUniform", "U_I_CombatUniform_shortsleeve", "U_I_CombatUniform_tshirt", "U_I_Uniform_01_tanktop_F"]];
 _militiaLoadoutData set ["vests", ["V_BandollierB_oli", "V_Chestrig_oli", "V_TacVest_oli"]];
 _militiaLoadoutData set ["Hvests", ["V_TacVest_oli"]];
 _militiaLoadoutData set ["backpacks", ["B_TacticalPack_oli", "B_FieldPack_oli", "B_AssaultPack_dgtl"]];

@@ -52,11 +52,13 @@ if (_medic != _treatedUnit) then {
 			(_medic != vehicle _medic) or 
 			(_medic != _treatedUnit getVariable ["helped",objNull]) or 
 			!(isNull attachedTo _treatedUnit) or 
-			(_medic getVariable ["cancelRevive",false])
+			(_medic getVariable ["cancelRevive",false]) or 
+			(_treatedUnit getVariable ["A3A_blockRevive",false])
 		) exitWith {};
 	};
 
 	if ((_treatedUnit distance _medic <= 3)
+		&& !(_treatedUnit getVariable ["A3A_blockRevive",false])
 		&& (alive _treatedUnit)
 		&& ([_medic] call A3A_fnc_canFight)
 		&& (_medic == vehicle _medic)
@@ -119,7 +121,9 @@ if (_medic != _treatedUnit) then {
 							|| (_medic distance _coverX <= 2)
 							|| (_timeOut < time)
 							|| (_medic != vehicle _medic)
-							|| (_medic getVariable ["cancelRevive",false])) exitWith {};
+							|| (_medic getVariable ["cancelRevive",false])
+							|| (_treatedUnit getVariable ["A3A_blockRevive",false])
+						) exitWith {};
 
 						if (_treatedUnit distance _dummy > 3) then {
 							detach _treatedUnit;
@@ -142,7 +146,12 @@ if (_medic != _treatedUnit) then {
 					_medic enableAI "ANIM";
 				};
 
-				if ((alive _treatedUnit) && ([_medic] call A3A_fnc_canFight) && (_medic == vehicle _medic) && !(_medic getVariable ["cancelRevive",false])) then {
+				if ((alive _treatedUnit) 
+					&& ([_medic] call A3A_fnc_canFight) 
+					&& (_medic == vehicle _medic) 
+					&& !(_medic getVariable ["cancelRevive",false])
+					&& !(_treatedUnit getVariable ["A3A_blockRevive",false])
+				) then {
 					_medic playMove "amovpknlmstpsraswrfldnon";
 					_medic stop true;
 					_treatedUnit stop true;
